@@ -29,6 +29,18 @@
           <span class="dot"></span>
           <span id="printer-label">Hors ligne</span>
         </div>
+        <div class="status-icons" id="status-card" data-state="offline" aria-label="Statut imprimante">
+          <span class="status-chip" title="Batterie"><span class="status-ico" aria-hidden="true">🔋</span><strong id="stat-battery">—</strong></span>
+          <span class="status-chip" title="Papier"><span class="status-ico" aria-hidden="true">📄</span><strong id="stat-paper">—</strong></span>
+          <span class="status-chip" title="Couvercle"><span class="status-ico" aria-hidden="true">🔒</span><strong id="stat-cover">—</strong></span>
+          <span class="status-chip" title="Firmware"><span class="status-ico" aria-hidden="true">FW</span><strong id="stat-fw">—</strong></span>
+        </div>
+        <button type="button" class="btn icon soft" id="btn-refresh" disabled title="Rafraîchir statut">↻</button>
+        <button type="button" class="btn primary header-print" id="btn-print">Imprimer ✨</button>
+        <div id="progress" class="progress header-progress" hidden>
+          <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+          <p id="progress-label">0%</p>
+        </div>
       </div>
     </header>
 
@@ -126,22 +138,6 @@
       </section>
 
       <aside class="side">
-        <div class="print-card candy">
-          <h2>Impression 💕</h2>
-          <div class="stats" id="status-card" data-state="offline">
-            <div class="stat"><span>Batterie</span><strong id="stat-battery">—</strong></div>
-            <div class="stat"><span>Papier</span><strong id="stat-paper">—</strong></div>
-            <div class="stat"><span>Couvercle</span><strong id="stat-cover">—</strong></div>
-            <div class="stat"><span>FW</span><strong id="stat-fw">—</strong></div>
-          </div>
-          <button type="button" class="btn primary block xl" id="btn-print">Imprimer ✨</button>
-          <button type="button" class="btn soft block" id="btn-refresh" disabled>Rafraîchir statut</button>
-          <div id="progress" class="progress" hidden>
-            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
-            <p id="progress-label">0%</p>
-          </div>
-        </div>
-
         <div class="selection-card candy" id="selection-card">
           <h2>Sélection ✨</h2>
           <p class="sel-label" id="sel-label">Rien de sélectionné</p>

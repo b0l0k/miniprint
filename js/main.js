@@ -142,8 +142,16 @@ function renderStatus() {
   }
   els.battery.textContent = `${s.batteryLevel}%`;
   els.paper.textContent = s.noPaper ? "vide" : "ok";
-  els.cover.textContent = s.coverOpen ? "ouvert" : "fermé";
+  els.cover.textContent = s.coverOpen ? "open" : "ok";
   els.fw.textContent = set?.firmwareVersion ?? "—";
+  els.cover.closest(".status-chip")?.setAttribute(
+    "title",
+    s.coverOpen ? "Couvercle ouvert" : "Couvercle fermé",
+  );
+  els.paper.closest(".status-chip")?.setAttribute(
+    "title",
+    s.noPaper ? "Plus de papier" : "Papier OK",
+  );
 }
 
 function setProgress(pct, label) {
