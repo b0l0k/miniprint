@@ -61,6 +61,12 @@
         <div class="tab-panels">
           <section class="tab-panel is-active" data-panel="collage">
             <p class="panel-hint">Choisis une mise en page, puis tape ＋ Photo sur le rendu 📸</p>
+            <div class="subhead">Format</div>
+            <div class="chip-grid orient-grid" id="orient-list">
+              <button type="button" class="chip is-active" data-orient="portrait">Portrait</button>
+              <button type="button" class="chip" data-orient="landscape">Paysage</button>
+            </div>
+            <div class="subhead">Mise en page</div>
             <div class="chip-grid" id="collage-list"></div>
             <div class="subhead">Motifs de fond</div>
             <div class="thumb-row" id="pattern-list"></div>
@@ -130,7 +136,7 @@
       </aside>
 
       <section class="stage">
-        <div class="canvas-shell">
+        <div class="canvas-shell" data-orient="portrait">
           <div class="shell-bow" aria-hidden="true">♡</div>
           <canvas id="studio-canvas" aria-label="Zone de création"></canvas>
         </div>

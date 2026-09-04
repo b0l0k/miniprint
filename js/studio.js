@@ -78,6 +78,8 @@ function emojiCanvas(emoji, size = 256) {
 export class Studio {
   W = PRINT_START_WIDTH;
   H = PRINT_START_HEIGHT;
+  /** @type {'portrait'|'landscape'} */
+  orientation = "portrait";
 
   collageId = "single";
   /** @type {number|null} id cadre (null = aucun) */
@@ -123,6 +125,7 @@ export class Studio {
     this.ctx = canvas.getContext("2d");
     this.canvas.width = this.W;
     this.canvas.height = this.H;
+    this.canvas.closest(".canvas-shell")?.setAttribute("data-orient", this.orientation);
     this.#fileInput = opts.fileInput ?? null;
     this.setCollage("single");
     this.#bindPointer();
@@ -166,6 +169,42 @@ export class Studio {
     }
     this.selection = null;
     this.queueRender();
+  }
+
+  /**
+   * Bascule portrait (1280×1920) / paysage (1920×1280).
+   * @param {'portrait'|'landscape'} orient
+   */
+  setOrientation(orient) {
+    if (orient !== "portrait" && orient !== "landscape") return;
+    if (orient === this.orientation) return;
+
+    const oldW = this.W;
+    const oldH = this.H;
+    this.orientation = orient;
+    if (orient === "landscape") {
+      this.W = PRINT_START_HEIGHT;
+      this.H = PRINT_START_WIDTH;
+    } else {
+      this.W = PRINT_START_WIDTH;
+      this.H = PRINT_START_HEIGHT;
+    }
+
+    for (const s of this.stickers) {
+      s.x = (s.x / oldW) * this.W;
+      s.y = (s.y / oldH) * this.H;
+    }
+    for (const t of this.texts) {
+      t.x = (t.x / oldW) * this.W;
+      t.y = (t.y / oldH) * this.H;
+    }
+
+    this.canvas.width = this.W;
+    this.canvas.height = this.H;
+    this.canvas.closest(".canvas-shell")?.setAttribute("data-orient", orient);
+    document.documentElement.dataset.orient = orient;
+    this.queueRender();
+    this.onChange();
   }
 
   setFrame(id) {
@@ -389,7 +428,7 @@ export class Studio {
     if (pattern) {
       try {
         const img = await loadImage(pattern.src);
-        ctx.drawImage(img, 0, 0, W, H);
+        this.#drawPortraitAsset(ctx, img, W, H);
       } catch {
         ctx.fillStyle = this.bgColor;
         ctx.fillRect(0, 0, W, H);
@@ -429,12 +468,12 @@ export class Studio {
 
     ctx.drawImage(adjLayer, 0, 0);
 
-    // Cadre Canon par-dessus
+    // Cadre Canon par-dessus (assets portrait → rotés en paysage)
     const frame = this.selectedFrame;
     if (frame) {
       try {
         const img = await loadImage(frame.src);
-        ctx.drawImage(img, 0, 0, W, H);
+        this.#drawPortraitAsset(ctx, img, W, H);
       } catch {
         /* ignore */
       }
@@ -526,6 +565,22 @@ export class Studio {
         ctx.stroke();
       });
     }
+  }
+
+  /**
+   * Dessine un asset conçu en portrait (cadre / motif) dans le canvas courant.
+   * En paysage : rotation 90° CW pour coller au format 1920×1280.
+   */
+  #drawPortraitAsset(ctx, img, W, H) {
+    if (this.orientation !== "landscape") {
+      ctx.drawImage(img, 0, 0, W, H);
+      return;
+    }
+    ctx.save();
+    ctx.translate(W, 0);
+    ctx.rotate(Math.PI / 2);
+    ctx.drawImage(img, 0, 0, H, W);
+    ctx.restore();
   }
 
   #drawSlot(ctx, slot, x, y, w, h) {

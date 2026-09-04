@@ -44,7 +44,7 @@ export async function prepareImage(source, opts = {}) {
 }
 
 /**
- * Canvas déjà au format 1280×1920 (éditeur) → JPEG imprimante.
+ * Canvas déjà au format éditeur → JPEG imprimante.
  * @param {HTMLCanvasElement} stage
  */
 export async function prepareStageCanvas(stage, opts = {}) {
@@ -55,6 +55,7 @@ export async function prepareStageCanvas(stage, opts = {}) {
 async function finalizeStage(stage, { quality, preview }) {
   let outCanvas = stage;
   if (!preview) {
+    const portrait = toPrinterPortrait(stage);
     const final = document.createElement("canvas");
     final.width = PRINT_FINAL_WIDTH;
     final.height = PRINT_FINAL_HEIGHT;
@@ -62,7 +63,7 @@ async function finalizeStage(stage, { quality, preview }) {
     fctx.translate(PRINT_FINAL_WIDTH, PRINT_FINAL_HEIGHT);
     fctx.rotate(Math.PI);
     fctx.drawImage(
-      stage,
+      portrait,
       0,
       0,
       PRINT_START_WIDTH,
@@ -78,14 +79,52 @@ async function finalizeStage(stage, { quality, preview }) {
   const blob = await canvasToJpeg(outCanvas, quality);
   const jpeg = new Uint8Array(await blob.arrayBuffer());
 
-  const previewCanvas = document.createElement("canvas");
-  previewCanvas.width = PRINT_START_WIDTH;
-  previewCanvas.height = PRINT_START_HEIGHT;
-  previewCanvas.getContext("2d").drawImage(stage, 0, 0);
-  const previewBlob = await canvasToJpeg(previewCanvas, 0.85);
-  const previewUrl = URL.createObjectURL(previewBlob);
+  let previewUrl = "";
+  if (preview) {
+    const previewCanvas = document.createElement("canvas");
+    previewCanvas.width = stage.width;
+    previewCanvas.height = stage.height;
+    previewCanvas.getContext("2d").drawImage(stage, 0, 0);
+    const previewBlob = await canvasToJpeg(previewCanvas, 0.85);
+    previewUrl = URL.createObjectURL(previewBlob);
+  }
 
   return { jpeg, previewUrl };
+}
+
+/**
+ * Stage paysage (1920×1280) → portrait 1280×1920 (rot. 90° CW).
+ * Portrait déjà au bon format : renvoyé tel quel (ou redimensionné).
+ * @param {HTMLCanvasElement} stage
+ */
+function toPrinterPortrait(stage) {
+  if (stage.width <= stage.height) {
+    if (
+      stage.width === PRINT_START_WIDTH &&
+      stage.height === PRINT_START_HEIGHT
+    ) {
+      return stage;
+    }
+    const c = document.createElement("canvas");
+    c.width = PRINT_START_WIDTH;
+    c.height = PRINT_START_HEIGHT;
+    c.getContext("2d").drawImage(
+      stage,
+      0,
+      0,
+      PRINT_START_WIDTH,
+      PRINT_START_HEIGHT,
+    );
+    return c;
+  }
+  const c = document.createElement("canvas");
+  c.width = PRINT_START_WIDTH;
+  c.height = PRINT_START_HEIGHT;
+  const ctx = c.getContext("2d");
+  ctx.translate(PRINT_START_WIDTH, 0);
+  ctx.rotate(Math.PI / 2);
+  ctx.drawImage(stage, 0, 0);
+  return c;
 }
 
 export async function makeTestPattern() {

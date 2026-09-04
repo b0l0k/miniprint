@@ -18,6 +18,7 @@ const els = {
   fileInput: $("#file-input"),
   canvas: $("#studio-canvas"),
   collageList: $("#collage-list"),
+  orientList: $("#orient-list"),
   emojiList: $("#emoji-list"),
   stickerCats: $("#sticker-cats"),
   stickerList: $("#sticker-list"),
@@ -296,6 +297,23 @@ function buildCollages() {
       [...els.collageList.children].forEach((el) => el.classList.toggle("is-active", el === btn));
     });
     els.collageList.appendChild(btn);
+  });
+}
+
+function wireOrientation() {
+  els.orientList?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-orient]");
+    if (!btn) return;
+    studio.setOrientation(btn.dataset.orient);
+    [...els.orientList.querySelectorAll("[data-orient]")].forEach((el) => {
+      el.classList.toggle("is-active", el === btn);
+    });
+    log(
+      btn.dataset.orient === "landscape"
+        ? "Format paysage — l’impression pivote pour le papier Zoemini."
+        : "Format portrait.",
+      "ok",
+    );
   });
 }
 
@@ -594,6 +612,7 @@ async function printNow() {
 async function boot() {
   wireTabs();
   buildCollages();
+  wireOrientation();
   wireAdjustments();
   buildTextTools();
   wirePhotoTools();

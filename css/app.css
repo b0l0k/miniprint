@@ -558,8 +558,8 @@ body {
 }
 
 .canvas-shell {
-  width: min(calc((100dvh - 7.5rem) * 2 / 3), 100%);
   max-height: min(100%, calc(100dvh - 7.5rem));
+  max-width: 100%;
   background: white;
   padding: 0.55rem;
   border-radius: 16px;
@@ -573,6 +573,15 @@ body {
   box-sizing: border-box;
 }
 
+.canvas-shell[data-orient="portrait"] {
+  width: min(calc((100dvh - 7.5rem) * 2 / 3), 100%);
+}
+
+.canvas-shell[data-orient="landscape"] {
+  width: min(calc((100dvh - 7.5rem) * 3 / 2), min(100%, 52rem));
+  transform: rotate(0.4deg);
+}
+
 .shell-bow {
   position: absolute;
   top: -0.45rem;
@@ -584,7 +593,6 @@ body {
 
 #studio-canvas {
   width: 100%;
-  aspect-ratio: 2 / 3;
   height: auto;
   max-height: 100%;
   display: block;
@@ -592,6 +600,14 @@ body {
   touch-action: none;
   cursor: grab;
   background: #ffe8f1;
+}
+
+.canvas-shell[data-orient="portrait"] #studio-canvas {
+  aspect-ratio: 2 / 3;
+}
+
+.canvas-shell[data-orient="landscape"] #studio-canvas {
+  aspect-ratio: 3 / 2;
 }
 #studio-canvas:active { cursor: grabbing; }
 
@@ -784,12 +800,22 @@ body {
   .v-tool { width: 4.2rem; }
   .canvas-shell {
     height: auto;
-    width: min(100%, 340px);
     transform: none;
+  }
+  .canvas-shell[data-orient="portrait"] {
+    width: min(100%, 340px);
+  }
+  .canvas-shell[data-orient="landscape"] {
+    width: min(100%, 480px);
   }
   #studio-canvas {
     height: auto;
+  }
+  .canvas-shell[data-orient="portrait"] #studio-canvas {
     aspect-ratio: 2 / 3;
+  }
+  .canvas-shell[data-orient="landscape"] #studio-canvas {
+    aspect-ratio: 3 / 2;
   }
   .tabs { grid-template-columns: repeat(3, 1fr); }
   .site-footer { padding-bottom: 4.5rem; }
@@ -818,6 +844,11 @@ body {
 
 .fit-grid {
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.orient-grid {
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 0.35rem;
 }
 
 .fit-grid .chip {
