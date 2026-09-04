@@ -80,8 +80,8 @@ export class Studio {
   H = PRINT_START_HEIGHT;
 
   collageId = "single";
-  /** @type {number|null} id cadre Canon */
-  frameId = 110;
+  /** @type {number|null} id cadre (null = aucun) */
+  frameId = null;
   /** @type {number|null} */
   patternId = null;
   /** @type {number|null} */

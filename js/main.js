@@ -380,7 +380,7 @@ function renderCanonStickers(catalog) {
 function buildFrames(catalog) {
   const none = document.createElement("button");
   none.type = "button";
-  none.className = "frame-btn";
+  none.className = "frame-btn" + (studio.frameId == null ? " is-active" : "");
   none.title = "Sans cadre";
   none.textContent = "Aucun";
   none.style.display = "grid";
