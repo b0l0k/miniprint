@@ -433,6 +433,48 @@
       "categoryId": 12,
       "src": "/assets/canon/stickers/183.png",
       "thumb": "/assets/canon/stickers/thumb/183.png"
+    },
+    {
+      "id": 900,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-virus.svg",
+      "thumb": "/assets/extra/stickers/microbe-virus.svg"
+    },
+    {
+      "id": 901,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-rod.svg",
+      "thumb": "/assets/extra/stickers/microbe-rod.svg"
+    },
+    {
+      "id": 902,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-fuzzy.svg",
+      "thumb": "/assets/extra/stickers/microbe-fuzzy.svg"
+    },
+    {
+      "id": 903,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-blob.svg",
+      "thumb": "/assets/extra/stickers/microbe-blob.svg"
+    },
+    {
+      "id": 904,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-phage.svg",
+      "thumb": "/assets/extra/stickers/microbe-phage.svg"
+    },
+    {
+      "id": 905,
+      "category": "Autre",
+      "categoryId": 13,
+      "src": "/assets/extra/stickers/microbe-sucker.svg",
+      "thumb": "/assets/extra/stickers/microbe-sucker.svg"
     }
   ],
   "frames": [
@@ -910,43 +952,5 @@
       "src": "/assets/canon/patterns/604.png",
       "thumb": "/assets/canon/patterns/thumb/604.png"
     }
-  ],
-  "emojiStickers": [
-    "💖",
-    "⭐",
-    "✨",
-    "🌈",
-    "🦄",
-    "🐱",
-    "🐶",
-    "🐰",
-    "🐻",
-    "🌸",
-    "🌻",
-    "🦋",
-    "🍦",
-    "🎂",
-    "🎈",
-    "📷",
-    "👑",
-    "😘",
-    "😂",
-    "😎",
-    "🔥",
-    "🎵",
-    "🌙",
-    "☁️",
-    "🍓",
-    "🍩",
-    "🎀",
-    "🐣",
-    "🐯",
-    "🍀",
-    "💜",
-    "💞",
-    "🧁",
-    "🍉",
-    "🍒",
-    "💗"
   ]
 }

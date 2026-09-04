@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <g stroke="#3b2233" stroke-width="14" stroke-linecap="round" fill="none">
+    <path d="M 210 374 C 194 404 182 420 164 440"/>
+    <path d="M 240 380 C 232 412 226 428 218 450"/>
+    <path d="M 272 380 C 280 412 286 428 294 450"/>
+    <path d="M 302 374 C 318 404 330 420 348 440"/>
+
+    <rect x="238" y="258" width="36" height="100" rx="12" fill="#ff9840"/>
+    <rect x="192" y="348" width="128" height="28" rx="14" fill="#ff9840"/>
+
+    <polygon points="256,72 340,120 340,216 256,264 172,216 172,120" fill="#ffab5e"/>
+
+    <circle cx="226" cy="150" r="25" fill="#ffffff"/>
+    <circle cx="286" cy="150" r="25" fill="#ffffff"/>
+    <circle cx="232" cy="157" r="11" fill="#3b2233" stroke="none"/>
+    <circle cx="292" cy="157" r="11" fill="#3b2233" stroke="none"/>
+    <path d="M 224 202 Q 256 228 288 202"/>
+  </g>
+</svg>

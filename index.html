@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Pacifico&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/fonts.css?v=4" />
-    <link rel="stylesheet" href="css/app.css?v=4" />
+    <link rel="stylesheet" href="css/fonts.css?v=6" />
+    <link rel="stylesheet" href="css/app.css?v=6" />
   </head>
   <body>
     <div class="sparkles" aria-hidden="true"></div>
@@ -75,6 +75,17 @@
           <section class="tab-panel" data-panel="stickers">
             <p class="panel-hint">Stickers Canon + emojis — clique puis glisse 🎀</p>
             <div class="subhead">Emojis</div>
+            <label class="emoji-search">
+              <span class="visually-hidden">Rechercher un emoji</span>
+              <input
+                type="search"
+                id="emoji-search"
+                placeholder="Rechercher… smile, sourire, chat…"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </label>
+            <div class="cat-pills" id="emoji-cats"></div>
             <div class="sticker-grid emoji-grid" id="emoji-list"></div>
             <div class="subhead" id="sticker-cat-title">Catégories</div>
             <div class="cat-pills" id="sticker-cats"></div>
@@ -198,6 +209,6 @@
     </footer>
 
     <input type="file" id="file-input" accept="image/*" hidden />
-    <script type="module" src="js/main.js?v=3"></script>
+    <script type="module" src="js/main.js?v=5"></script>
   </body>
 </html>

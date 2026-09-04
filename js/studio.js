@@ -134,7 +134,7 @@ export class Studio {
     }
   }
 
-  async loadCatalog(url = asset("assets/canon/catalog.json")) {
+  async loadCatalog(url = asset("assets/canon/catalog.json?v=2")) {
     const res = await fetch(url);
     this.catalog = rebasePaths(await res.json());
     // précharge cadre + thumbs utiles

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <g stroke="#3b2233" stroke-width="12" stroke-linecap="round">
+    <g>
+      <g transform="rotate(0 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(24 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(48 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(72 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(96 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(120 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(144 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(168 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(192 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(216 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(240 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(264 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(288 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(312 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+      <g transform="rotate(336 256 256)"><line x1="256" y1="122" x2="256" y2="76"/></g>
+    </g>
+
+    <circle cx="256" cy="256" r="134" stroke-width="14" fill="#ff8fb3"/>
+
+    <circle cx="214" cy="232" r="31" stroke-width="14" fill="#ffffff"/>
+    <circle cx="298" cy="232" r="31" stroke-width="14" fill="#ffffff"/>
+    <circle cx="221" cy="240" r="14" fill="#3b2233" stroke="none"/>
+    <circle cx="305" cy="240" r="14" fill="#3b2233" stroke="none"/>
+    <path d="M 212 294 Q 256 344 300 294 Z" stroke-width="14" fill="#e84d82"/>
+  </g>
+</svg>

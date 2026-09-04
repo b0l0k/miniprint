@@ -374,8 +374,82 @@ body {
 }
 
 .sticker-grid { grid-template-columns: repeat(4, 1fr); }
-.emoji-grid .sticker-btn { font-size: 1.45rem; }
 .canon-grid { grid-template-columns: repeat(3, 1fr); }
+
+.emoji-search {
+  display: block;
+  margin-bottom: 0.55rem;
+}
+
+.emoji-search input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 0.55rem 0.75rem;
+  font: 700 0.85rem/1.2 var(--font-body);
+  color: var(--ink);
+  background: white;
+  outline: none;
+}
+
+.emoji-search input::placeholder {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.emoji-search input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.18);
+}
+
+#emoji-cats.is-dimmed {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.emoji-grid {
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.3rem;
+  max-height: 15rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232, 77, 130, 0.35) transparent;
+}
+
+.emoji-grid .sticker-btn {
+  font-size: 1.1rem;
+  border-width: 1px;
+  border-radius: 12px;
+}
+
+.emoji-empty {
+  grid-column: 1 / -1;
+  margin: 0.4rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.emoji-grid + .subhead {
+  margin-top: 1.1rem;
+  padding-top: 0.75rem;
+  border-top: 2px dashed var(--line);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .sticker-btn, .frame-btn, .effect-btn, .pattern-btn {
   appearance: none;

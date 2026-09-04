@@ -1,6 +1,7 @@
-import { COLLAGES, Studio } from "./studio.js?v=3";
+import { COLLAGES, Studio } from "./studio.js?v=4";
 import { prepareStageCanvas } from "./image.js?v=3";
 import { ZoeminiPrinter, serialSupported } from "./printer.js?v=3";
+import { EMOJI_GROUPS, searchEmojis } from "./emoji.js?v=2";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -19,7 +20,9 @@ const els = {
   canvas: $("#studio-canvas"),
   collageList: $("#collage-list"),
   orientList: $("#orient-list"),
+  emojiCats: $("#emoji-cats"),
   emojiList: $("#emoji-list"),
+  emojiSearch: $("#emoji-search"),
   stickerCats: $("#sticker-cats"),
   stickerList: $("#sticker-list"),
   frameList: $("#frame-list"),
@@ -91,6 +94,8 @@ const TEXT_COLORS = [
 ];
 
 let activeStickerCat = null; // rempli au boot (1ère catégorie, pas « tous »)
+let activeEmojiGroup = EMOJI_GROUPS[0]?.name ?? "";
+let emojiQuery = "";
 
 let logUnread = 0;
 
@@ -345,12 +350,50 @@ function buildPatterns(catalog) {
   });
 }
 
-function buildEmojis(catalog) {
-  (catalog.emojiStickers || []).forEach((emoji) => {
+function buildEmojis() {
+  EMOJI_GROUPS.forEach((group) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "cat-pill" + (group.name === activeEmojiGroup ? " is-active" : "");
+    btn.textContent = group.name;
+    btn.addEventListener("click", () => {
+      activeEmojiGroup = group.name;
+      [...els.emojiCats.children].forEach((el) => el.classList.toggle("is-active", el === btn));
+      renderEmojis();
+    });
+    els.emojiCats.appendChild(btn);
+  });
+
+  els.emojiSearch.addEventListener("input", () => {
+    emojiQuery = els.emojiSearch.value;
+    els.emojiCats.classList.toggle("is-dimmed", Boolean(emojiQuery.trim()));
+    renderEmojis();
+  });
+
+  renderEmojis();
+}
+
+function renderEmojis() {
+  const q = emojiQuery.trim();
+  const emojis = q
+    ? searchEmojis(q, { limit: 240 })
+    : searchEmojis("", { groupName: activeEmojiGroup, limit: 500 });
+
+  els.emojiList.innerHTML = "";
+  if (!emojis.length) {
+    const empty = document.createElement("p");
+    empty.className = "emoji-empty";
+    empty.textContent = q ? `Aucun emoji pour « ${q} »` : "Aucun emoji";
+    els.emojiList.appendChild(empty);
+    return;
+  }
+
+  emojis.forEach((emoji) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "sticker-btn";
     btn.textContent = emoji;
+    btn.title = emoji;
     btn.addEventListener("click", () => studio.addEmojiSticker(emoji));
     els.emojiList.appendChild(btn);
   });
@@ -679,7 +722,7 @@ async function boot() {
   try {
     log("Chargement des stickers & cadres Canon…");
     const catalog = await studio.loadCatalog();
-    buildEmojis(catalog);
+    buildEmojis();
     buildStickerCats(catalog);
     renderCanonStickers(catalog);
     buildFrames(catalog);
