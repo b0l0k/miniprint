@@ -554,12 +554,13 @@ body {
   gap: 0.35rem;
   min-height: 0;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .canvas-shell {
-  max-height: min(100%, calc(100dvh - 7.5rem));
+  --shell-max-h: min(100%, calc(100dvh - 7.5rem));
   max-width: 100%;
+  max-height: var(--shell-max-h);
   background: white;
   padding: 0.55rem;
   border-radius: 16px;
@@ -567,18 +568,21 @@ body {
   border: 3px solid rgba(255, 107, 157, 0.2);
   position: relative;
   transform: rotate(-0.6deg);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+  display: block;
   box-sizing: border-box;
 }
 
+/* Dimensionne la coque elle-même (évite canvas à hauteur 0 sur ChromeOS). */
 .canvas-shell[data-orient="portrait"] {
-  width: min(calc((100dvh - 7.5rem) * 2 / 3), 100%);
+  width: min(calc(var(--shell-max-h) * 2 / 3), 100%);
+  aspect-ratio: 2 / 3;
+  height: auto;
 }
 
 .canvas-shell[data-orient="landscape"] {
-  width: min(calc((100dvh - 7.5rem) * 3 / 2), min(100%, 52rem));
+  width: min(100%, 42rem, calc(var(--shell-max-h) * 3 / 2));
+  aspect-ratio: 3 / 2;
+  height: auto;
   transform: rotate(0.4deg);
 }
 
@@ -589,25 +593,19 @@ body {
   font-size: 1.15rem;
   color: var(--pink);
   filter: drop-shadow(0 2px 0 white);
+  z-index: 1;
 }
 
 #studio-canvas {
   width: 100%;
-  height: auto;
-  max-height: 100%;
+  height: 100%;
   display: block;
   border-radius: 8px;
   touch-action: none;
   cursor: grab;
   background: #ffe8f1;
-}
-
-.canvas-shell[data-orient="portrait"] #studio-canvas {
-  aspect-ratio: 2 / 3;
-}
-
-.canvas-shell[data-orient="landscape"] #studio-canvas {
-  aspect-ratio: 3 / 2;
+  /* L’aspect est porté par .canvas-shell — pas de max-height ici. */
+  aspect-ratio: auto;
 }
 #studio-canvas:active { cursor: grabbing; }
 
@@ -799,8 +797,8 @@ body {
   }
   .v-tool { width: 4.2rem; }
   .canvas-shell {
-    height: auto;
     transform: none;
+    --shell-max-h: min(70dvh, 520px);
   }
   .canvas-shell[data-orient="portrait"] {
     width: min(100%, 340px);
@@ -809,13 +807,8 @@ body {
     width: min(100%, 480px);
   }
   #studio-canvas {
-    height: auto;
-  }
-  .canvas-shell[data-orient="portrait"] #studio-canvas {
-    aspect-ratio: 2 / 3;
-  }
-  .canvas-shell[data-orient="landscape"] #studio-canvas {
-    aspect-ratio: 3 / 2;
+    width: 100%;
+    height: 100%;
   }
   .tabs { grid-template-columns: repeat(3, 1fr); }
   .site-footer { padding-bottom: 4.5rem; }

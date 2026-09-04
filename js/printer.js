@@ -13,7 +13,7 @@ import {
   parseStartSession,
   parseStatus,
   PrinterError,
-} from "./protocol.js";
+} from "./protocol.js?v=3";
 
 /** Serial Port Profile — APK Canon (`SPP_UUID`). */
 export const SPP_UUID = "00001101-0000-1000-8000-00805f9b34fb";

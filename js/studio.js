@@ -1,12 +1,12 @@
-import { PRINT_START_HEIGHT, PRINT_START_WIDTH } from "./image.js";
-import { asset, rebasePaths } from "./base.js";
+import { PRINT_START_HEIGHT, PRINT_START_WIDTH } from "./image.js?v=3";
+import { asset, rebasePaths } from "./base.js?v=3";
 import {
   applyCanonEffect,
   drawAdjusted,
   drawFitted,
   loadImage,
   pathRoundRect,
-} from "./filters.js";
+} from "./filters.js?v=3";
 
 export const COLLAGES = [
   { id: "single", label: "1 photo", slots: [{ x: 0, y: 0, w: 1, h: 1 }] },

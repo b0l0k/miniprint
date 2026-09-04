@@ -1,6 +1,6 @@
-import { COLLAGES, Studio } from "./studio.js";
-import { prepareStageCanvas } from "./image.js";
-import { ZoeminiPrinter, serialSupported } from "./printer.js";
+import { COLLAGES, Studio } from "./studio.js?v=3";
+import { prepareStageCanvas } from "./image.js?v=3";
+import { ZoeminiPrinter, serialSupported } from "./printer.js?v=3";
 
 const $ = (sel) => document.querySelector(sel);
 
