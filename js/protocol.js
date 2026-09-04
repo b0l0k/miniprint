@@ -3,6 +3,8 @@
  * https://github.com/dtgreene/ivy2
  */
 
+import { t } from "./i18n.js?v=1";
+
 export const START_CODE = 0x430f; // 17167 — requêtes (host → imprimante)
 /** Réponses imprimante : nibble bas inversé (`43 f0` observé sur Zoemini 2). */
 export const RESPONSE_START_CODE = 0x43f0;
@@ -138,24 +140,21 @@ export class PrinterError extends Error {
 
 export function assertPrintWorthy(status) {
   if (status.errorCode !== 0) {
-    throw new PrinterError(
-      `L'imprimante signale une erreur (${status.errorCode}).`,
-      "status_error",
-    );
+    throw new PrinterError(t("err.status", { code: status.errorCode }), "status_error");
   }
   if (status.batteryLevel < PRINT_BATTERY_MIN) {
     throw new PrinterError(
-      `Batterie trop faible (${status.batteryLevel}%). Chargez l'imprimante.`,
+      t("err.lowBattery", { battery: status.batteryLevel }),
       "low_battery",
     );
   }
   if (status.coverOpen) {
-    throw new PrinterError("Le couvercle est ouvert.", "cover_open");
+    throw new PrinterError(t("err.coverOpen"), "cover_open");
   }
   if (status.noPaper) {
-    throw new PrinterError("Plus de papier ZINK.", "no_paper");
+    throw new PrinterError(t("err.noPaper"), "no_paper");
   }
   if (status.wrongSmartSheet) {
-    throw new PrinterError("Mauvaise SMART SHEET détectée.", "wrong_sheet");
+    throw new PrinterError(t("err.wrongSheet"), "wrong_sheet");
   }
 }

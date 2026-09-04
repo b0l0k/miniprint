@@ -1,7 +1,8 @@
-import { COLLAGES, Studio } from "./studio.js?v=4";
+import { COLLAGES, Studio } from "./studio.js?v=5";
 import { prepareStageCanvas } from "./image.js?v=3";
-import { ZoeminiPrinter, serialSupported } from "./printer.js?v=3";
+import { ZoeminiPrinter, serialSupported } from "./printer.js?v=4";
 import { EMOJI_GROUPS, searchEmojis } from "./emoji.js?v=2";
+import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=2";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -96,6 +97,8 @@ const TEXT_COLORS = [
 let activeStickerCat = null; // rempli au boot (1ère catégorie, pas « tous »)
 let activeEmojiGroup = EMOJI_GROUPS[0]?.name ?? "";
 let emojiQuery = "";
+/** @type {any} */
+let catalogCache = null;
 
 let logUnread = 0;
 
@@ -133,7 +136,7 @@ function setPrinterUi() {
   const state = ok ? "online" : link ? "link" : "offline";
   els.statusCard.dataset.state = state;
   els.printerPill.dataset.state = state;
-  els.printerLabel.textContent = ok ? "Prête 💕" : link ? "Connectée…" : "Hors ligne";
+  els.printerLabel.textContent = ok ? t("header.printerReady") : link ? t("header.printerLink") : t("header.printerOffline");
 }
 
 function renderStatus() {
@@ -147,8 +150,8 @@ function renderStatus() {
     return;
   }
   els.battery.textContent = `${s.batteryLevel}%`;
-  els.paper.textContent = s.noPaper ? "vide" : "ok";
-  els.cover.textContent = s.coverOpen ? "open" : "ok";
+  els.paper.textContent = s.noPaper ? t("status.paperEmpty") : t("status.paperOk");
+  els.cover.textContent = s.coverOpen ? t("status.coverOpen") : t("status.coverOk");
   els.fw.textContent = set?.firmwareVersion ?? "—";
   els.cover.closest(".status-chip")?.setAttribute(
     "title",
@@ -202,21 +205,21 @@ function syncPhotoTools() {
 function updateSelectionLabel() {
   const sel = studio.selection;
   if (!sel) {
-    els.selLabel.textContent = "Rien de sélectionné";
+    els.selLabel.textContent = t("sel.none");
     syncTextTools();
     syncPhotoTools();
     return;
   }
   if (sel.kind === "sticker") {
     const s = studio.stickers[sel.index];
-    els.selLabel.textContent = s?.type === "emoji" ? `Sticker ${s.emoji}` : "Sticker Canon";
+    els.selLabel.textContent = s?.type === "emoji" ? t("sel.stickerEmoji", { emoji: s.emoji }) : t("sel.stickerCanon");
   } else if (sel.kind === "text") {
-    els.selLabel.textContent = `Texte « ${studio.texts[sel.index]?.text ?? ""} »`;
+    els.selLabel.textContent = t("sel.text", { text: studio.texts[sel.index]?.text ?? "" });
   } else if (sel.kind === "slot") {
     const slot = studio.slots[sel.index];
     els.selLabel.textContent = slot?.bitmap
-      ? `Photo ${sel.index + 1}`
-      : `Emplacement ${sel.index + 1} (vide)`;
+      ? t("sel.photo", { n: sel.index + 1 })
+      : t("sel.slotEmpty", { n: sel.index + 1 });
   }
   syncTextTools();
   syncPhotoTools();
@@ -258,8 +261,8 @@ function buildTextTools() {
 
   els.editTextBtn.addEventListener("click", () => {
     if (studio.selection?.kind !== "text") return;
-    const t = studio.texts[studio.selection.index];
-    const next = prompt("Texte :", t?.text ?? "");
+    const item = studio.texts[studio.selection.index];
+    const next = prompt(t("prompt.text"), item?.text ?? "");
     if (next != null) studio.updateSelectedText({ text: next });
     updateSelectionLabel();
   });
@@ -292,11 +295,12 @@ function activateTab(id) {
 }
 
 function buildCollages() {
+  els.collageList.innerHTML = "";
   COLLAGES.forEach((c) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "chip" + (c.id === studio.collageId ? " is-active" : "");
-    btn.textContent = c.label;
+    btn.textContent = t(c.labelKey);
     btn.addEventListener("click", () => {
       studio.setCollage(c.id);
       [...els.collageList.children].forEach((el) => el.classList.toggle("is-active", el === btn));
@@ -315,8 +319,8 @@ function wireOrientation() {
     });
     log(
       btn.dataset.orient === "landscape"
-        ? "Format paysage — l’impression pivote pour le papier Zoemini."
-        : "Format portrait.",
+        ? t("collage.orientLandscape")
+        : t("collage.orientPortrait"),
       "ok",
     );
   });
@@ -326,7 +330,7 @@ function buildPatterns(catalog) {
   const none = document.createElement("button");
   none.type = "button";
   none.className = "pattern-btn is-none is-active";
-  none.textContent = "Aucun";
+  none.textContent = t("collage.none");
   none.addEventListener("click", () => {
     studio.setPattern(null);
     [...els.patternList.children].forEach((el) => el.classList.toggle("is-active", el === none));
@@ -337,7 +341,7 @@ function buildPatterns(catalog) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "pattern-btn";
-    btn.title = `Motif ${p.id}`;
+    btn.title = t("stickers.patternTitle", { id: p.id });
     const img = document.createElement("img");
     img.src = p.thumb || p.src;
     img.alt = "";
@@ -351,23 +355,28 @@ function buildPatterns(catalog) {
 }
 
 function buildEmojis() {
+  // avoid stacking listeners on search when re-building
+  const search = els.emojiSearch;
+  const searchClone = search.cloneNode(true);
+  search.parentNode.replaceChild(searchClone, search);
+  els.emojiSearch = searchClone;
+  els.emojiSearch.addEventListener("input", () => {
+    emojiQuery = els.emojiSearch.value;
+    els.emojiCats.classList.toggle("is-dimmed", Boolean(emojiQuery.trim()));
+    renderEmojis();
+  });
+
   EMOJI_GROUPS.forEach((group) => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "cat-pill" + (group.name === activeEmojiGroup ? " is-active" : "");
-    btn.textContent = group.name;
+    btn.textContent = tEmojiGroup(group.name);
     btn.addEventListener("click", () => {
       activeEmojiGroup = group.name;
       [...els.emojiCats.children].forEach((el) => el.classList.toggle("is-active", el === btn));
       renderEmojis();
     });
     els.emojiCats.appendChild(btn);
-  });
-
-  els.emojiSearch.addEventListener("input", () => {
-    emojiQuery = els.emojiSearch.value;
-    els.emojiCats.classList.toggle("is-dimmed", Boolean(emojiQuery.trim()));
-    renderEmojis();
   });
 
   renderEmojis();
@@ -383,7 +392,7 @@ function renderEmojis() {
   if (!emojis.length) {
     const empty = document.createElement("p");
     empty.className = "emoji-empty";
-    empty.textContent = q ? `Aucun emoji pour « ${q} »` : "Aucun emoji";
+    empty.textContent = q ? t("stickers.noneEmojiQuery", { q }) : t("stickers.noneEmoji");
     els.emojiList.appendChild(empty);
     return;
   }
@@ -400,6 +409,7 @@ function renderEmojis() {
 }
 
 function buildStickerCats(catalog) {
+  els.stickerCats.innerHTML = "";
   const cats = [...new Set(catalog.stickers.map((s) => s.category))];
   if (!activeStickerCat) activeStickerCat = cats[0] || "all";
   const allCats = ["all", ...cats];
@@ -407,7 +417,7 @@ function buildStickerCats(catalog) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "cat-pill" + (cat === activeStickerCat ? " is-active" : "");
-    btn.textContent = cat === "all" ? "Tous" : cat;
+    btn.textContent = cat === "all" ? t("stickers.all") : tCategory(cat);
     btn.addEventListener("click", () => {
       activeStickerCat = cat;
       [...els.stickerCats.children].forEach((el) =>
@@ -427,7 +437,7 @@ function renderCanonStickers(catalog) {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "sticker-btn";
-      btn.title = `Sticker ${s.id}`;
+      btn.title = t("stickers.stickerTitle", { id: s.id });
       const img = document.createElement("img");
       img.src = s.thumb || s.src;
       img.alt = "";
@@ -442,8 +452,8 @@ function buildFrames(catalog) {
   const none = document.createElement("button");
   none.type = "button";
   none.className = "frame-btn" + (studio.frameId == null ? " is-active" : "");
-  none.title = "Sans cadre";
-  none.textContent = "Aucun";
+  none.title = t("collage.none");
+  none.textContent = t("collage.none");
   none.style.display = "grid";
   none.style.placeItems = "center";
   none.style.fontWeight = "800";
@@ -459,7 +469,7 @@ function buildFrames(catalog) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "frame-btn" + (f.id === studio.frameId ? " is-active" : "");
-    btn.title = `Cadre ${f.id}`;
+    btn.title = t("stickers.frameTitle", { id: f.id });
     const img = document.createElement("img");
     img.src = f.thumb;
     img.alt = "";
@@ -477,7 +487,7 @@ function buildEffects(catalog) {
   const none = document.createElement("button");
   none.type = "button";
   none.className = "effect-btn is-active";
-  none.innerHTML = "<span>Aucun</span>";
+  none.innerHTML = `<span>${t("effects.none")}</span>`;
   none.addEventListener("click", () => {
     studio.setEffect(null);
     [...els.effectList.children].forEach((el) => el.classList.toggle("is-active", el === none));
@@ -529,14 +539,14 @@ function wireAdjustments() {
 async function connect() {
   els.connectBtn.disabled = true;
   try {
-    log("Choisis l'imprimante (Canon / SPP)…");
+    log(t("log.choosePrinter"));
     let port = await printer.pickPort({ preferGranted: true });
     try {
       const info = await printer.connect(port);
       renderStatus();
       setPrinterUi();
       log(
-        `Prête · batterie ${info.status.batteryLevel}% · FW ${info.setting.firmwareVersion}`,
+        t("log.readyBattery", { battery: info.status.batteryLevel, fw: info.setting.firmwareVersion }),
         "ok",
       );
       return;
@@ -544,7 +554,7 @@ async function connect() {
       if (err?.code !== "open_failed") throw err;
 
       // Port réutilisé souvent verrouillé (ChromeOS / getPorts).
-      log("Port bloqué — oubli + nouvelle sélection…", "warn");
+      log(t("log.portBlocked"), "warn");
       try {
         await port.close();
       } catch {
@@ -562,20 +572,17 @@ async function connect() {
       renderStatus();
       setPrinterUi();
       log(
-        `Prête · batterie ${info.status.batteryLevel}% · FW ${info.setting.firmwareVersion}`,
+        t("log.readyBattery", { battery: info.status.batteryLevel, fw: info.setting.firmwareVersion }),
         "ok",
       );
     }
   } catch (err) {
-    if (err?.name === "NotFoundError") log("Aucun appareil choisi.", "warn");
+    if (err?.name === "NotFoundError") log(t("log.noDevice"), "warn");
     else if (/user gesture|NotAllowedError|SecurityError/i.test(String(err?.message ?? err?.name ?? ""))) {
-      log(
-        "Chrome a besoin d’un nouveau clic. Reclique Connecter (imprimante appairée, appli Canon fermée).",
-        "warn",
-      );
+      log(t("log.needGesture"), "warn");
     } else {
       log(err.message || String(err), "err");
-      if (printer.linkOpen) log("Lien BT ouvert — tu peux relancer le handshake.", "warn");
+      if (printer.linkOpen) log(t("log.linkOpenRetry"), "warn");
     }
     setPrinterUi();
     renderStatus();
@@ -586,12 +593,12 @@ async function connect() {
 
 async function retryHandshake() {
   try {
-    log("Relance du handshake…");
+    log(t("log.handshakeRetry"));
     const info = await printer.handshake();
     renderStatus();
     setPrinterUi();
     log(
-      `Handshake OK · batterie ${info.status.batteryLevel}% · FW ${info.setting.firmwareVersion}`,
+      t("log.handshakeOk", { battery: info.status.batteryLevel, fw: info.setting.firmwareVersion }),
       "ok",
     );
   } catch (err) {
@@ -604,7 +611,7 @@ async function disconnect() {
   await printer.disconnect();
   setPrinterUi();
   renderStatus();
-  log("Déconnectée.");
+  log(t("log.disconnected"));
 }
 
 async function refresh() {
@@ -612,7 +619,7 @@ async function refresh() {
     await printer.getStatus();
     await printer.getSetting();
     renderStatus();
-    log("Statut rafraîchi.", "ok");
+    log(t("log.statusRefreshed"), "ok");
   } catch (err) {
     log(err.message || String(err), "err");
   }
@@ -620,27 +627,27 @@ async function refresh() {
 
 async function printNow() {
   if (!printer.connected) {
-    log("Connecte d'abord l'imprimante (Bluetooth).", "warn");
+    log(t("log.connectFirst"), "warn");
     return;
   }
   if (!studio.slots.some((s) => s.bitmap) && studio.stickers.length === 0) {
-    log("Ajoute au moins une photo ou un sticker.", "warn");
+    log(t("log.addContent"), "warn");
     return;
   }
 
   els.printBtn.disabled = true;
-  setProgress(0, "Préparation…");
+  setProgress(0, t("progress.prep"));
   try {
-    log("Rendu de la composition…");
+    log(t("log.render"));
     const stage = await studio.renderExport();
     const { jpeg } = await prepareStageCanvas(stage, { quality: 0.92 });
-    log(`Envoi (${Math.round(jpeg.byteLength / 1024)} Ko)…`);
+    log(t("log.sending", { kb: Math.round(jpeg.byteLength / 1024) }));
     await printer.printJpeg(jpeg, {
       onProgress: (pct) =>
-        setProgress(pct, pct < 100 ? `Envoi ${pct}%` : "Impression…"),
+        setProgress(pct, pct < 100 ? t("progress.send", { pct }) : t("progress.printing")),
     });
-    setProgress(100, "C'est parti !");
-    log("Transfert OK — impression en cours.", "ok");
+    setProgress(100, t("progress.done"));
+    log(t("log.transferOk"), "ok");
     await printer.getStatus().catch(() => {});
     renderStatus();
   } catch (err) {
@@ -652,7 +659,67 @@ async function printNow() {
   }
 }
 
+function refreshLocalizedUi() {
+  buildCollages();
+  if (catalogCache) {
+    buildStickerCats(catalogCache);
+    renderCanonStickers(catalogCache);
+    // patterns/frames/effects keep structure; refresh "Aucun" labels
+    els.patternList.innerHTML = "";
+    buildPatterns(catalogCache);
+    els.frameList.innerHTML = "";
+    buildFrames(catalogCache);
+    els.effectList.innerHTML = "";
+    buildEffects(catalogCache);
+  }
+  els.emojiCats.innerHTML = "";
+  buildEmojis();
+  setPrinterUi();
+  renderStatus();
+  updateSelectionLabel();
+}
+
+function setLangMenuOpen(open) {
+  const root = $("#lang-switch");
+  const trigger = $("#lang-trigger");
+  const menu = $("#lang-menu");
+  if (!root || !trigger || !menu) return;
+  root.classList.toggle("is-open", open);
+  menu.hidden = !open;
+  trigger.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function wireLangSwitch() {
+  const root = $("#lang-switch");
+  const trigger = $("#lang-trigger");
+  const menu = $("#lang-menu");
+  if (!root || !trigger || !menu) return;
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setLangMenuOpen(menu.hidden);
+  });
+
+  menu.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-lang]");
+    if (!btn) return;
+    setLang(btn.getAttribute("data-lang"));
+    setLangMenuOpen(false);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!root.contains(e.target)) setLangMenuOpen(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setLangMenuOpen(false);
+  });
+}
+
 async function boot() {
+  initI18n();
+  onLangChange(() => refreshLocalizedUi());
+  wireLangSwitch();
   wireTabs();
   buildCollages();
   wireOrientation();
@@ -663,7 +730,7 @@ async function boot() {
   if (!serialSupported()) {
     els.support.hidden = false;
     els.connectBtn.disabled = true;
-    log("Web Serial indisponible — création OK, impression Chrome/Edge seulement.", "warn");
+    log(t("log.noSerial"), "warn");
   } else {
     els.support.hidden = true;
   }
@@ -679,8 +746,8 @@ async function boot() {
   els.printBtn.addEventListener("click", printNow);
   els.addPhotoQuickBtn?.addEventListener("click", () => studio.pickPhotoForSlot());
   els.addTextBtn.addEventListener("click", () => {
-    const t = prompt("Ton texte :", "Hello !");
-    if (t) studio.addText(t);
+    const value = prompt(t("prompt.newText"), t("prompt.newTextDefault"));
+    if (value) studio.addText(value);
   });
   els.gotoStickersBtn?.addEventListener("click", () => {
     activateTab("stickers");
@@ -720,8 +787,9 @@ async function boot() {
   }
 
   try {
-    log("Chargement des stickers & cadres Canon…");
+    log(t("log.loadingCatalog"));
     const catalog = await studio.loadCatalog();
+    catalogCache = catalog;
     buildEmojis();
     buildStickerCats(catalog);
     renderCanonStickers(catalog);
@@ -730,11 +798,15 @@ async function boot() {
     buildPatterns(catalog);
     await studio.render();
     log(
-      `Atelier prêt ✨ ${catalog.frames.length} cadres · ${catalog.stickers.length} stickers · ${catalog.effects.length} effets`,
+      t("log.readyStudio", {
+        frames: catalog.frames.length,
+        stickers: catalog.stickers.length,
+        effects: catalog.effects.length,
+      }),
       "ok",
     );
   } catch (err) {
-    log(`Catalogue Canon: ${err.message}`, "err");
+    log(t("log.catalogErr", { msg: err.message }), "err");
     await studio.render();
   }
 }

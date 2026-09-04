@@ -13,7 +13,8 @@ import {
   parseStartSession,
   parseStatus,
   PrinterError,
-} from "./protocol.js?v=3";
+} from "./protocol.js?v=4";
+import { t } from "./i18n.js?v=1";
 
 /** Serial Port Profile — APK Canon (`SPP_UUID`). */
 export const SPP_UUID = "00001101-0000-1000-8000-00805f9b34fb";
@@ -63,10 +64,7 @@ export class ZoeminiPrinter {
    */
   async pickPort({ preferGranted = true } = {}) {
     if (!serialSupported()) {
-      throw new PrinterError(
-        "Web Serial n'est pas disponible. Utilisez Chrome ou Edge sur desktop.",
-        "no_serial",
-      );
+      throw new PrinterError(t("printer.noSerial"), "no_serial");
     }
 
     if (preferGranted) {
@@ -76,11 +74,11 @@ export class ZoeminiPrinter {
         return id === 0x1101 || id === SPP_UUID || id != null;
       });
       if (bt.length === 1) {
-        this.onLog(`Réutilisation du port déjà autorisé (${String(bt[0].getInfo?.()?.bluetoothServiceClassId ?? "BT")}).`);
+        this.onLog(t("printer.reuseBtPort", { id: String(bt[0].getInfo?.()?.bluetoothServiceClassId ?? "BT") }));
         return bt[0];
       }
       if (granted.length === 1) {
-        this.onLog("Réutilisation du port série déjà autorisé.");
+        this.onLog(t("printer.reuseSerialPort"));
         return granted[0];
       }
     }
@@ -102,7 +100,7 @@ export class ZoeminiPrinter {
     try {
       await port.close();
     } catch (err) {
-      this.onLog(`Fermeture préalable impossible (${err.message})`, "warn");
+      this.onLog(t("printer.forceCloseFail", { msg: err.message }), "warn");
     }
   }
 
@@ -114,10 +112,7 @@ export class ZoeminiPrinter {
   async #openPort(port) {
     const connected = port.connected;
     if (connected === false) {
-      this.onLog(
-        "L’imprimante n’est pas connectée au système BT — tentative d’ouverture quand même…",
-        "warn",
-      );
+      this.onLog(t("printer.btNotConnected"), "warn");
     }
 
     await this.#forceClosePort(port);
@@ -135,13 +130,18 @@ export class ZoeminiPrinter {
       const opts = attempts[i];
       try {
         this.onLog(
-          `Ouverture RFCOMM (essai ${i + 1}/${attempts.length}, baud=${opts.baudRate}${opts.bufferSize ? `, buf=${opts.bufferSize}` : ""})…`,
+          t("printer.opening", {
+            n: i + 1,
+            total: attempts.length,
+            baud: opts.baudRate,
+            buf: opts.bufferSize ? `, buf=${opts.bufferSize}` : "",
+          }),
         );
         await port.open(opts);
         return;
       } catch (err) {
         lastErr = err;
-        this.onLog(`open échoué : ${err.message}`, "warn");
+        this.onLog(t("printer.openFail", { msg: err.message }), "warn");
         await this.#forceClosePort(port);
         await sleep(500 + i * 400);
       }
@@ -164,10 +164,7 @@ export class ZoeminiPrinter {
     try {
       await this.#openPort(port);
     } catch (err) {
-      throw new PrinterError(
-        `Impossible d'ouvrir le port (${err.message}). Sur ChromeOS : 1) imprimante appairée et allumée 2) ferme l'appli Canon Mini Print 3) reclique Connecter pour resélectionner le port. Sinon oublie l'imprimante en BT et réapparie.`,
-        "open_failed",
-      );
+      throw new PrinterError(t("printer.openFailed", { msg: err.message }), "open_failed");
     }
 
     this.port = port;
@@ -180,7 +177,11 @@ export class ZoeminiPrinter {
 
     const info = port.getInfo?.() ?? {};
     this.onLog(
-      `Lien RFCOMM ouvert · bluetoothServiceClassId=${info.bluetoothServiceClassId ?? "n/a"} · usb=${info.usbVendorId ?? "-"} · connected=${port.connected ?? "?"}`,
+      t("printer.linkOpen", {
+        bt: info.bluetoothServiceClassId ?? "n/a",
+        usb: info.usbVendorId ?? "-",
+        connected: port.connected ?? "?",
+      }),
       "ok",
     );
 
@@ -193,7 +194,7 @@ export class ZoeminiPrinter {
   /** Relance StartSession / Status / Setting sans refermer le port. */
   async handshake() {
     if (!this.linkOpen) {
-      throw new PrinterError("Pas de lien RFCOMM ouvert.", "not_connected");
+      throw new PrinterError(t("printer.noLink"), "not_connected");
     }
 
     this.#rx = new Uint8Array(0);
@@ -203,7 +204,7 @@ export class ZoeminiPrinter {
       this.onLog(`TX StartSession: ${toHex(buildStartSession())}`);
       this.session = await this.startSession();
       this.onLog(
-        `Session OK · batterie ${this.session.batteryLevel}% · MTU ${this.session.mtu}`,
+        t("printer.sessionOk", { battery: this.session.batteryLevel, mtu: this.session.mtu }),
         "ok",
       );
 
@@ -221,7 +222,7 @@ export class ZoeminiPrinter {
       const pending = this.#rx.byteLength
         ? toHex(this.#rx)
         : "(aucune donnée reçue)";
-      this.onLog(`RX buffer: ${pending}`, "warn");
+      this.onLog(t("printer.rxBuffer", { pending }), "warn");
       throw err;
     }
   }
@@ -292,7 +293,7 @@ export class ZoeminiPrinter {
   async printJpeg(jpegBytes, opts = {}) {
     const { onProgress, transferTimeoutMs = 60_000 } = opts;
     if (!this.connected) {
-      throw new PrinterError("Handshake non terminé.", "not_connected");
+      throw new PrinterError(t("printer.handshakeIncomplete"), "not_connected");
     }
 
     const status = await this.getStatus();
@@ -325,7 +326,7 @@ export class ZoeminiPrinter {
 
   async #write(bytes) {
     if (!this.writer) {
-      throw new PrinterError("Port série indisponible.", "no_writer");
+      throw new PrinterError(t("printer.noWriter"), "no_writer");
     }
     // Copie : certains backends n’aiment pas les subarrays partagés.
     await this.writer.write(bytes.slice());
@@ -338,11 +339,11 @@ export class ZoeminiPrinter {
       const frame = this.#tryParseFrame();
       if (frame) {
         this.onLog(
-          `RX frame ack=${frame.ack} err=${frame.error} · ${toHex(frame.data)}`,
+          t("printer.rxFrame", { ack: frame.ack, err: frame.error, hex: toHex(frame.data) }),
         );
         if (expectedAck != null && frame.ack !== expectedAck) {
           throw new PrinterError(
-            `ACK invalide (attendu ${expectedAck}, reçu ${frame.ack}).`,
+            t("printer.badAck", { expected: expectedAck, got: frame.ack }),
             "ack",
           );
         }
@@ -353,14 +354,11 @@ export class ZoeminiPrinter {
       }
       if (this.#rx.byteLength !== lastLen && this.#rx.byteLength > 0) {
         lastLen = this.#rx.byteLength;
-        this.onLog(`RX +${lastLen}o: ${toHex(this.#rx)}`, "warn");
+        this.onLog(t("printer.rxGrow", { n: lastLen, hex: toHex(this.#rx) }), "warn");
       }
       await sleep(30);
     }
-    throw new PrinterError(
-      `Délai dépassé (RX=${this.#rx.byteLength}o).`,
-      "timeout",
-    );
+    throw new PrinterError(t("printer.timeout", { bytes: this.#rx.byteLength }), "timeout");
   }
 
   #tryParseFrame() {
@@ -377,14 +375,14 @@ export class ZoeminiPrinter {
 
     if (start < 0) {
       if (this.#rx.byteLength > 128) {
-        this.onLog(`RX sans magic 43xx, purge: ${toHex(this.#rx)}`, "warn");
+        this.onLog(t("printer.rxPurge", { hex: toHex(this.#rx) }), "warn");
         this.#rx = this.#rx.slice(-1);
       }
       return null;
     }
 
     if (start > 0) {
-      this.onLog(`RX ignore ${start}o avant magic`, "warn");
+      this.onLog(t("printer.rxSkip", { n: start }), "warn");
       this.#rx = this.#rx.slice(start);
     }
 

@@ -451,6 +451,91 @@ body {
   border: 0;
 }
 
+.lang-switch {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lang-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  padding: 0.35rem 0.55rem 0.35rem 0.45rem;
+  font: 800 0.72rem/1 var(--font-body);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.lang-trigger:hover,
+.lang-switch.is-open .lang-trigger {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.15);
+}
+
+.lang-flag {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.lang-code {
+  letter-spacing: 0.02em;
+}
+
+.lang-caret {
+  color: var(--muted);
+  font-size: 0.65rem;
+  transform: translateY(-0.5px);
+}
+
+.lang-switch.is-open .lang-caret {
+  transform: rotate(180deg) translateY(0.5px);
+}
+
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 40;
+  min-width: 9.5rem;
+  padding: 0.3rem;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 12px 28px rgba(28, 36, 56, 0.14);
+  display: grid;
+  gap: 0.2rem;
+}
+
+.lang-option {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0.45rem 0.55rem;
+  font: 800 0.8rem/1.1 var(--font-body);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.lang-option:hover {
+  background: rgba(255, 107, 157, 0.1);
+}
+
+.lang-option.is-active {
+  background: rgba(255, 107, 157, 0.16);
+  color: var(--pink);
+}
+
 .sticker-btn, .frame-btn, .effect-btn, .pattern-btn {
   appearance: none;
   border: 2px solid var(--line);

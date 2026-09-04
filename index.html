@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Pacifico&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/fonts.css?v=6" />
-    <link rel="stylesheet" href="css/app.css?v=6" />
+    <link rel="stylesheet" href="css/fonts.css?v=8" />
+    <link rel="stylesheet" href="css/app.css?v=8" />
   </head>
   <body>
     <div class="sparkles" aria-hidden="true"></div>
@@ -19,24 +19,49 @@
     <header class="app-header">
       <div class="brand-block">
         <p class="brand">MiniPrint</p>
-        <p class="tagline">atelier tout mignon · Zoemini 2</p>
+        <p class="tagline" data-i18n="header.tagline">atelier tout mignon · Zoemini 2</p>
       </div>
       <div class="header-actions">
-        <button type="button" class="btn soft" id="btn-connect">📡 Bluetooth</button>
-        <button type="button" class="btn soft" id="btn-disconnect" hidden>Déconnecter</button>
-        <button type="button" class="btn soft" id="btn-handshake" hidden>Handshake</button>
+        <div class="lang-switch" id="lang-switch">
+          <button
+            type="button"
+            class="lang-trigger"
+            id="lang-trigger"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            data-i18n-aria="lang.switchAria"
+            aria-label="Langue"
+          >
+            <span class="lang-flag" id="lang-flag" aria-hidden="true">🇫🇷</span>
+            <span class="lang-code" id="lang-code">FR</span>
+            <span class="lang-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" hidden>
+            <button type="button" class="lang-option is-active" role="option" data-lang="fr" aria-selected="true">
+              <span class="lang-flag" aria-hidden="true">🇫🇷</span>
+              <span data-i18n="lang.frName">Français</span>
+            </button>
+            <button type="button" class="lang-option" role="option" data-lang="en" aria-selected="false">
+              <span class="lang-flag" aria-hidden="true">🇬🇧</span>
+              <span data-i18n="lang.enName">English</span>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn soft" id="btn-connect" data-i18n="header.connect">📡 Bluetooth</button>
+        <button type="button" class="btn soft" id="btn-disconnect" hidden data-i18n="header.disconnect">Déconnecter</button>
+        <button type="button" class="btn soft" id="btn-handshake" hidden data-i18n="header.handshake">Handshake</button>
         <div class="printer-pill" id="printer-pill" data-state="offline">
           <span class="dot"></span>
-          <span id="printer-label">Hors ligne</span>
+          <span id="printer-label" data-i18n="header.printerOffline">Hors ligne</span>
         </div>
-        <div class="status-icons" id="status-card" data-state="offline" aria-label="Statut imprimante">
-          <span class="status-chip" title="Batterie"><span class="status-ico" aria-hidden="true">🔋</span><strong id="stat-battery">—</strong></span>
-          <span class="status-chip" title="Papier"><span class="status-ico" aria-hidden="true">📄</span><strong id="stat-paper">—</strong></span>
-          <span class="status-chip" title="Couvercle"><span class="status-ico" aria-hidden="true">🔒</span><strong id="stat-cover">—</strong></span>
-          <span class="status-chip" title="Firmware"><span class="status-ico" aria-hidden="true">FW</span><strong id="stat-fw">—</strong></span>
+        <div class="status-icons" id="status-card" data-state="offline" data-i18n-aria="header.statusAria" aria-label="Statut imprimante">
+          <span class="status-chip" data-i18n-title="header.battery" title="Batterie"><span class="status-ico" aria-hidden="true">🔋</span><strong id="stat-battery">—</strong></span>
+          <span class="status-chip" data-i18n-title="header.paper" title="Papier"><span class="status-ico" aria-hidden="true">📄</span><strong id="stat-paper">—</strong></span>
+          <span class="status-chip" data-i18n-title="header.cover" title="Couvercle"><span class="status-ico" aria-hidden="true">🔒</span><strong id="stat-cover">—</strong></span>
+          <span class="status-chip" data-i18n-title="header.firmware" title="Firmware"><span class="status-ico" aria-hidden="true">FW</span><strong id="stat-fw">—</strong></span>
         </div>
-        <button type="button" class="btn icon soft" id="btn-refresh" disabled title="Rafraîchir statut">↻</button>
-        <button type="button" class="btn primary header-print" id="btn-print">Imprimer ✨</button>
+        <button type="button" class="btn icon soft" id="btn-refresh" disabled data-i18n-title="header.refresh" title="Rafraîchir statut">↻</button>
+        <button type="button" class="btn primary header-print" id="btn-print" data-i18n="header.print">Imprimer ✨</button>
         <div id="progress" class="progress header-progress" hidden>
           <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
           <p id="progress-label">0%</p>
@@ -44,42 +69,43 @@
       </div>
     </header>
 
-    <div id="support-banner" class="banner" hidden>
+    <div id="support-banner" class="banner" hidden data-i18n-html="banner.support">
       Ouvre cette page dans <strong>Chrome</strong> ou <strong>Edge</strong> pour imprimer ✨
     </div>
 
     <main class="app-grid">
       <aside class="rail candy">
         <nav class="tabs" role="tablist">
-          <button type="button" class="tab is-active" data-tab="collage">Collages</button>
-          <button type="button" class="tab" data-tab="stickers">Stickers</button>
-          <button type="button" class="tab" data-tab="frames">Cadres</button>
-          <button type="button" class="tab" data-tab="effects">Effets</button>
-          <button type="button" class="tab" data-tab="light">Lumière</button>
+          <button type="button" class="tab is-active" data-tab="collage" data-i18n="tab.collage">Collages</button>
+          <button type="button" class="tab" data-tab="stickers" data-i18n="tab.stickers">Stickers</button>
+          <button type="button" class="tab" data-tab="frames" data-i18n="tab.frames">Cadres</button>
+          <button type="button" class="tab" data-tab="effects" data-i18n="tab.effects">Effets</button>
+          <button type="button" class="tab" data-tab="light" data-i18n="tab.light">Lumière</button>
         </nav>
 
         <div class="tab-panels">
           <section class="tab-panel is-active" data-panel="collage">
-            <p class="panel-hint">Choisis une mise en page, puis tape ＋ Photo sur le rendu 📸</p>
-            <div class="subhead">Format</div>
+            <p class="panel-hint" data-i18n="collage.hint">Choisis une mise en page, puis tape ＋ Photo sur le rendu 📸</p>
+            <div class="subhead" data-i18n="collage.format">Format</div>
             <div class="chip-grid orient-grid" id="orient-list">
-              <button type="button" class="chip is-active" data-orient="portrait">Portrait</button>
-              <button type="button" class="chip" data-orient="landscape">Paysage</button>
+              <button type="button" class="chip is-active" data-orient="portrait" data-i18n="collage.portrait">Portrait</button>
+              <button type="button" class="chip" data-orient="landscape" data-i18n="collage.landscape">Paysage</button>
             </div>
-            <div class="subhead">Mise en page</div>
+            <div class="subhead" data-i18n="collage.layout">Mise en page</div>
             <div class="chip-grid" id="collage-list"></div>
-            <div class="subhead">Motifs de fond</div>
+            <div class="subhead" data-i18n="collage.patterns">Motifs de fond</div>
             <div class="thumb-row" id="pattern-list"></div>
           </section>
 
           <section class="tab-panel" data-panel="stickers">
-            <p class="panel-hint">Stickers Canon + emojis — clique puis glisse 🎀</p>
-            <div class="subhead">Emojis</div>
+            <p class="panel-hint" data-i18n="stickers.hint">Stickers Canon + emojis — clique puis glisse 🎀</p>
+            <div class="subhead" data-i18n="stickers.emojis">Emojis</div>
             <label class="emoji-search">
-              <span class="visually-hidden">Rechercher un emoji</span>
+              <span class="visually-hidden" data-i18n="stickers.searchAria">Rechercher un emoji</span>
               <input
                 type="search"
                 id="emoji-search"
+                data-i18n-placeholder="stickers.searchPlaceholder"
                 placeholder="Rechercher… smile, sourire, chat…"
                 autocomplete="off"
                 spellcheck="false"
@@ -87,118 +113,118 @@
             </label>
             <div class="cat-pills" id="emoji-cats"></div>
             <div class="sticker-grid emoji-grid" id="emoji-list"></div>
-            <div class="subhead" id="sticker-cat-title">Catégories</div>
+            <div class="subhead" id="sticker-cat-title" data-i18n="stickers.categories">Catégories</div>
             <div class="cat-pills" id="sticker-cats"></div>
             <div class="sticker-grid canon-grid" id="sticker-list"></div>
           </section>
 
           <section class="tab-panel" data-panel="frames">
-            <p class="panel-hint">Les vrais cadres de l’appli Canon 🖼️</p>
+            <p class="panel-hint" data-i18n="frames.hint">Les vrais cadres de l’appli Canon 🖼️</p>
             <div class="frame-grid" id="frame-list"></div>
           </section>
 
           <section class="tab-panel" data-panel="effects">
-            <p class="panel-hint">Filtres / tons couleur de l’appli Canon 🌈</p>
+            <p class="panel-hint" data-i18n="effects.hint">Filtres / tons couleur de l’appli Canon 🌈</p>
             <div class="effect-grid" id="effect-list"></div>
           </section>
 
           <section class="tab-panel" data-panel="light">
-            <p class="panel-hint">Réglages photo — luminosité, contraste… ☀️</p>
+            <p class="panel-hint" data-i18n="light.hint">Réglages photo — luminosité, contraste… ☀️</p>
             <div class="sliders" id="adjust-sliders">
               <label class="slider-field">
-                <span>Luminosité <em id="val-brightness">0</em></span>
+                <span><span data-i18n="light.brightness">Luminosité</span> <em id="val-brightness">0</em></span>
                 <input type="range" min="-60" max="60" value="0" data-adj="brightness" />
               </label>
               <label class="slider-field">
-                <span>Contraste <em id="val-contrast">0</em></span>
+                <span><span data-i18n="light.contrast">Contraste</span> <em id="val-contrast">0</em></span>
                 <input type="range" min="-60" max="60" value="0" data-adj="contrast" />
               </label>
               <label class="slider-field">
-                <span>Saturation <em id="val-saturation">0</em></span>
+                <span><span data-i18n="light.saturation">Saturation</span> <em id="val-saturation">0</em></span>
                 <input type="range" min="-80" max="80" value="0" data-adj="saturation" />
               </label>
               <label class="slider-field">
-                <span>Chaleur <em id="val-warmth">0</em></span>
+                <span><span data-i18n="light.warmth">Chaleur</span> <em id="val-warmth">0</em></span>
                 <input type="range" min="-60" max="60" value="0" data-adj="warmth" />
               </label>
               <label class="slider-field">
-                <span>Vignette <em id="val-vignette">0</em></span>
+                <span><span data-i18n="light.vignette">Vignette</span> <em id="val-vignette">0</em></span>
                 <input type="range" min="0" max="80" value="0" data-adj="vignette" />
               </label>
             </div>
-            <button type="button" class="btn soft block" id="btn-reset-adj">Réinitialiser</button>
+            <button type="button" class="btn soft block" id="btn-reset-adj" data-i18n="light.reset">Réinitialiser</button>
           </section>
         </div>
       </aside>
 
-      <aside class="v-toolbar" aria-label="Outils rapides">
-        <button type="button" class="v-tool" id="btn-add-text" title="Ajouter du texte">
+      <aside class="v-toolbar" data-i18n-aria="tools.aria" aria-label="Outils rapides">
+        <button type="button" class="v-tool" id="btn-add-text" data-i18n-title="tools.textTitle" title="Ajouter du texte">
           <span class="v-tool-icon aa">Aa</span>
-          <span class="v-tool-label">Texte</span>
+          <span class="v-tool-label" data-i18n="tools.text">Texte</span>
         </button>
-        <button type="button" class="v-tool" id="btn-goto-stickers" title="Stickers">
+        <button type="button" class="v-tool" id="btn-goto-stickers" data-i18n-title="tools.stickerTitle" title="Stickers">
           <span class="v-tool-icon">＋</span>
-          <span class="v-tool-label">Sticker</span>
+          <span class="v-tool-label" data-i18n="tools.sticker">Sticker</span>
         </button>
-        <button type="button" class="v-tool" id="btn-add-photo-quick" title="Ajouter une photo">
+        <button type="button" class="v-tool" id="btn-add-photo-quick" data-i18n-title="tools.photoTitle" title="Ajouter une photo">
           <span class="v-tool-icon">📷</span>
-          <span class="v-tool-label">Photo</span>
+          <span class="v-tool-label" data-i18n="tools.photo">Photo</span>
         </button>
       </aside>
 
       <section class="stage">
         <div class="canvas-shell" data-orient="portrait">
           <div class="shell-bow" aria-hidden="true">♡</div>
-          <canvas id="studio-canvas" aria-label="Zone de création"></canvas>
+          <canvas id="studio-canvas" data-i18n-aria="stage.canvasAria" aria-label="Zone de création"></canvas>
         </div>
-        <p class="stage-hint">Glisse les stickers · double-clic pour changer une photo</p>
+        <p class="stage-hint" data-i18n="stage.hint">Glisse les stickers · double-clic pour changer une photo</p>
       </section>
 
       <aside class="side">
         <div class="selection-card candy" id="selection-card">
-          <h2>Sélection ✨</h2>
-          <p class="sel-label" id="sel-label">Rien de sélectionné</p>
+          <h2 data-i18n="sel.title">Sélection ✨</h2>
+          <p class="sel-label" id="sel-label" data-i18n="sel.none">Rien de sélectionné</p>
           <div class="sel-actions">
-            <button type="button" class="btn icon" id="btn-smaller" title="Plus petit">−</button>
-            <button type="button" class="btn icon" id="btn-bigger" title="Plus grand">＋</button>
-            <button type="button" class="btn icon" id="btn-rot-left" title="Pivoter">↺</button>
-            <button type="button" class="btn icon" id="btn-rot-right" title="Pivoter">↻</button>
-            <button type="button" class="btn icon danger" id="btn-delete" title="Supprimer">✕</button>
+            <button type="button" class="btn icon" id="btn-smaller" data-i18n-title="sel.smaller" title="Plus petit">−</button>
+            <button type="button" class="btn icon" id="btn-bigger" data-i18n-title="sel.bigger" title="Plus grand">＋</button>
+            <button type="button" class="btn icon" id="btn-rot-left" data-i18n-title="sel.rotate" title="Pivoter">↺</button>
+            <button type="button" class="btn icon" id="btn-rot-right" data-i18n-title="sel.rotate" title="Pivoter">↻</button>
+            <button type="button" class="btn icon danger" id="btn-delete" data-i18n-title="sel.delete" title="Supprimer">✕</button>
           </div>
           <div class="text-tools" id="text-tools" hidden>
-            <button type="button" class="btn soft block" id="btn-edit-text">✏️ Modifier le texte</button>
-            <div class="subhead">Police</div>
+            <button type="button" class="btn soft block" id="btn-edit-text" data-i18n="sel.editText">✏️ Modifier le texte</button>
+            <div class="subhead" data-i18n="sel.font">Police</div>
             <div class="font-grid" id="font-list"></div>
-            <div class="subhead">Couleur</div>
+            <div class="subhead" data-i18n="sel.color">Couleur</div>
             <div class="color-row" id="color-list"></div>
             <label class="slider-field">
-              <span>Taille <em id="val-text-size">72</em></span>
+              <span><span data-i18n="sel.size">Taille</span> <em id="val-text-size">72</em></span>
               <input type="range" id="text-size" min="28" max="180" value="72" />
             </label>
           </div>
           <div class="photo-tools" id="photo-tools" hidden>
-            <div class="subhead">Cadrage</div>
+            <div class="subhead" data-i18n="sel.fit">Cadrage</div>
             <div class="chip-grid fit-grid" id="fit-list">
-              <button type="button" class="chip is-active" data-fit="contain" title="Image entière, sans déformer">Ajuster</button>
-              <button type="button" class="chip" data-fit="cover" title="Remplir le cadre (rogne)">Remplir</button>
-              <button type="button" class="chip" data-fit="stretch" title="Étirer (peut déformer)">Étirer</button>
+              <button type="button" class="chip is-active" data-fit="contain" data-i18n="sel.fitContain" data-i18n-title="sel.fitContainTitle" title="Image entière, sans déformer">Ajuster</button>
+              <button type="button" class="chip" data-fit="cover" data-i18n="sel.fitCover" data-i18n-title="sel.fitCoverTitle" title="Remplir le cadre (rogne)">Remplir</button>
+              <button type="button" class="chip" data-fit="stretch" data-i18n="sel.fitStretch" data-i18n-title="sel.fitStretchTitle" title="Étirer (peut déformer)">Étirer</button>
             </div>
-            <p class="panel-hint">Remplir : glisse la photo pour recadrer · ± pour zoomer</p>
+            <p class="panel-hint" data-i18n="sel.fitHint">Remplir : glisse la photo pour recadrer · ± pour zoomer</p>
           </div>
         </div>
       </aside>
     </main>
 
     <div class="log-fab" id="log-fab">
-      <button type="button" class="log-fab-btn" id="btn-toggle-log" aria-expanded="false" title="Journal">
+      <button type="button" class="log-fab-btn" id="btn-toggle-log" aria-expanded="false" data-i18n-title="log.fabTitle" title="Journal">
         <span class="log-fab-icon">📝</span>
-        <span class="log-fab-label">Journal</span>
+        <span class="log-fab-label" data-i18n="log.fabLabel">Journal</span>
         <span class="log-fab-badge" id="log-badge" hidden>0</span>
       </button>
       <div class="log-popover candy" id="log-popover" hidden>
         <div class="log-popover-head">
-          <h2>Journal</h2>
-          <button type="button" class="btn icon" id="btn-close-log" title="Fermer">✕</button>
+          <h2 data-i18n="log.title">Journal</h2>
+          <button type="button" class="btn icon" id="btn-close-log" data-i18n-title="log.close" title="Fermer">✕</button>
         </div>
         <div id="log" class="log" aria-live="polite"></div>
       </div>
@@ -209,6 +235,6 @@
     </footer>
 
     <input type="file" id="file-input" accept="image/*" hidden />
-    <script type="module" src="js/main.js?v=5"></script>
+    <script type="module" src="js/main.js?v=7"></script>
   </body>
 </html>

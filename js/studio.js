@@ -7,12 +7,13 @@ import {
   loadImage,
   pathRoundRect,
 } from "./filters.js?v=3";
+import { t } from "./i18n.js?v=1";
 
 export const COLLAGES = [
-  { id: "single", label: "1 photo", slots: [{ x: 0, y: 0, w: 1, h: 1 }] },
+  { id: "single", labelKey: "collage.single", slots: [{ x: 0, y: 0, w: 1, h: 1 }] },
   {
     id: "split-v",
-    label: "2 haut/bas",
+    labelKey: "collage.split-v",
     slots: [
       { x: 0, y: 0, w: 1, h: 0.5 },
       { x: 0, y: 0.5, w: 1, h: 0.5 },
@@ -20,7 +21,7 @@ export const COLLAGES = [
   },
   {
     id: "split-h",
-    label: "2 côte à côte",
+    labelKey: "collage.split-h",
     slots: [
       { x: 0, y: 0, w: 0.5, h: 1 },
       { x: 0.5, y: 0, w: 0.5, h: 1 },
@@ -28,7 +29,7 @@ export const COLLAGES = [
   },
   {
     id: "feature",
-    label: "1 grande + 2",
+    labelKey: "collage.feature",
     slots: [
       { x: 0, y: 0, w: 1, h: 0.62 },
       { x: 0, y: 0.62, w: 0.5, h: 0.38 },
@@ -37,7 +38,7 @@ export const COLLAGES = [
   },
   {
     id: "grid4",
-    label: "Grille 4",
+    labelKey: "collage.grid4",
     slots: [
       { x: 0, y: 0, w: 0.5, h: 0.5 },
       { x: 0.5, y: 0, w: 0.5, h: 0.5 },
@@ -47,7 +48,7 @@ export const COLLAGES = [
   },
   {
     id: "strip3",
-    label: "Bande 3",
+    labelKey: "collage.strip3",
     slots: [
       { x: 0, y: 0, w: 1, h: 1 / 3 },
       { x: 0, y: 1 / 3, w: 1, h: 1 / 3 },
@@ -699,7 +700,7 @@ export class Studio {
       const hit = this.#hitTest(p.x, p.y);
       if (hit?.kind === "slot") this.pickPhotoForSlot(hit.index);
       if (hit?.kind === "text") {
-        const next = prompt("Texte :", this.texts[hit.index].text);
+        const next = prompt(t("prompt.text"), this.texts[hit.index].text);
         if (next != null) {
           this.texts[hit.index].text = next;
           this.queueRender();
