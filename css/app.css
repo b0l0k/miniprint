@@ -551,23 +551,25 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   min-height: 0;
   height: 100%;
-  overflow: auto;
+  /* Pas de mini-scrollbar : on réserve la place du hint ci-dessous. */
+  overflow: hidden;
 }
 
 .canvas-shell {
-  --shell-max-h: min(100%, calc(100dvh - 7.5rem));
+  /* 1.4rem ≈ hint + gap ; 8.75rem ≈ header/footer un peu plus généreux sur Chromebook */
+  --shell-max-h: min(calc(100% - 1.4rem), calc(100dvh - 8.75rem));
   max-width: 100%;
   max-height: var(--shell-max-h);
   background: white;
-  padding: 0.55rem;
+  padding: 0.45rem;
   border-radius: 16px;
   box-shadow: var(--shadow);
   border: 3px solid rgba(255, 107, 157, 0.2);
   position: relative;
-  transform: rotate(-0.6deg);
+  transform: rotate(-0.4deg);
   display: block;
   box-sizing: border-box;
 }
@@ -583,7 +585,7 @@ body {
   width: min(100%, 42rem, calc(var(--shell-max-h) * 3 / 2));
   aspect-ratio: 3 / 2;
   height: auto;
-  transform: rotate(0.4deg);
+  transform: rotate(0.3deg);
 }
 
 .shell-bow {
