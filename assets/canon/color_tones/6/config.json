@@ -1,0 +1,8 @@
+{
+    "filters": [
+        {
+            "type": "colorinvert",
+            "adjusts": [100.0]
+        }
+    ]
+}

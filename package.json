@@ -1,0 +1,14 @@
+{
+  "name": "miniprintweb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Imprimer depuis le navigateur sur une Canon Zoemini 2 / Ivy 2 Mini",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

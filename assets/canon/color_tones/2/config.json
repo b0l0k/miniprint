@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "divide",
+            "texture": "f1_blend_divide.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

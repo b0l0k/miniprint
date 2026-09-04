@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "multiply",
+            "texture": "f1_blend_darken.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

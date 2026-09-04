@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MiniPrint 💕 atelier photo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <div class="sparkles" aria-hidden="true"></div>
+
+    <header class="app-header">
+      <div class="brand-block">
+        <p class="brand">MiniPrint</p>
+        <p class="tagline">atelier tout mignon · Zoemini 2</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn soft" id="btn-connect">📡 Bluetooth</button>
+        <button type="button" class="btn soft" id="btn-disconnect" hidden>Couper</button>
+        <button type="button" class="btn soft" id="btn-handshake" hidden>Handshake</button>
+        <div class="printer-pill" id="printer-pill" data-state="offline">
+          <span class="dot"></span>
+          <span id="printer-label">Hors ligne</span>
+        </div>
+      </div>
+    </header>
+
+    <div id="support-banner" class="banner" hidden>
+      Ouvre cette page dans <strong>Chrome</strong> ou <strong>Edge</strong> pour imprimer ✨
+    </div>
+
+    <main class="app-grid">
+      <aside class="rail candy">
+        <nav class="tabs" role="tablist">
+          <button type="button" class="tab is-active" data-tab="collage">Collages</button>
+          <button type="button" class="tab" data-tab="stickers">Stickers</button>
+          <button type="button" class="tab" data-tab="frames">Cadres</button>
+          <button type="button" class="tab" data-tab="effects">Effets</button>
+          <button type="button" class="tab" data-tab="light">Lumière</button>
+        </nav>
+
+        <div class="tab-panels">
+          <section class="tab-panel is-active" data-panel="collage">
+            <p class="panel-hint">Choisis une mise en page, puis tape ＋ Photo sur le rendu 📸</p>
+            <div class="chip-grid" id="collage-list"></div>
+            <div class="subhead">Motifs de fond</div>
+            <div class="thumb-row" id="pattern-list"></div>
+          </section>
+
+          <section class="tab-panel" data-panel="stickers">
+            <p class="panel-hint">Stickers Canon + emojis — clique puis glisse 🎀</p>
+            <div class="subhead">Emojis</div>
+            <div class="sticker-grid emoji-grid" id="emoji-list"></div>
+            <div class="subhead" id="sticker-cat-title">Canon</div>
+            <div class="cat-pills" id="sticker-cats"></div>
+            <div class="sticker-grid canon-grid" id="sticker-list"></div>
+          </section>
+
+          <section class="tab-panel" data-panel="frames">
+            <p class="panel-hint">Les vrais cadres de l’appli Canon 🖼️</p>
+            <div class="frame-grid" id="frame-list"></div>
+          </section>
+
+          <section class="tab-panel" data-panel="effects">
+            <p class="panel-hint">Filtres / tons couleur de l’appli Canon 🌈</p>
+            <div class="effect-grid" id="effect-list"></div>
+          </section>
+
+          <section class="tab-panel" data-panel="light">
+            <p class="panel-hint">Réglages photo — luminosité, contraste… ☀️</p>
+            <div class="sliders" id="adjust-sliders">
+              <label class="slider-field">
+                <span>Luminosité <em id="val-brightness">0</em></span>
+                <input type="range" min="-60" max="60" value="0" data-adj="brightness" />
+              </label>
+              <label class="slider-field">
+                <span>Contraste <em id="val-contrast">0</em></span>
+                <input type="range" min="-60" max="60" value="0" data-adj="contrast" />
+              </label>
+              <label class="slider-field">
+                <span>Saturation <em id="val-saturation">0</em></span>
+                <input type="range" min="-80" max="80" value="0" data-adj="saturation" />
+              </label>
+              <label class="slider-field">
+                <span>Chaleur <em id="val-warmth">0</em></span>
+                <input type="range" min="-60" max="60" value="0" data-adj="warmth" />
+              </label>
+              <label class="slider-field">
+                <span>Vignette <em id="val-vignette">0</em></span>
+                <input type="range" min="0" max="80" value="0" data-adj="vignette" />
+              </label>
+            </div>
+            <button type="button" class="btn soft block" id="btn-reset-adj">Réinitialiser</button>
+          </section>
+        </div>
+      </aside>
+
+      <aside class="v-toolbar" aria-label="Outils rapides">
+        <button type="button" class="v-tool" id="btn-add-text" title="Ajouter du texte">
+          <span class="v-tool-icon aa">Aa</span>
+          <span class="v-tool-label">Texte</span>
+        </button>
+        <button type="button" class="v-tool" id="btn-goto-stickers" title="Stickers">
+          <span class="v-tool-icon">＋</span>
+          <span class="v-tool-label">Sticker</span>
+        </button>
+        <button type="button" class="v-tool" id="btn-add-photo-quick" title="Ajouter une photo">
+          <span class="v-tool-icon">📷</span>
+          <span class="v-tool-label">Photo</span>
+        </button>
+      </aside>
+
+      <section class="stage">
+        <div class="canvas-shell">
+          <div class="shell-bow" aria-hidden="true">♡</div>
+          <canvas id="studio-canvas" aria-label="Zone de création"></canvas>
+        </div>
+        <p class="stage-hint">Glisse les stickers · double-clic pour changer une photo</p>
+      </section>
+
+      <aside class="side">
+        <div class="print-card candy">
+          <h2>Impression 💕</h2>
+          <div class="stats" id="status-card" data-state="offline">
+            <div class="stat"><span>Batterie</span><strong id="stat-battery">—</strong></div>
+            <div class="stat"><span>Papier</span><strong id="stat-paper">—</strong></div>
+            <div class="stat"><span>Couvercle</span><strong id="stat-cover">—</strong></div>
+            <div class="stat"><span>FW</span><strong id="stat-fw">—</strong></div>
+          </div>
+          <button type="button" class="btn primary block xl" id="btn-print">Imprimer ✨</button>
+          <button type="button" class="btn soft block" id="btn-refresh" disabled>Rafraîchir statut</button>
+          <div id="progress" class="progress" hidden>
+            <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+            <p id="progress-label">0%</p>
+          </div>
+        </div>
+
+        <div class="selection-card candy" id="selection-card">
+          <h2>Sélection ✨</h2>
+          <p class="sel-label" id="sel-label">Rien de sélectionné</p>
+          <div class="sel-actions">
+            <button type="button" class="btn icon" id="btn-smaller" title="Plus petit">−</button>
+            <button type="button" class="btn icon" id="btn-bigger" title="Plus grand">＋</button>
+            <button type="button" class="btn icon" id="btn-rot-left" title="Pivoter">↺</button>
+            <button type="button" class="btn icon" id="btn-rot-right" title="Pivoter">↻</button>
+            <button type="button" class="btn icon danger" id="btn-delete" title="Supprimer">✕</button>
+          </div>
+          <div class="text-tools" id="text-tools" hidden>
+            <button type="button" class="btn soft block" id="btn-edit-text">✏️ Modifier le texte</button>
+            <div class="subhead">Police</div>
+            <div class="font-grid" id="font-list"></div>
+            <div class="subhead">Couleur</div>
+            <div class="color-row" id="color-list"></div>
+            <label class="slider-field">
+              <span>Taille <em id="val-text-size">72</em></span>
+              <input type="range" id="text-size" min="28" max="180" value="72" />
+            </label>
+          </div>
+          <div class="photo-tools" id="photo-tools" hidden>
+            <div class="subhead">Cadrage</div>
+            <div class="chip-grid fit-grid" id="fit-list">
+              <button type="button" class="chip is-active" data-fit="contain" title="Image entière, sans déformer">Ajuster</button>
+              <button type="button" class="chip" data-fit="cover" title="Remplir le cadre (rogne)">Remplir</button>
+              <button type="button" class="chip" data-fit="stretch" title="Étirer (peut déformer)">Étirer</button>
+            </div>
+            <p class="panel-hint">Remplir : glisse la photo pour recadrer · ± pour zoomer</p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div class="log-fab" id="log-fab">
+      <button type="button" class="log-fab-btn" id="btn-toggle-log" aria-expanded="false" title="Journal">
+        <span class="log-fab-icon">📝</span>
+        <span class="log-fab-label">Journal</span>
+        <span class="log-fab-badge" id="log-badge" hidden>0</span>
+      </button>
+      <div class="log-popover candy" id="log-popover" hidden>
+        <div class="log-popover-head">
+          <h2>Journal</h2>
+          <button type="button" class="btn icon" id="btn-close-log" title="Fermer">✕</button>
+        </div>
+        <div id="log" class="log" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>Made by <strong>b0l0k</strong> for his <span class="heart" aria-hidden="true">♥</span> daughter</p>
+    </footer>
+
+    <input type="file" id="file-input" accept="image/*" hidden />
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

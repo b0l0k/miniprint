@@ -1,0 +1,10 @@
+	{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "colorburn",
+            "texture": "f4_blend_color-burn.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

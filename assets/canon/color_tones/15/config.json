@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "softlight",
+            "texture": "soft-lens.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

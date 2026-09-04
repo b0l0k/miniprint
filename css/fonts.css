@@ -1,0 +1,57 @@
+/* Polices extraites de Canon Mini Print */
+@font-face {
+  font-family: "Mini Didact";
+  src: url("../assets/canon/fonts/DidactGothic-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Butterfly";
+  src: url("../assets/canon/fonts/ButterflyKids-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Gochi";
+  src: url("../assets/canon/fonts/GochiHand-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Chawp";
+  src: url("../assets/canon/fonts/chawp.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Berantas";
+  src: url("../assets/canon/fonts/berantas korupsi.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Old Standard";
+  src: url("../assets/canon/fonts/OldStandard-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Pinyon";
+  src: url("../assets/canon/fonts/PinyonScript-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Qwigley";
+  src: url("../assets/canon/fonts/Qwigley-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Vinsdojo";
+  src: url("../assets/canon/fonts/vinsdojo.TTF") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Pacifico";
+  src: local("Pacifico"), url("https://fonts.gstatic.com/s/pacifico/v22/FwZY7-QmySESjcVbbNWM8w.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mini Nunito";
+  src: local("Nunito"), local("Nunito Regular");
+  font-display: swap;
+}

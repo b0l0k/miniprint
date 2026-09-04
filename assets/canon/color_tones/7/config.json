@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "saturation",
+            "texture": "f3_blend_saturation.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

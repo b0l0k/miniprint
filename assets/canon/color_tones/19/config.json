@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "colorburn",
+            "texture": "spring.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

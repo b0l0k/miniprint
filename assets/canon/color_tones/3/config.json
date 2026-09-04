@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "hue",
+            "texture": "bw.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

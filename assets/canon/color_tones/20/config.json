@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "colorburn",
+            "texture": "summer.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

@@ -1,0 +1,952 @@
+{
+  "stickers": [
+    {
+      "id": 123,
+      "category": "Boissons",
+      "categoryId": 1,
+      "src": "/assets/canon/stickers/123.png",
+      "thumb": "/assets/canon/stickers/thumb/123.png"
+    },
+    {
+      "id": 124,
+      "category": "Boissons",
+      "categoryId": 1,
+      "src": "/assets/canon/stickers/124.png",
+      "thumb": "/assets/canon/stickers/thumb/124.png"
+    },
+    {
+      "id": 125,
+      "category": "Boissons",
+      "categoryId": 1,
+      "src": "/assets/canon/stickers/125.png",
+      "thumb": "/assets/canon/stickers/thumb/125.png"
+    },
+    {
+      "id": 126,
+      "category": "Boissons",
+      "categoryId": 1,
+      "src": "/assets/canon/stickers/126.png",
+      "thumb": "/assets/canon/stickers/thumb/126.png"
+    },
+    {
+      "id": 127,
+      "category": "Boissons",
+      "categoryId": 1,
+      "src": "/assets/canon/stickers/127.png",
+      "thumb": "/assets/canon/stickers/thumb/127.png"
+    },
+    {
+      "id": 128,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/128.png",
+      "thumb": "/assets/canon/stickers/thumb/128.png"
+    },
+    {
+      "id": 129,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/129.png",
+      "thumb": "/assets/canon/stickers/thumb/129.png"
+    },
+    {
+      "id": 130,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/130.png",
+      "thumb": "/assets/canon/stickers/thumb/130.png"
+    },
+    {
+      "id": 131,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/131.png",
+      "thumb": "/assets/canon/stickers/thumb/131.png"
+    },
+    {
+      "id": 132,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/132.png",
+      "thumb": "/assets/canon/stickers/thumb/132.png"
+    },
+    {
+      "id": 133,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/133.png",
+      "thumb": "/assets/canon/stickers/thumb/133.png"
+    },
+    {
+      "id": 134,
+      "category": "Miam",
+      "categoryId": 2,
+      "src": "/assets/canon/stickers/134.png",
+      "thumb": "/assets/canon/stickers/thumb/134.png"
+    },
+    {
+      "id": 135,
+      "category": "Animaux",
+      "categoryId": 3,
+      "src": "/assets/canon/stickers/135.png",
+      "thumb": "/assets/canon/stickers/thumb/135.png"
+    },
+    {
+      "id": 136,
+      "category": "Animaux",
+      "categoryId": 3,
+      "src": "/assets/canon/stickers/136.png",
+      "thumb": "/assets/canon/stickers/thumb/136.png"
+    },
+    {
+      "id": 137,
+      "category": "Animaux",
+      "categoryId": 3,
+      "src": "/assets/canon/stickers/137.png",
+      "thumb": "/assets/canon/stickers/thumb/137.png"
+    },
+    {
+      "id": 138,
+      "category": "Animaux",
+      "categoryId": 3,
+      "src": "/assets/canon/stickers/138.png",
+      "thumb": "/assets/canon/stickers/thumb/138.png"
+    },
+    {
+      "id": 145,
+      "category": "Nature",
+      "categoryId": 4,
+      "src": "/assets/canon/stickers/145.png",
+      "thumb": "/assets/canon/stickers/thumb/145.png"
+    },
+    {
+      "id": 146,
+      "category": "Nature",
+      "categoryId": 4,
+      "src": "/assets/canon/stickers/146.png",
+      "thumb": "/assets/canon/stickers/thumb/146.png"
+    },
+    {
+      "id": 147,
+      "category": "Nature",
+      "categoryId": 4,
+      "src": "/assets/canon/stickers/147.png",
+      "thumb": "/assets/canon/stickers/thumb/147.png"
+    },
+    {
+      "id": 148,
+      "category": "Nature",
+      "categoryId": 4,
+      "src": "/assets/canon/stickers/148.png",
+      "thumb": "/assets/canon/stickers/thumb/148.png"
+    },
+    {
+      "id": 149,
+      "category": "Nature",
+      "categoryId": 4,
+      "src": "/assets/canon/stickers/149.png",
+      "thumb": "/assets/canon/stickers/thumb/149.png"
+    },
+    {
+      "id": 150,
+      "category": "Fleurs",
+      "categoryId": 5,
+      "src": "/assets/canon/stickers/150.png",
+      "thumb": "/assets/canon/stickers/thumb/150.png"
+    },
+    {
+      "id": 151,
+      "category": "Fleurs",
+      "categoryId": 5,
+      "src": "/assets/canon/stickers/151.png",
+      "thumb": "/assets/canon/stickers/thumb/151.png"
+    },
+    {
+      "id": 152,
+      "category": "Fleurs",
+      "categoryId": 5,
+      "src": "/assets/canon/stickers/152.png",
+      "thumb": "/assets/canon/stickers/thumb/152.png"
+    },
+    {
+      "id": 153,
+      "category": "Fleurs",
+      "categoryId": 5,
+      "src": "/assets/canon/stickers/153.png",
+      "thumb": "/assets/canon/stickers/thumb/153.png"
+    },
+    {
+      "id": 154,
+      "category": "Fleurs",
+      "categoryId": 5,
+      "src": "/assets/canon/stickers/154.png",
+      "thumb": "/assets/canon/stickers/thumb/154.png"
+    },
+    {
+      "id": 155,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/155.png",
+      "thumb": "/assets/canon/stickers/thumb/155.png"
+    },
+    {
+      "id": 156,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/156.png",
+      "thumb": "/assets/canon/stickers/thumb/156.png"
+    },
+    {
+      "id": 157,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/157.png",
+      "thumb": "/assets/canon/stickers/thumb/157.png"
+    },
+    {
+      "id": 158,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/158.png",
+      "thumb": "/assets/canon/stickers/thumb/158.png"
+    },
+    {
+      "id": 159,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/159.png",
+      "thumb": "/assets/canon/stickers/thumb/159.png"
+    },
+    {
+      "id": 160,
+      "category": "Cœurs",
+      "categoryId": 6,
+      "src": "/assets/canon/stickers/160.png",
+      "thumb": "/assets/canon/stickers/thumb/160.png"
+    },
+    {
+      "id": 161,
+      "category": "Étoiles",
+      "categoryId": 7,
+      "src": "/assets/canon/stickers/161.png",
+      "thumb": "/assets/canon/stickers/thumb/161.png"
+    },
+    {
+      "id": 162,
+      "category": "Étoiles",
+      "categoryId": 7,
+      "src": "/assets/canon/stickers/162.png",
+      "thumb": "/assets/canon/stickers/thumb/162.png"
+    },
+    {
+      "id": 163,
+      "category": "Étoiles",
+      "categoryId": 7,
+      "src": "/assets/canon/stickers/163.png",
+      "thumb": "/assets/canon/stickers/thumb/163.png"
+    },
+    {
+      "id": 164,
+      "category": "Étoiles",
+      "categoryId": 7,
+      "src": "/assets/canon/stickers/164.png",
+      "thumb": "/assets/canon/stickers/thumb/164.png"
+    },
+    {
+      "id": 165,
+      "category": "Étoiles",
+      "categoryId": 7,
+      "src": "/assets/canon/stickers/165.png",
+      "thumb": "/assets/canon/stickers/thumb/165.png"
+    },
+    {
+      "id": 166,
+      "category": "Fun",
+      "categoryId": 8,
+      "src": "/assets/canon/stickers/166.png",
+      "thumb": "/assets/canon/stickers/thumb/166.png"
+    },
+    {
+      "id": 167,
+      "category": "Fun",
+      "categoryId": 8,
+      "src": "/assets/canon/stickers/167.png",
+      "thumb": "/assets/canon/stickers/thumb/167.png"
+    },
+    {
+      "id": 168,
+      "category": "Fun",
+      "categoryId": 8,
+      "src": "/assets/canon/stickers/168.png",
+      "thumb": "/assets/canon/stickers/thumb/168.png"
+    },
+    {
+      "id": 169,
+      "category": "Fun",
+      "categoryId": 8,
+      "src": "/assets/canon/stickers/169.png",
+      "thumb": "/assets/canon/stickers/thumb/169.png"
+    },
+    {
+      "id": 170,
+      "category": "Fun",
+      "categoryId": 8,
+      "src": "/assets/canon/stickers/170.png",
+      "thumb": "/assets/canon/stickers/thumb/170.png"
+    },
+    {
+      "id": 171,
+      "category": "Dessin",
+      "categoryId": 9,
+      "src": "/assets/canon/stickers/171.png",
+      "thumb": "/assets/canon/stickers/thumb/171.png"
+    },
+    {
+      "id": 172,
+      "category": "Dessin",
+      "categoryId": 9,
+      "src": "/assets/canon/stickers/172.png",
+      "thumb": "/assets/canon/stickers/thumb/172.png"
+    },
+    {
+      "id": 173,
+      "category": "Dessin",
+      "categoryId": 9,
+      "src": "/assets/canon/stickers/173.png",
+      "thumb": "/assets/canon/stickers/thumb/173.png"
+    },
+    {
+      "id": 174,
+      "category": "Dessin",
+      "categoryId": 9,
+      "src": "/assets/canon/stickers/174.png",
+      "thumb": "/assets/canon/stickers/thumb/174.png"
+    },
+    {
+      "id": 175,
+      "category": "Dessin",
+      "categoryId": 9,
+      "src": "/assets/canon/stickers/175.png",
+      "thumb": "/assets/canon/stickers/thumb/175.png"
+    },
+    {
+      "id": 176,
+      "category": "Déco",
+      "categoryId": 10,
+      "src": "/assets/canon/stickers/176.png",
+      "thumb": "/assets/canon/stickers/thumb/176.png"
+    },
+    {
+      "id": 177,
+      "category": "Déco",
+      "categoryId": 10,
+      "src": "/assets/canon/stickers/177.png",
+      "thumb": "/assets/canon/stickers/thumb/177.png"
+    },
+    {
+      "id": 178,
+      "category": "Déco",
+      "categoryId": 10,
+      "src": "/assets/canon/stickers/178.png",
+      "thumb": "/assets/canon/stickers/thumb/178.png"
+    },
+    {
+      "id": 179,
+      "category": "Déco",
+      "categoryId": 10,
+      "src": "/assets/canon/stickers/179.png",
+      "thumb": "/assets/canon/stickers/thumb/179.png"
+    },
+    {
+      "id": 180,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/180.png",
+      "thumb": "/assets/canon/stickers/thumb/180.png"
+    },
+    {
+      "id": 181,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/181.png",
+      "thumb": "/assets/canon/stickers/thumb/181.png"
+    },
+    {
+      "id": 182,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/182.png",
+      "thumb": "/assets/canon/stickers/thumb/182.png"
+    },
+    {
+      "id": 183,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/183.png",
+      "thumb": "/assets/canon/stickers/thumb/183.png"
+    },
+    {
+      "id": 184,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/184.png",
+      "thumb": "/assets/canon/stickers/thumb/184.png"
+    },
+    {
+      "id": 185,
+      "category": "Cute",
+      "categoryId": 11,
+      "src": "/assets/canon/stickers/185.png",
+      "thumb": "/assets/canon/stickers/thumb/185.png"
+    },
+    {
+      "id": 186,
+      "category": "Extra",
+      "categoryId": 12,
+      "src": "/assets/canon/stickers/186.png",
+      "thumb": "/assets/canon/stickers/thumb/186.png"
+    },
+    {
+      "id": 187,
+      "category": "Extra",
+      "categoryId": 12,
+      "src": "/assets/canon/stickers/187.png",
+      "thumb": "/assets/canon/stickers/thumb/187.png"
+    },
+    {
+      "id": 188,
+      "category": "Extra",
+      "categoryId": 12,
+      "src": "/assets/canon/stickers/188.png",
+      "thumb": "/assets/canon/stickers/thumb/188.png"
+    },
+    {
+      "id": 189,
+      "category": "Extra",
+      "categoryId": 12,
+      "src": "/assets/canon/stickers/189.png",
+      "thumb": "/assets/canon/stickers/thumb/189.png"
+    },
+    {
+      "id": 190,
+      "category": "Extra",
+      "categoryId": 12,
+      "src": "/assets/canon/stickers/190.png",
+      "thumb": "/assets/canon/stickers/thumb/190.png"
+    }
+  ],
+  "frames": [
+    {
+      "id": 100,
+      "src": "/assets/canon/frames/100.png",
+      "thumb": "/assets/canon/frames/thumb/100.png"
+    },
+    {
+      "id": 101,
+      "src": "/assets/canon/frames/101.png",
+      "thumb": "/assets/canon/frames/thumb/101.png"
+    },
+    {
+      "id": 102,
+      "src": "/assets/canon/frames/102.png",
+      "thumb": "/assets/canon/frames/thumb/102.png"
+    },
+    {
+      "id": 103,
+      "src": "/assets/canon/frames/103.png",
+      "thumb": "/assets/canon/frames/thumb/103.png"
+    },
+    {
+      "id": 104,
+      "src": "/assets/canon/frames/104.png",
+      "thumb": "/assets/canon/frames/thumb/104.png"
+    },
+    {
+      "id": 105,
+      "src": "/assets/canon/frames/105.png",
+      "thumb": "/assets/canon/frames/thumb/105.png"
+    },
+    {
+      "id": 106,
+      "src": "/assets/canon/frames/106.png",
+      "thumb": "/assets/canon/frames/thumb/106.png"
+    },
+    {
+      "id": 107,
+      "src": "/assets/canon/frames/107.png",
+      "thumb": "/assets/canon/frames/thumb/107.png"
+    },
+    {
+      "id": 108,
+      "src": "/assets/canon/frames/108.png",
+      "thumb": "/assets/canon/frames/thumb/108.png"
+    },
+    {
+      "id": 109,
+      "src": "/assets/canon/frames/109.png",
+      "thumb": "/assets/canon/frames/thumb/109.png"
+    },
+    {
+      "id": 110,
+      "src": "/assets/canon/frames/110.png",
+      "thumb": "/assets/canon/frames/thumb/110.png"
+    },
+    {
+      "id": 111,
+      "src": "/assets/canon/frames/111.png",
+      "thumb": "/assets/canon/frames/thumb/111.png"
+    },
+    {
+      "id": 112,
+      "src": "/assets/canon/frames/112.png",
+      "thumb": "/assets/canon/frames/thumb/112.png"
+    },
+    {
+      "id": 113,
+      "src": "/assets/canon/frames/113.png",
+      "thumb": "/assets/canon/frames/thumb/113.png"
+    },
+    {
+      "id": 114,
+      "src": "/assets/canon/frames/114.png",
+      "thumb": "/assets/canon/frames/thumb/114.png"
+    },
+    {
+      "id": 115,
+      "src": "/assets/canon/frames/115.png",
+      "thumb": "/assets/canon/frames/thumb/115.png"
+    },
+    {
+      "id": 116,
+      "src": "/assets/canon/frames/116.png",
+      "thumb": "/assets/canon/frames/thumb/116.png"
+    },
+    {
+      "id": 117,
+      "src": "/assets/canon/frames/117.png",
+      "thumb": "/assets/canon/frames/thumb/117.png"
+    },
+    {
+      "id": 118,
+      "src": "/assets/canon/frames/118.png",
+      "thumb": "/assets/canon/frames/thumb/118.png"
+    },
+    {
+      "id": 119,
+      "src": "/assets/canon/frames/119.png",
+      "thumb": "/assets/canon/frames/thumb/119.png"
+    },
+    {
+      "id": 120,
+      "src": "/assets/canon/frames/120.png",
+      "thumb": "/assets/canon/frames/thumb/120.png"
+    },
+    {
+      "id": 121,
+      "src": "/assets/canon/frames/121.png",
+      "thumb": "/assets/canon/frames/thumb/121.png"
+    },
+    {
+      "id": 122,
+      "src": "/assets/canon/frames/122.png",
+      "thumb": "/assets/canon/frames/thumb/122.png"
+    }
+  ],
+  "effects": [
+    {
+      "id": 1,
+      "name": "Douceur",
+      "thumb": "/assets/canon/color_tones/thumb/1.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "colorburn",
+          "texture": "f4_blend_color-burn.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/1/"
+    },
+    {
+      "id": 2,
+      "name": "Teinte",
+      "thumb": "/assets/canon/color_tones/thumb/2.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "divide",
+          "texture": "f1_blend_divide.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/2/"
+    },
+    {
+      "id": 3,
+      "name": "N&B",
+      "thumb": "/assets/canon/color_tones/thumb/3.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "hue",
+          "texture": "bw.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/3/"
+    },
+    {
+      "id": 4,
+      "name": "Golden Hour",
+      "thumb": "/assets/canon/color_tones/thumb/4.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "vividlight",
+          "texture": "f1_blend_hard_light.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/4/"
+    },
+    {
+      "id": 5,
+      "name": "RGB Pop",
+      "thumb": "/assets/canon/color_tones/thumb/5.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "multiply",
+          "texture": "f1_blend_darken.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/5/"
+    },
+    {
+      "id": 6,
+      "name": "Négatif",
+      "thumb": "/assets/canon/color_tones/thumb/6.png",
+      "filters": [
+        {
+          "type": "colorinvert",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/6/"
+    },
+    {
+      "id": 7,
+      "name": "Contraste",
+      "thumb": "/assets/canon/color_tones/thumb/7.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "saturation",
+          "texture": "f3_blend_saturation.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/7/"
+    },
+    {
+      "id": 8,
+      "name": "Cinéma",
+      "thumb": "/assets/canon/color_tones/thumb/8.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "hardlight",
+          "texture": "f3_blend_vivid-light.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/8/"
+    },
+    {
+      "id": 9,
+      "name": "Saturation",
+      "thumb": "/assets/canon/color_tones/thumb/9.png",
+      "filters": [
+        {
+          "type": "sketch",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/9/"
+    },
+    {
+      "id": 10,
+      "name": "Vintage",
+      "thumb": "/assets/canon/color_tones/thumb/10.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "overlay",
+          "texture": "f3_blend.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/10/"
+    },
+    {
+      "id": 12,
+      "name": "Crayon",
+      "thumb": "/assets/canon/color_tones/thumb/12.png",
+      "filters": [
+        {
+          "type": "sketchcrayola",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/12/"
+    },
+    {
+      "id": 13,
+      "name": "Bois",
+      "thumb": "/assets/canon/color_tones/thumb/13.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "hardlight",
+          "texture": "f2_blend_hartlight.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/13/"
+    },
+    {
+      "id": 14,
+      "name": "Vieille lettre",
+      "thumb": "/assets/canon/color_tones/thumb/14.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "hardlight",
+          "texture": "f5_blend.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/14/"
+    },
+    {
+      "id": 15,
+      "name": "Soft Lens",
+      "thumb": "/assets/canon/color_tones/thumb/15.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "softlight",
+          "texture": "soft-lens.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/15/"
+    },
+    {
+      "id": 16,
+      "name": "Paillettes",
+      "thumb": "/assets/canon/color_tones/thumb/16.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "hardlight",
+          "texture": "gliter.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/16/"
+    },
+    {
+      "id": 17,
+      "name": "Puzzle",
+      "thumb": "/assets/canon/color_tones/thumb/17.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "linearburn",
+          "texture": "f1_blend.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/17/"
+    },
+    {
+      "id": 18,
+      "name": "Mosaïque",
+      "thumb": "/assets/canon/color_tones/thumb/18.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "overlay",
+          "texture": "f3_blend.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/18/"
+    },
+    {
+      "id": 19,
+      "name": "Printemps",
+      "thumb": "/assets/canon/color_tones/thumb/19.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "colorburn",
+          "texture": "spring.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/19/"
+    },
+    {
+      "id": 20,
+      "name": "Été",
+      "thumb": "/assets/canon/color_tones/thumb/20.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "colorburn",
+          "texture": "summer.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/20/"
+    },
+    {
+      "id": 21,
+      "name": "Automne",
+      "thumb": "/assets/canon/color_tones/thumb/21.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "colorburn",
+          "texture": "autumn.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/21/"
+    },
+    {
+      "id": 22,
+      "name": "Hiver",
+      "thumb": "/assets/canon/color_tones/thumb/22.png",
+      "filters": [
+        {
+          "type": "blend",
+          "mode": "colorburn",
+          "texture": "winter.png",
+          "adjusts": [
+            100.0
+          ]
+        }
+      ],
+      "base": "/assets/canon/color_tones/22/"
+    }
+  ],
+  "patterns": [
+    {
+      "id": 600,
+      "src": "/assets/canon/patterns/600.png",
+      "thumb": "/assets/canon/patterns/thumb/600.png"
+    },
+    {
+      "id": 601,
+      "src": "/assets/canon/patterns/601.png",
+      "thumb": "/assets/canon/patterns/thumb/601.png"
+    },
+    {
+      "id": 602,
+      "src": "/assets/canon/patterns/602.png",
+      "thumb": "/assets/canon/patterns/thumb/602.png"
+    },
+    {
+      "id": 603,
+      "src": "/assets/canon/patterns/603.png",
+      "thumb": "/assets/canon/patterns/thumb/603.png"
+    },
+    {
+      "id": 604,
+      "src": "/assets/canon/patterns/604.png",
+      "thumb": "/assets/canon/patterns/thumb/604.png"
+    }
+  ],
+  "emojiStickers": [
+    "💖",
+    "⭐",
+    "✨",
+    "🌈",
+    "🦄",
+    "🐱",
+    "🐶",
+    "🐰",
+    "🐻",
+    "🌸",
+    "🌻",
+    "🦋",
+    "🍦",
+    "🎂",
+    "🎈",
+    "📷",
+    "👑",
+    "😘",
+    "😂",
+    "😎",
+    "🔥",
+    "🎵",
+    "🌙",
+    "☁️",
+    "🍓",
+    "🍩",
+    "🎀",
+    "🐣",
+    "🐯",
+    "🍀",
+    "💜",
+    "💞",
+    "🧁",
+    "🍉",
+    "🍒",
+    "💗"
+  ]
+}

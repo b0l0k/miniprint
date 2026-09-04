@@ -1,0 +1,889 @@
+{
+  "color_tones": [
+    {
+      "id": 1,
+      "priority": 1,
+      "version": 1,
+      "translation": {
+        "en_us": "Color tone",
+        "ja_jp": "Color tone",
+        "en_gb": "Color tone",
+        "en_ca": "Color tone",
+        "en": "Color tone",
+        "pt_pt": "Color tone",
+        "ko_kr": "Color tone",
+        "zh-hans": "Color tone"
+      }
+    },
+    {
+      "id": 2,
+      "priority": 2,
+      "version": 1,
+      "translation": {
+        "en_us": "Color Tone Hue",
+        "ja_jp": "Color Tone Hue",
+        "en_gb": "Color Tone Hue",
+        "en_ca": "Color Tone Hue",
+        "en": "Color Tone Hue",
+        "pt_pt": "Color Tone Hue",
+        "ko_kr": "Color Tone Hue",
+        "zh-hans": "Color Tone Hue"
+      }
+    },
+    {
+      "id": 3,
+      "priority": 3,
+      "version": 1,
+      "translation": {
+        "en_us": "B&W2",
+        "ja_jp": "B&W2",
+        "en_gb": "B&W2",
+        "en_ca": "B&W2",
+        "en": "B&W2",
+        "pt_pt": "B&W2",
+        "ko_kr": "B&W2",
+        "zh-hans": "B&W2"
+      }
+    },
+    {
+      "id": 4,
+      "priority": 4,
+      "version": 1,
+      "translation": {
+        "en_us": "Golden Hour",
+        "ja_jp": "Golden Hour",
+        "en_gb": "Golden Hour",
+        "en_ca": "Golden Hour",
+        "en": "Golden Hour",
+        "pt_pt": "Golden Hour",
+        "ko_kr": "Golden Hour",
+        "zh-hans": "Golden Hour"
+      }
+    },
+    {
+      "id": 5,
+      "priority": 5,
+      "version": 1,
+      "translation": {
+        "en_us": "Color RGB",
+        "ja_jp": "Color RGB",
+        "en_gb": "Color RGB",
+        "en_ca": "Color RGB",
+        "en": "Color RGB",
+        "pt_pt": "Color RGB",
+        "ko_kr": "Color RGB",
+        "zh-hans": "Color RGB"
+      }
+    },
+    {
+      "id": 6,
+      "priority": 6,
+      "version": 1,
+      "translation": {
+        "en_us": "Negative_EN",
+        "ja_jp": "Negative_EN",
+        "en_gb": "Negative_EN",
+        "en_ca": "Negative_EN",
+        "en": "Negative_EN",
+        "pt_pt": "Negative_EN",
+        "ko_kr": "Negative_EN",
+        "zh-hans": "Negative_EN"
+      }
+    },
+    {
+      "id": 7,
+      "priority": 7,
+      "version": 1,
+      "translation": {
+        "en_us": "Color_Contrast_EN",
+        "ja_jp": "Color_Contrast_EN",
+        "en_gb": "Color_Contrast_EN",
+        "en_ca": "Color_Contrast_EN",
+        "en": "Color_Contrast_EN",
+        "pt_pt": "Color_Contrast_EN",
+        "ko_kr": "Color_Contrast_EN",
+        "zh-hans": "Color_Contrast_EN"
+      }
+    },
+    {
+      "id": 8,
+      "priority": 8,
+      "version": 1,
+      "translation": {
+        "en_us": "Movie",
+        "ja_jp": "Movie",
+        "en_gb": "Movie",
+        "en_ca": "Movie",
+        "en": "Movie",
+        "pt_pt": "Movie",
+        "ko_kr": "Movie",
+        "zh-hans": "Movie"
+      }
+    },
+    {
+      "id": 9,
+      "priority": 9,
+      "version": 1,
+      "translation": {
+        "en_us": "Color Saturation",
+        "ja_jp": "Color Saturation",
+        "en_gb": "Color Saturation",
+        "en_ca": "Color Saturation",
+        "en": "Color Saturation",
+        "pt_pt": "Color Saturation",
+        "ko_kr": "Color Saturation",
+        "zh-hans": "Color Saturation"
+      }
+    },
+    {
+      "id": 10,
+      "priority": 10,
+      "version": 1,
+      "translation": {
+        "en_us": "Vintage",
+        "ja_jp": "Vintage",
+        "en_gb": "Vintage",
+        "en_ca": "Vintage",
+        "en": "Vintage",
+        "pt_pt": "Vintage",
+        "ko_kr": "Vintage",
+        "zh-hans": "Vintage"
+      }
+    },
+    {
+      "id": 12,
+      "priority": 12,
+      "version": 1,
+      "translation": {
+        "en_us": "Crayola",
+        "ja_jp": "Crayola",
+        "en_gb": "Crayola",
+        "en_ca": "Crayola",
+        "en": "Crayola",
+        "pt_pt": "Crayola",
+        "ko_kr": "Crayola",
+        "zh-hans": "Crayola"
+      }
+    },
+    {
+      "id": 13,
+      "priority": 13,
+      "version": 1,
+      "translation": {
+        "en_us": "Wood",
+        "ja_jp": "Wood",
+        "en_gb": "Wood",
+        "en_ca": "Wood",
+        "en": "Wood",
+        "pt_pt": "Wood",
+        "ko_kr": "Wood",
+        "zh-hans": "Wood"
+      }
+    },
+    {
+      "id": 14,
+      "priority": 14,
+      "version": 1,
+      "translation": {
+        "en_us": "Old Letter",
+        "ja_jp": "Old Letter",
+        "en_gb": "Old Letter",
+        "en_ca": "Old Letter",
+        "en": "Old Letter",
+        "pt_pt": "Old Letter",
+        "ko_kr": "Old Letter",
+        "zh-hans": "Old Letter"
+      }
+    },
+    {
+      "id": 15,
+      "priority": 15,
+      "version": 1,
+      "translation": {
+        "en_us": "Soft Lens",
+        "ja_jp": "Soft Lens",
+        "en_gb": "Soft Lens",
+        "en_ca": "Soft Lens",
+        "en": "Soft Lens",
+        "pt_pt": "Soft Lens",
+        "ko_kr": "Soft Lens",
+        "zh-hans": "Soft Lens"
+      }
+    },
+    {
+      "id": 16,
+      "priority": 16,
+      "version": 1,
+      "translation": {
+        "en_us": "Glitter",
+        "ja_jp": "Glitter",
+        "en_gb": "Glitter",
+        "en_ca": "Glitter",
+        "en": "Glitter",
+        "pt_pt": "Glitter",
+        "ko_kr": "Glitter",
+        "zh-hans": "Glitter"
+      }
+    },
+    {
+      "id": 17,
+      "priority": 17,
+      "version": 1,
+      "translation": {
+        "en_us": "Jigsaw Puzzle",
+        "ja_jp": "Jigsaw Puzzle",
+        "en_gb": "Jigsaw Puzzle",
+        "en_ca": "Jigsaw Puzzle",
+        "en": "Jigsaw Puzzle",
+        "pt_pt": "Jigsaw Puzzle",
+        "ko_kr": "Jigsaw Puzzle",
+        "zh-hans": "Jigsaw Puzzle"
+      }
+    },
+    {
+      "id": 18,
+      "priority": 18,
+      "version": 1,
+      "translation": {
+        "en_us": "Mosaic",
+        "ja_jp": "Mosaic",
+        "en_gb": "Mosaic",
+        "en_ca": "Mosaic",
+        "en": "Mosaic",
+        "pt_pt": "Mosaic",
+        "ko_kr": "Mosaic",
+        "zh-hans": "Mosaic"
+      }
+    },
+    {
+      "id": 19,
+      "priority": 19,
+      "version": 1,
+      "translation": {
+        "en_us": "Spring",
+        "ja_jp": "Spring",
+        "en_gb": "Spring",
+        "en_ca": "Spring",
+        "en": "Spring",
+        "pt_pt": "Spring",
+        "ko_kr": "Spring",
+        "zh-hans": "Spring"
+      }
+    },
+    {
+      "id": 20,
+      "priority": 20,
+      "version": 1,
+      "translation": {
+        "en_us": "Summner",
+        "ja_jp": "Summner",
+        "en_gb": "Summner",
+        "en_ca": "Summner",
+        "en": "Summner",
+        "pt_pt": "Summner",
+        "ko_kr": "Summner",
+        "zh-hans": "Summner"
+      }
+    },
+    {
+      "id": 21,
+      "priority": 21,
+      "version": 1,
+      "translation": {
+        "en_us": "Autumn",
+        "ja_jp": "Autumn",
+        "en_gb": "Autumn",
+        "en_ca": "Autumn",
+        "en": "Autumn",
+        "pt_pt": "Autumn",
+        "ko_kr": "Autumn",
+        "zh-hans": "Autumn"
+      }
+    },
+    {
+      "id": 22,
+      "priority": 22,
+      "version": 1,
+      "translation": {
+        "en_us": "Winter",
+        "ja_jp": "Winter",
+        "en_gb": "Winter",
+        "en_ca": "Winter",
+        "en": "Winter",
+        "pt_pt": "Winter",
+        "ko_kr": "Winter",
+        "zh-hans": "Winter"
+      }
+    }
+  ],
+  "sticker_categories": [
+    {
+      "id": 1,
+      "version": 1,
+      "priority": 0,
+      "stickers": [
+        {
+          "id": 123,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 124,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 125,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 126,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 127,
+          "priority": 5,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "version": 1,
+      "priority": 1,
+      "stickers": [
+        {
+          "id": 128,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 129,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 130,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 131,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 132,
+          "priority": 5,
+          "version": 1
+        },
+        {
+          "id": 133,
+          "priority": 5,
+          "version": 1
+        },
+        {
+          "id": 134,
+          "priority": 5,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "version": 1,
+      "priority": 2,
+      "stickers": [
+        {
+          "id": 135,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 136,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 137,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 138,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "version": 1,
+      "priority": 3,
+      "stickers": [
+        {
+          "id": 145,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 146,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 147,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 148,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 149,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "version": 1,
+      "priority": 4,
+      "stickers": [
+        {
+          "id": 150,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 151,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 152,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 153,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 154,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "version": 1,
+      "priority": 5,
+      "stickers": [
+        {
+          "id": 155,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 156,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 157,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 158,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 159,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 160,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "version": 1,
+      "priority": 6,
+      "stickers": [
+        {
+          "id": 161,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 162,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 163,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 164,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 165,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "version": 1,
+      "priority": 7,
+      "stickers": [
+        {
+          "id": 166,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 167,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 168,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 169,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 170,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "version": 1,
+      "priority": 8,
+      "stickers": [
+        {
+          "id": 171,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 172,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 173,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 174,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 175,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "version": 1,
+      "priority": 9,
+      "stickers": [
+        {
+          "id": 176,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 177,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 178,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 179,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "version": 1,
+      "priority": 10,
+      "stickers": [
+        {
+          "id": 180,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 181,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 182,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 183,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 184,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 185,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "version": 1,
+      "priority": 11,
+      "stickers": [
+        {
+          "id": 186,
+          "priority": 1,
+          "version": 1
+        },
+        {
+          "id": 187,
+          "priority": 2,
+          "version": 1
+        },
+        {
+          "id": 188,
+          "priority": 3,
+          "version": 1
+        },
+        {
+          "id": 189,
+          "priority": 4,
+          "version": 1
+        },
+        {
+          "id": 190,
+          "priority": 4,
+          "version": 1
+        }
+      ]
+    }
+  ],
+  "frame_categories": [
+    {
+      "id": 0,
+      "version": 1,
+      "priority": 1,
+      "frames": [
+        {
+          "id": 100,
+          "priority": 1,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 101,
+          "priority": 2,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 102,
+          "priority": 3,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 103,
+          "priority": 4,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 104,
+          "priority": 5,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 105,
+          "priority": 6,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 106,
+          "priority": 7,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 107,
+          "priority": 8,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 108,
+          "priority": 9,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 109,
+          "priority": 10,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 110,
+          "priority": 11,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 111,
+          "priority": 12,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 112,
+          "priority": 13,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 113,
+          "priority": 14,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 114,
+          "priority": 15,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 115,
+          "priority": 16,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 116,
+          "priority": 17,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 117,
+          "priority": 18,
+          "version": 1,
+          "orientation": 2
+        },
+        {
+          "id": 118,
+          "priority": 19,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 119,
+          "priority": 20,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 120,
+          "priority": 21,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 121,
+          "priority": 22,
+          "version": 1,
+          "orientation": 1
+        },
+        {
+          "id": 122,
+          "priority": 23,
+          "version": 1,
+          "orientation": 1
+        }
+      ]
+    }
+  ],
+  "patterns": [
+    {
+      "id": 600,
+      "priority": 1,
+      "version": 1
+    },
+    {
+      "id": 601,
+      "priority": 2,
+      "version": 1
+    },
+    {
+      "id": 602,
+      "priority": 3,
+      "version": 1
+    },
+    {
+      "id": 603,
+      "priority": 4,
+      "version": 1
+    },
+    {
+      "id": 604,
+      "priority": 5,
+      "version": 1
+    }
+  ]
+}

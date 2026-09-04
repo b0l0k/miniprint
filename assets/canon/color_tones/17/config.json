@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "linearburn",
+            "texture": "f1_blend.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "overlay",
+            "texture": "f3_blend.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

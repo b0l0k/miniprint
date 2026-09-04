@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "vividlight",
+            "texture": "f1_blend_hard_light.png",
+            "adjusts": [100.0]
+        }
+    ]
+}

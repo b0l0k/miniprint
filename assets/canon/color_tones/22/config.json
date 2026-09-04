@@ -1,0 +1,10 @@
+{
+    "filters": [
+        {
+            "type": "blend",
+            "mode": "colorburn",
+            "texture": "winter.png",
+            "adjusts": [100.0]
+        }
+    ]
+}
