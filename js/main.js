@@ -1,8 +1,8 @@
-import { COLLAGES, Studio } from "./studio.js?v=7";
+import { COLLAGES, Studio } from "./studio.js?v=10";
 import { prepareStageCanvas } from "./image.js?v=3";
 import { ZoeminiPrinter, serialSupported } from "./printer.js?v=6";
 import { EMOJI_GROUPS, searchEmojis } from "./emoji.js?v=2";
-import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=5";
+import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=6";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -35,6 +35,7 @@ const els = {
   bigger: $("#btn-bigger"),
   rotL: $("#btn-rot-left"),
   rotR: $("#btn-rot-right"),
+  flipBtn: $("#btn-flip"),
   del: $("#btn-delete"),
   textTools: $("#text-tools"),
   photoTools: $("#photo-tools"),
@@ -201,12 +202,31 @@ function syncPhotoTools() {
   });
 }
 
+function syncSelectionActions() {
+  const sel = studio.selection;
+  const isPhoto = sel?.kind === "slot" && Boolean(studio.slots[sel.index]?.bitmap);
+  const isSticker = sel?.kind === "sticker";
+  const isText = sel?.kind === "text";
+  const canRotate = isPhoto || isSticker || isText;
+  const canFlip = isPhoto || isSticker;
+  const canScale = isPhoto || isSticker || isText;
+  const canDelete = Boolean(sel);
+
+  els.rotL.disabled = !canRotate;
+  els.rotR.disabled = !canRotate;
+  if (els.flipBtn) els.flipBtn.disabled = !canFlip;
+  els.smaller.disabled = !canScale;
+  els.bigger.disabled = !canScale;
+  els.del.disabled = !canDelete;
+}
+
 function updateSelectionLabel() {
   const sel = studio.selection;
   if (!sel) {
     els.selLabel.textContent = t("sel.none");
     syncTextTools();
     syncPhotoTools();
+    syncSelectionActions();
     return;
   }
   if (sel.kind === "sticker") {
@@ -222,6 +242,7 @@ function updateSelectionLabel() {
   }
   syncTextTools();
   syncPhotoTools();
+  syncSelectionActions();
 }
 
 function buildTextTools() {
@@ -759,6 +780,7 @@ async function boot() {
   els.bigger.addEventListener("click", () => studio.scaleSelection(1.1));
   els.rotL.addEventListener("click", () => studio.rotateSelection(-0.15));
   els.rotR.addEventListener("click", () => studio.rotateSelection(0.15));
+  els.flipBtn?.addEventListener("click", () => studio.flipSelection());
   els.del.addEventListener("click", () => studio.deleteSelection());
 
   els.logToggle.addEventListener("click", () => {

@@ -8,7 +8,7 @@ const list = (str) => str.trim().split(/\s+/);
 export const EMOJI_GROUPS = [
   {
     name: "Favoris",
-    emojis: list("💖 ⭐ ✨ 🌈 🦄 🐱 🐶 🐰 🐻 🌸 🌻 🦋 🍦 🎂 🎈 📷 👑 😘 😂 😎 🔥 🎵 🌙 ☁️ 🍓 🍩 🎀 🐣 🐯 🍀 💜 💞 🧁 🍉 🍒 💗"),
+    emojis: list("💖 ⭐ ✨ 🌈 🦄 🐹 🐶 🐕 🐩 🐱 🐰 🐻 🌸 🌻 🦋 🍦 🎂 🎈 📷 👑 😘 😂 😎 🔥 🎵 🌙 ☁️ 🍓 🍩 🎀 🐣 🐯 🍀 💜 💞 🧁 🍉 🍒 💗"),
   },
   {
     name: "Smileys",
@@ -20,7 +20,7 @@ export const EMOJI_GROUPS = [
   },
   {
     name: "Animaux",
-    emojis: list("🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🐛 🦋 🐌 🐞 🐜 🦗 🕷️ 🕸️ 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🐄 🐎 🐖 🐑 🦙 🐐 🦌 🐕 🐩 🐈 🐓 🦃 🦚 🦜 🦢 🕊️ 🐇 🦝 🦡 🦦 🦥 🐁 🐀 🐿️ 🦔 🐾 🐉 🦠"),
+    emojis: list("🐹 🐶 🐕 🐩 🐭 🐁 🐀 🐿️ 🐱 🐈 🐰 🐇 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🐛 🦋 🐌 🐞 🐜 🦗 🕷️ 🕸️ 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦑 🦐 🦞 🦀 🐡 🐠 🐟 🐬 🐳 🐋 🦈 🐊 🐅 🐆 🦓 🦍 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🐄 🐎 🐖 🐑 🦙 🐐 🦌 🐓 🦃 🦚 🦜 🦢 🕊️ 🦝 🦡 🦦 🦥 🦔 🐾 🐉 🦠"),
   },
   {
     name: "Nature",
@@ -56,7 +56,7 @@ export const EMOJI_TAGS = {
   "🌈": "rainbow arc-en-ciel colors couleurs weather meteo",
   "🦄": "unicorn licorne horse cheval fantasy magie magic",
   "🐱": "cat chat kitten chaton animal pet",
-  "🐶": "dog chien puppy chiot animal pet",
+  "🐶": "dog chien puppy chiot animal pet cute mignon",
   "🐰": "rabbit lapin bunny animal",
   "🐻": "bear ours animal",
   "🌸": "cherry blossom fleur de cerisier flower fleur spring printemps pink rose",
@@ -241,7 +241,7 @@ export const EMOJI_TAGS = {
   "👄": "mouth bouche lips levres kiss bisou",
   "💋": "kiss mark trace de rouge a levres bisou kiss love amour",
   "🐭": "mouse face souris animal",
-  "🐹": "hamster animal pet cute mignon",
+  "🐹": "hamster animal pet cute mignon rodent rongeur",
   "🦊": "fox renard animal",
   "🐼": "panda bear ours animal",
   "🐨": "koala animal australia australie",
@@ -312,8 +312,8 @@ export const EMOJI_TAGS = {
   "🦙": "llama lama alpaca animal",
   "🐐": "goat chevre animal farm ferme",
   "🦌": "deer cerf animal",
-  "🐕": "dog chien animal pet",
-  "🐩": "poodle caniche dog chien",
+  "🐕": "dog chien animal pet puppy chiot",
+  "🐩": "poodle caniche dog chien fluffy boucle",
   "🐈": "cat chat animal pet",
   "🐓": "rooster coq chicken animal farm ferme",
   "🦃": "turkey dinde thanksgiving animal bird oiseau",

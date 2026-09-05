@@ -7,7 +7,7 @@ import {
   loadImage,
   pathRoundRect,
 } from "./filters.js?v=3";
-import { t } from "./i18n.js?v=5";
+import { t } from "./i18n.js?v=6";
 
 export const COLLAGES = [
   { id: "single", labelKey: "collage.single", slots: [{ x: 0, y: 0, w: 1, h: 1 }] },
@@ -227,7 +227,7 @@ export class Studio {
     window.addEventListener("resize", () => this.fitShell());
   }
 
-  async loadCatalog(url = asset("assets/canon/catalog.json?v=2")) {
+  async loadCatalog(url = asset("assets/canon/catalog.json?v=7")) {
     const res = await fetch(url);
     this.catalog = rebasePaths(await res.json());
     // précharge cadre + thumbs utiles
@@ -424,6 +424,7 @@ export class Studio {
       emoji,
       scale: 1,
       rotation: (Math.random() - 0.5) * 0.35,
+      flipX: false,
     });
     this.selection = { kind: "sticker", index: this.stickers.length - 1 };
     this.queueRender();
@@ -438,6 +439,7 @@ export class Studio {
       ...this.#spawnPoint(),
       scale: 0.85,
       rotation: (Math.random() - 0.5) * 0.3,
+      flipX: false,
     });
     this.selection = { kind: "sticker", index: this.stickers.length - 1 };
     loadImage(sticker.src).then(() => this.queueRender());
@@ -489,8 +491,9 @@ export class Studio {
     if (this.selection?.kind === "slot") {
       const slot = this.slots[this.selection.index];
       if (!slot?.bitmap || slot.fit === "stretch") return;
-      slot.panX = (slot.panX || 0) + dx / this.W;
-      slot.panY = (slot.panY || 0) + dy / this.H;
+      const local = this.#slotPanDelta(slot, dx, dy);
+      slot.panX = (slot.panX || 0) + local.dx / this.W;
+      slot.panY = (slot.panY || 0) + local.dy / this.H;
       this.#clampSlotPan(this.selection.index);
       this.queueRender();
       return;
@@ -537,9 +540,49 @@ export class Studio {
   }
 
   rotateSelection(delta) {
+    const sel = this.selection;
+    if (sel?.kind === "slot") {
+      const slot = this.slots[sel.index];
+      if (!slot?.bitmap) return;
+      // Photos : quarts de tour (90°) — ↺/↻ pour mettre à l’envers, etc.
+      const step = delta < 0 ? -1 : 1;
+      slot.rotQuarters = (((slot.rotQuarters || 0) + step) % 4 + 4) % 4;
+      this.queueRender();
+      return;
+    }
+    const item = this.#selectedItem();
+    if (!item) return;
+    const { angle } = snapRotation(item.rotation + delta);
+    item.rotation = angle;
+    this.queueRender();
+  }
+
+  /** Miroir horizontal (photo, sticker, emoji). */
+  flipSelection() {
+    const sel = this.selection;
+    if (!sel) return;
+    if (sel.kind === "slot") {
+      const slot = this.slots[sel.index];
+      if (!slot?.bitmap) return;
+      slot.flipX = !slot.flipX;
+      // Le pan suit le miroir pour que le cadrage ne « saute » pas.
+      slot.panX = -(slot.panX || 0);
+      this.queueRender();
+      return;
+    }
+    if (sel.kind === "sticker") {
+      const s = this.stickers[sel.index];
+      if (!s) return;
+      s.flipX = !s.flipX;
+      this.queueRender();
+    }
+  }
+
+  /** Remet la rotation de la sélection à 0° (droit). */
+  resetSelectionRotation() {
     const item = this.#selectedItem();
     if (!item || this.selection?.kind === "slot") return;
-    item.rotation += delta;
+    item.rotation = 0;
     this.queueRender();
   }
 
@@ -573,6 +616,8 @@ export class Studio {
       panX: 0,
       panY: 0,
       zoom: 1,
+      flipX: false,
+      rotQuarters: 0,
     };
     this.selection = { kind: "slot", index };
     this.queueRender();
@@ -667,6 +712,7 @@ export class Studio {
       ctx.save();
       ctx.translate(s.x, s.y);
       ctx.rotate(s.rotation);
+      if (s.flipX) ctx.scale(-1, 1);
       if (s.type === "emoji") {
         const img = emojiCanvas(s.emoji, 256);
         ctx.drawImage(img, -size / 2, -size / 2, size, size);
@@ -684,11 +730,10 @@ export class Studio {
         }
       }
       if (showUi && this.selection?.kind === "sticker" && this.selection.index === i) {
-        ctx.strokeStyle = "#ff6b9d";
-        ctx.lineWidth = 5;
-        ctx.setLineDash([12, 8]);
-        ctx.strokeRect(-size / 2 - 10, -size / 2 - 10, size + 20, size + 20);
-        ctx.setLineDash([]);
+        const b = this.#itemBounds(s, "sticker");
+        this.#drawTransformHandles(ctx, b.halfW, b.halfH, {
+          snapped: this.#drag?.kind === "rotate" && this.#drag.snapped,
+        });
       }
       ctx.restore();
     }
@@ -709,12 +754,10 @@ export class Studio {
       ctx.fillStyle = t.color;
       ctx.fillText(t.text, 0, 0);
       if (showUi && this.selection?.kind === "text" && this.selection.index === i) {
-        const tw = ctx.measureText(t.text).width;
-        ctx.strokeStyle = "#ff6b9d";
-        ctx.lineWidth = 3;
-        ctx.setLineDash([8, 6]);
-        ctx.strokeRect(-tw / 2 - 14, -t.size / 2 - 12, tw + 28, t.size + 24);
-        ctx.setLineDash([]);
+        const b = this.#itemBounds(t, "text");
+        this.#drawTransformHandles(ctx, b.halfW, b.halfH, {
+          snapped: this.#drag?.kind === "rotate" && this.#drag.snapped,
+        });
       }
       ctx.restore();
     });
@@ -832,7 +875,16 @@ export class Studio {
     }
     ctx.clip();
     if (slot?.bitmap) {
-      drawFitted(ctx, slot.bitmap, x, y, w, h, {
+      const q = (((slot.rotQuarters || 0) % 4) + 4) % 4;
+      const cx = x + w / 2;
+      const cy = y + h / 2;
+      ctx.translate(cx, cy);
+      ctx.rotate((q * Math.PI) / 2);
+      if (slot.flipX) ctx.scale(-1, 1);
+      // À 90° / 270°, le rectangle local est tourné : on échange w/h.
+      const fw = q % 2 === 1 ? h : w;
+      const fh = q % 2 === 1 ? w : h;
+      drawFitted(ctx, slot.bitmap, -fw / 2, -fh / 2, fw, fh, {
         fit: slot.fit || "contain",
         zoom: slot.zoom ?? 1,
         panX: slot.panX ?? 0,
@@ -845,10 +897,164 @@ export class Studio {
     ctx.restore();
   }
 
+  /**
+   * Delta écran → pan local (après rotQuarters + flipX).
+   * @param {any} slot
+   * @param {number} dx
+   * @param {number} dy
+   */
+  #slotPanDelta(slot, dx, dy) {
+    let lx = dx;
+    let ly = dy;
+    const q = (((slot.rotQuarters || 0) % 4) + 4) % 4;
+    if (q === 1) [lx, ly] = [dy, -dx];
+    else if (q === 2) [lx, ly] = [-dx, -dy];
+    else if (q === 3) [lx, ly] = [-dy, dx];
+    if (slot.flipX) lx = -lx;
+    return { dx: lx, dy: ly };
+  }
+
   #selectedItem() {
     if (!this.selection) return null;
     if (this.selection.kind === "sticker") return this.stickers[this.selection.index];
     if (this.selection.kind === "text") return this.texts[this.selection.index];
+    return null;
+  }
+
+  /**
+   * Demi-dimensions locales du cadre de sélection (après translate+rotate).
+   * @param {any} item
+   * @param {'sticker'|'text'} kind
+   */
+  #itemBounds(item, kind) {
+    if (kind === "sticker") {
+      const half = 220 * item.scale * 0.5 + 10;
+      return { halfW: half, halfH: half };
+    }
+    const tw = this.#measureTextWidth(item);
+    return {
+      halfW: tw / 2 + 14,
+      halfH: item.size / 2 + 12,
+    };
+  }
+
+  #measureTextWidth(item) {
+    const ctx = this.ctx;
+    const family = item.font || "Mini Gochi";
+    const weight = item.weight || "700";
+    ctx.save();
+    ctx.font = `${weight} ${item.size}px "${family}", "Nunito", sans-serif`;
+    const w = ctx.measureText(item.text).width;
+    ctx.restore();
+    return w;
+  }
+
+  /**
+   * Dessine cadre + 4 coins + poignée de rotation (espace local déjà transformé).
+   * @param {CanvasRenderingContext2D} ctx
+   * @param {number} halfW
+   * @param {number} halfH
+   * @param {{ snapped?: boolean }} [opts]
+   */
+  #drawTransformHandles(ctx, halfW, halfH, opts = {}) {
+    const hs = HANDLE_SIZE;
+    const stem = ROTATE_STEM;
+    const snapped = Boolean(opts.snapped);
+    const corners = [
+      [-halfW, -halfH],
+      [halfW, -halfH],
+      [halfW, halfH],
+      [-halfW, halfH],
+    ];
+
+    ctx.save();
+    ctx.setLineDash([]);
+
+    // Cadre
+    ctx.strokeStyle = snapped ? "#ff6b9d" : "rgba(255,107,157,0.95)";
+    ctx.lineWidth = snapped ? 7 : 4;
+    ctx.strokeRect(-halfW, -halfH, halfW * 2, halfH * 2);
+
+    // Guide d’alignement quand aimanté
+    if (snapped) {
+      ctx.strokeStyle = "rgba(255,107,157,0.55)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([10, 8]);
+      ctx.beginPath();
+      ctx.moveTo(-halfW - 24, 0);
+      ctx.lineTo(halfW + 24, 0);
+      ctx.moveTo(0, -halfH - 24);
+      ctx.lineTo(0, halfH + 24);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Tige + poignée de rotation
+    const ry = -halfH - stem;
+    ctx.strokeStyle = "#ff6b9d";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, -halfH);
+    ctx.lineTo(0, ry);
+    ctx.stroke();
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(0, ry, hs * 0.55, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#ff6b9d";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    // Petite flèche courbe (suggestion rotation)
+    ctx.beginPath();
+    ctx.arc(0, ry, hs * 0.28, -0.8, Math.PI * 0.9);
+    ctx.stroke();
+
+    // Coins
+    for (const [cx, cy] of corners) {
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#ff6b9d";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.rect(cx - hs / 2, cy - hs / 2, hs, hs);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  /** Point monde → local (centré, non tourné). */
+  #toLocal(item, x, y) {
+    const dx = x - item.x;
+    const dy = y - item.y;
+    const c = Math.cos(-item.rotation);
+    const s = Math.sin(-item.rotation);
+    let lx = dx * c - dy * s;
+    const ly = dx * s + dy * c;
+    if (item.flipX) lx = -lx;
+    return { x: lx, y: ly };
+  }
+
+  /**
+   * Poignée sous le pointeur pour un item sticker/texte.
+   * @returns {null | { handle: 'rotate'|'nw'|'ne'|'se'|'sw' }}
+   */
+  #hitHandleOnItem(item, kind, x, y) {
+    const b = this.#itemBounds(item, kind);
+    const p = this.#toLocal(item, x, y);
+    const hitR = HANDLE_SIZE * 0.75;
+    const rotY = -b.halfH - ROTATE_STEM;
+    if (Math.hypot(p.x - 0, p.y - rotY) <= hitR) return { handle: "rotate" };
+    const corners = [
+      ["nw", -b.halfW, -b.halfH],
+      ["ne", b.halfW, -b.halfH],
+      ["se", b.halfW, b.halfH],
+      ["sw", -b.halfW, b.halfH],
+    ];
+    for (const [name, cx, cy] of corners) {
+      if (Math.abs(p.x - cx) <= hitR && Math.abs(p.y - cy) <= hitR) {
+        return { handle: name };
+      }
+    }
     return null;
   }
 
@@ -862,9 +1068,52 @@ export class Studio {
       };
     };
 
+    const cursorForHandle = (handle) => {
+      if (handle === "rotate") return "grab";
+      if (handle === "nw" || handle === "se") return "nwse-resize";
+      if (handle === "ne" || handle === "sw") return "nesw-resize";
+      return "move";
+    };
+
     el.addEventListener("pointerdown", (e) => {
       el.setPointerCapture(e.pointerId);
       const p = pos(e);
+
+      // Poignées de la sélection courante en priorité
+      if (this.selection?.kind === "sticker" || this.selection?.kind === "text") {
+        const item = this.#selectedItem();
+        const h = item && this.#hitHandleOnItem(item, this.selection.kind, p.x, p.y);
+        if (h?.handle === "rotate") {
+          this.#drag = {
+            kind: "rotate",
+            index: this.selection.index,
+            itemKind: this.selection.kind,
+            startPointerAngle: Math.atan2(p.y - item.y, p.x - item.x),
+            startRot: item.rotation,
+            snapped: false,
+          };
+          el.style.cursor = "grabbing";
+          this.queueRender();
+          this.onChange();
+          return;
+        }
+        if (h?.handle) {
+          this.#drag = {
+            kind: "scale",
+            handle: h.handle,
+            index: this.selection.index,
+            itemKind: this.selection.kind,
+            startDist: Math.max(8, Math.hypot(p.x - item.x, p.y - item.y)),
+            startScale: item.scale ?? 1,
+            startSize: item.size ?? 72,
+          };
+          el.style.cursor = cursorForHandle(h.handle);
+          this.queueRender();
+          this.onChange();
+          return;
+        }
+      }
+
       const hit = this.#hitTest(p.x, p.y);
       this.selection = hit;
       if (hit?.kind === "sticker" || hit?.kind === "text") {
@@ -875,13 +1124,13 @@ export class Studio {
           ox: p.x - item.x,
           oy: p.y - item.y,
         };
+        el.style.cursor = "move";
       } else if (hit?.kind === "slot") {
         const slot = this.slots[hit.index];
         if (!slot?.bitmap) {
           this.pickPhotoForSlot(hit.index);
           this.#drag = null;
         } else if (slot.fit !== "stretch") {
-          // Recadrage : glisser la photo (surtout utile en mode Remplir).
           this.#drag = {
             kind: "slot-pan",
             index: hit.index,
@@ -902,13 +1151,24 @@ export class Studio {
     el.addEventListener("pointermove", (e) => {
       if (!this.#drag) {
         const p = pos(e);
+        if (this.selection?.kind === "sticker" || this.selection?.kind === "text") {
+          const item = this.#selectedItem();
+          const h = item && this.#hitHandleOnItem(item, this.selection.kind, p.x, p.y);
+          if (h) {
+            el.style.cursor = cursorForHandle(h.handle);
+            return;
+          }
+        }
         const hit = this.#hitTest(p.x, p.y);
         const slot = hit?.kind === "slot" ? this.slots[hit.index] : null;
-        el.style.cursor =
-          slot?.bitmap && slot.fit !== "stretch" ? "grab" : "grab";
+        if (hit?.kind === "sticker" || hit?.kind === "text") el.style.cursor = "move";
+        else if (slot?.bitmap && slot.fit !== "stretch") el.style.cursor = "grab";
+        else el.style.cursor = "default";
         return;
       }
+
       const p = pos(e);
+
       if (this.#drag.kind === "slot-pan") {
         const slot = this.slots[this.#drag.index];
         if (!slot?.bitmap) return;
@@ -916,12 +1176,47 @@ export class Studio {
         const dy = p.y - this.#drag.lastY;
         this.#drag.lastX = p.x;
         this.#drag.lastY = p.y;
-        slot.panX = (slot.panX || 0) + dx / this.W;
-        slot.panY = (slot.panY || 0) + dy / this.H;
+        const local = this.#slotPanDelta(slot, dx, dy);
+        slot.panX = (slot.panX || 0) + local.dx / this.W;
+        slot.panY = (slot.panY || 0) + local.dy / this.H;
         this.#clampSlotPan(this.#drag.index);
         this.queueRender();
         return;
       }
+
+      if (this.#drag.kind === "rotate") {
+        const item =
+          this.#drag.itemKind === "sticker"
+            ? this.stickers[this.#drag.index]
+            : this.texts[this.#drag.index];
+        if (!item) return;
+        const ang = Math.atan2(p.y - item.y, p.x - item.x);
+        const raw = this.#drag.startRot + (ang - this.#drag.startPointerAngle);
+        const { angle, snapped } = snapRotation(raw);
+        item.rotation = angle;
+        this.#drag.snapped = snapped;
+        el.style.cursor = "grabbing";
+        this.queueRender();
+        return;
+      }
+
+      if (this.#drag.kind === "scale") {
+        const item =
+          this.#drag.itemKind === "sticker"
+            ? this.stickers[this.#drag.index]
+            : this.texts[this.#drag.index];
+        if (!item) return;
+        const dist = Math.max(8, Math.hypot(p.x - item.x, p.y - item.y));
+        const factor = dist / this.#drag.startDist;
+        if (this.#drag.itemKind === "sticker") {
+          item.scale = clamp(this.#drag.startScale * factor, 0.2, 4);
+        } else {
+          item.size = clamp(this.#drag.startSize * factor, 24, 220);
+        }
+        this.queueRender();
+        return;
+      }
+
       const item =
         this.#drag.kind === "sticker"
           ? this.stickers[this.#drag.index]
@@ -933,13 +1228,34 @@ export class Studio {
     });
 
     el.addEventListener("pointerup", () => {
+      if (this.#drag?.kind === "rotate" && this.#drag.snapped) {
+        const item =
+          this.#drag.itemKind === "sticker"
+            ? this.stickers[this.#drag.index]
+            : this.texts[this.#drag.index];
+        if (item) {
+          const { angle } = snapRotation(item.rotation);
+          item.rotation = angle;
+        }
+      }
       this.#drag = null;
-      el.style.cursor = "grab";
+      el.style.cursor = "default";
+      this.queueRender();
       this.onChange();
     });
 
     el.addEventListener("dblclick", (e) => {
       const p = pos(e);
+      if (this.selection?.kind === "sticker" || this.selection?.kind === "text") {
+        const item = this.#selectedItem();
+        const h = item && this.#hitHandleOnItem(item, this.selection.kind, p.x, p.y);
+        if (h?.handle === "rotate") {
+          item.rotation = 0;
+          this.queueRender();
+          this.onChange();
+          return;
+        }
+      }
       const hit = this.#hitTest(p.x, p.y);
       if (hit?.kind === "slot") this.pickPhotoForSlot(hit.index);
       if (hit?.kind === "text") {
@@ -962,7 +1278,9 @@ export class Studio {
     const rect = this.slotRects()[index];
     if (!slot?.bitmap || !rect || slot.fit === "stretch") return;
 
-    const { w, h } = rect;
+    const q = (((slot.rotQuarters || 0) % 4) + 4) % 4;
+    const w = q % 2 === 1 ? rect.h : rect.w;
+    const h = q % 2 === 1 ? rect.w : rect.h;
     const iw = slot.bitmap.width;
     const ih = slot.bitmap.height;
     const zoom = slot.zoom ?? 1;
@@ -980,15 +1298,20 @@ export class Studio {
   }
 
   #hitTest(x, y) {
+    // Corps des stickers / textes (poignées déjà testées à part si sélectionnés)
     for (let i = this.stickers.length - 1; i >= 0; i--) {
       const s = this.stickers[i];
-      if (Math.hypot(x - s.x, y - s.y) <= 110 * s.scale) {
+      const b = this.#itemBounds(s, "sticker");
+      const p = this.#toLocal(s, x, y);
+      if (Math.abs(p.x) <= b.halfW && Math.abs(p.y) <= b.halfH) {
         return { kind: "sticker", index: i };
       }
     }
     for (let i = this.texts.length - 1; i >= 0; i--) {
       const t = this.texts[i];
-      if (Math.hypot(x - t.x, y - t.y) <= t.size * 1.2) {
+      const b = this.#itemBounds(t, "text");
+      const p = this.#toLocal(t, x, y);
+      if (Math.abs(p.x) <= b.halfW && Math.abs(p.y) <= b.halfH) {
         return { kind: "text", index: i };
       }
     }
@@ -1015,11 +1338,37 @@ export class Studio {
 }
 
 function emptySlot() {
-  return { bitmap: null, fit: "contain", panX: 0, panY: 0, zoom: 1 };
+  return {
+    bitmap: null,
+    fit: "contain",
+    panX: 0,
+    panY: 0,
+    zoom: 1,
+    flipX: false,
+    rotQuarters: 0,
+  };
 }
 function uid() {
   return Math.random().toString(36).slice(2, 9);
 }
 function clamp(n, a, b) {
   return Math.max(a, Math.min(b, n));
+}
+
+const HANDLE_SIZE = 36;
+const ROTATE_STEM = 64;
+const SNAP_THRESH = (6 * Math.PI) / 180;
+
+/**
+ * Aimante l’angle vers le multiple de 90° le plus proche.
+ * @param {number} rad
+ * @returns {{ angle: number, snapped: boolean }}
+ */
+function snapRotation(rad) {
+  const step = Math.PI / 2;
+  const nearest = Math.round(rad / step) * step;
+  if (Math.abs(rad - nearest) <= SNAP_THRESH) {
+    return { angle: nearest, snapped: true };
+  }
+  return { angle: rad, snapped: false };
 }

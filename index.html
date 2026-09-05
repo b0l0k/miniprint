@@ -77,6 +77,9 @@
 
           <section class="tab-panel" data-panel="stickers">
             <p class="panel-hint" data-i18n="stickers.hint">Stickers Canon + emojis — clique puis glisse 🎀</p>
+            <div class="subhead" id="sticker-cat-title" data-i18n="stickers.categories">Catégories</div>
+            <div class="cat-pills" id="sticker-cats"></div>
+            <div class="sticker-grid canon-grid" id="sticker-list"></div>
             <div class="subhead" data-i18n="stickers.emojis">Emojis</div>
             <label class="emoji-search">
               <span class="visually-hidden" data-i18n="stickers.searchAria">Rechercher un emoji</span>
@@ -91,9 +94,6 @@
             </label>
             <div class="cat-pills" id="emoji-cats"></div>
             <div class="sticker-grid emoji-grid" id="emoji-list"></div>
-            <div class="subhead" id="sticker-cat-title" data-i18n="stickers.categories">Catégories</div>
-            <div class="cat-pills" id="sticker-cats"></div>
-            <div class="sticker-grid canon-grid" id="sticker-list"></div>
           </section>
 
           <section class="tab-panel" data-panel="frames">
@@ -166,6 +166,7 @@
             <button type="button" class="btn icon" id="btn-bigger" data-i18n-title="sel.bigger" title="Plus grand">＋</button>
             <button type="button" class="btn icon" id="btn-rot-left" data-i18n-title="sel.rotate" title="Pivoter">↺</button>
             <button type="button" class="btn icon" id="btn-rot-right" data-i18n-title="sel.rotate" title="Pivoter">↻</button>
+            <button type="button" class="btn icon" id="btn-flip" data-i18n-title="sel.flip" title="Miroir gauche ↔ droite">⇄</button>
             <button type="button" class="btn icon danger" id="btn-delete" data-i18n-title="sel.delete" title="Supprimer">✕</button>
           </div>
           <div class="text-tools" id="text-tools" hidden>
@@ -238,6 +239,6 @@
     </footer>
 
     <input type="file" id="file-input" accept="image/*" hidden />
-    <script type="module" src="js/main.js?v=14"></script>
+    <script type="module" src="js/main.js?v=17"></script>
   </body>
 </html>

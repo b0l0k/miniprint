@@ -1,6 +1,825 @@
 {
   "stickers": [
     {
+      "id": 910,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-01.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-01.png"
+    },
+    {
+      "id": 911,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-02.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-02.png"
+    },
+    {
+      "id": 912,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-03.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-03.png"
+    },
+    {
+      "id": 913,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-04.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-04.png"
+    },
+    {
+      "id": 914,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-05.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-05.png"
+    },
+    {
+      "id": 915,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-06.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-06.png"
+    },
+    {
+      "id": 916,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-07.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-07.png"
+    },
+    {
+      "id": 917,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-08.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-08.png"
+    },
+    {
+      "id": 918,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-09.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-09.png"
+    },
+    {
+      "id": 919,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-10.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-10.png"
+    },
+    {
+      "id": 920,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-11.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-11.png"
+    },
+    {
+      "id": 921,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-12.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-12.png"
+    },
+    {
+      "id": 922,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-13.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-13.png"
+    },
+    {
+      "id": 923,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-14.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-14.png"
+    },
+    {
+      "id": 924,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-15.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-15.png"
+    },
+    {
+      "id": 925,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-16.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-16.png"
+    },
+    {
+      "id": 926,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-17.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-17.png"
+    },
+    {
+      "id": 927,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-18.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-18.png"
+    },
+    {
+      "id": 928,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-19.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-19.png"
+    },
+    {
+      "id": 929,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-20.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-20.png"
+    },
+    {
+      "id": 930,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-21.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-21.png"
+    },
+    {
+      "id": 931,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-22.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-22.png"
+    },
+    {
+      "id": 932,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-23.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-23.png"
+    },
+    {
+      "id": 933,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-24.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-24.png"
+    },
+    {
+      "id": 934,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-25.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-25.png"
+    },
+    {
+      "id": 935,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-26.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-26.png"
+    },
+    {
+      "id": 936,
+      "category": "Capybaras",
+      "categoryId": 14,
+      "src": "/assets/extra/stickers/capybara-27.png",
+      "thumb": "/assets/extra/stickers/thumb/capybara-27.png"
+    },
+    {
+      "id": 937,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-01.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-01.png"
+    },
+    {
+      "id": 938,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-02.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-02.png"
+    },
+    {
+      "id": 939,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-03.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-03.png"
+    },
+    {
+      "id": 940,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-04.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-04.png"
+    },
+    {
+      "id": 941,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-05.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-05.png"
+    },
+    {
+      "id": 942,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-06.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-06.png"
+    },
+    {
+      "id": 943,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-07.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-07.png"
+    },
+    {
+      "id": 944,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-08.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-08.png"
+    },
+    {
+      "id": 945,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-09.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-09.png"
+    },
+    {
+      "id": 946,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-10.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-10.png"
+    },
+    {
+      "id": 947,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-11.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-11.png"
+    },
+    {
+      "id": 948,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-12.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-12.png"
+    },
+    {
+      "id": 949,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-13.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-13.png"
+    },
+    {
+      "id": 950,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-14.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-14.png"
+    },
+    {
+      "id": 951,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-15.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-15.png"
+    },
+    {
+      "id": 952,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-16.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-16.png"
+    },
+    {
+      "id": 953,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-17.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-17.png"
+    },
+    {
+      "id": 954,
+      "category": "Chats",
+      "categoryId": 15,
+      "src": "/assets/extra/stickers/cat-18.png",
+      "thumb": "/assets/extra/stickers/thumb/cat-18.png"
+    },
+    {
+      "id": 955,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-01.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-01.png"
+    },
+    {
+      "id": 956,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-02.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-02.png"
+    },
+    {
+      "id": 957,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-03.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-03.png"
+    },
+    {
+      "id": 958,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-04.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-04.png"
+    },
+    {
+      "id": 959,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-05.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-05.png"
+    },
+    {
+      "id": 960,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-06.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-06.png"
+    },
+    {
+      "id": 961,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-07.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-07.png"
+    },
+    {
+      "id": 962,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-08.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-08.png"
+    },
+    {
+      "id": 963,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-09.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-09.png"
+    },
+    {
+      "id": 964,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-10.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-10.png"
+    },
+    {
+      "id": 965,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-11.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-11.png"
+    },
+    {
+      "id": 966,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-12.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-12.png"
+    },
+    {
+      "id": 967,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-13.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-13.png"
+    },
+    {
+      "id": 968,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-14.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-14.png"
+    },
+    {
+      "id": 969,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-15.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-15.png"
+    },
+    {
+      "id": 970,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-16.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-16.png"
+    },
+    {
+      "id": 971,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-17.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-17.png"
+    },
+    {
+      "id": 972,
+      "category": "Chiens",
+      "categoryId": 16,
+      "src": "/assets/extra/stickers/dog-18.png",
+      "thumb": "/assets/extra/stickers/thumb/dog-18.png"
+    },
+    {
+      "id": 973,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-01.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-01.png"
+    },
+    {
+      "id": 974,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-02.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-02.png"
+    },
+    {
+      "id": 975,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-03.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-03.png"
+    },
+    {
+      "id": 976,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-04.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-04.png"
+    },
+    {
+      "id": 977,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-05.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-05.png"
+    },
+    {
+      "id": 978,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-06.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-06.png"
+    },
+    {
+      "id": 979,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-07.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-07.png"
+    },
+    {
+      "id": 980,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-08.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-08.png"
+    },
+    {
+      "id": 981,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-09.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-09.png"
+    },
+    {
+      "id": 982,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-10.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-10.png"
+    },
+    {
+      "id": 983,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-11.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-11.png"
+    },
+    {
+      "id": 984,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-12.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-12.png"
+    },
+    {
+      "id": 985,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-13.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-13.png"
+    },
+    {
+      "id": 986,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-14.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-14.png"
+    },
+    {
+      "id": 987,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-15.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-15.png"
+    },
+    {
+      "id": 988,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-16.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-16.png"
+    },
+    {
+      "id": 989,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-17.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-17.png"
+    },
+    {
+      "id": 990,
+      "category": "Hamsters",
+      "categoryId": 17,
+      "src": "/assets/extra/stickers/hamster-18.png",
+      "thumb": "/assets/extra/stickers/thumb/hamster-18.png"
+    },
+    {
+      "id": 991,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-01.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-01.png"
+    },
+    {
+      "id": 992,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-02.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-02.png"
+    },
+    {
+      "id": 993,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-03.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-03.png"
+    },
+    {
+      "id": 994,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-04.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-04.png"
+    },
+    {
+      "id": 995,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-05.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-05.png"
+    },
+    {
+      "id": 996,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-06.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-06.png"
+    },
+    {
+      "id": 997,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-07.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-07.png"
+    },
+    {
+      "id": 998,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-08.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-08.png"
+    },
+    {
+      "id": 999,
+      "category": "Lapins",
+      "categoryId": 18,
+      "src": "/assets/extra/stickers/bunny-09.png",
+      "thumb": "/assets/extra/stickers/thumb/bunny-09.png"
+    },
+    {
+      "id": 1000,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-01.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-01.png"
+    },
+    {
+      "id": 1001,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-02.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-02.png"
+    },
+    {
+      "id": 1002,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-03.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-03.png"
+    },
+    {
+      "id": 1003,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-04.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-04.png"
+    },
+    {
+      "id": 1004,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-05.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-05.png"
+    },
+    {
+      "id": 1005,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-06.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-06.png"
+    },
+    {
+      "id": 1006,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-07.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-07.png"
+    },
+    {
+      "id": 1007,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-08.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-08.png"
+    },
+    {
+      "id": 1008,
+      "category": "Forêt",
+      "categoryId": 19,
+      "src": "/assets/extra/stickers/forest-09.png",
+      "thumb": "/assets/extra/stickers/thumb/forest-09.png"
+    },
+    {
+      "id": 1009,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-01.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-01.png"
+    },
+    {
+      "id": 1010,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-02.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-02.png"
+    },
+    {
+      "id": 1011,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-03.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-03.png"
+    },
+    {
+      "id": 1012,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-04.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-04.png"
+    },
+    {
+      "id": 1013,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-05.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-05.png"
+    },
+    {
+      "id": 1014,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-06.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-06.png"
+    },
+    {
+      "id": 1015,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-07.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-07.png"
+    },
+    {
+      "id": 1016,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-08.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-08.png"
+    },
+    {
+      "id": 1017,
+      "category": "Ferme",
+      "categoryId": 20,
+      "src": "/assets/extra/stickers/farm-09.png",
+      "thumb": "/assets/extra/stickers/thumb/farm-09.png"
+    },
+    {
+      "id": 1018,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-01.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-01.png"
+    },
+    {
+      "id": 1019,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-02.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-02.png"
+    },
+    {
+      "id": 1020,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-03.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-03.png"
+    },
+    {
+      "id": 1021,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-04.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-04.png"
+    },
+    {
+      "id": 1022,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-05.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-05.png"
+    },
+    {
+      "id": 1023,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-06.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-06.png"
+    },
+    {
+      "id": 1024,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-07.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-07.png"
+    },
+    {
+      "id": 1025,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-08.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-08.png"
+    },
+    {
+      "id": 1026,
+      "category": "Mer",
+      "categoryId": 21,
+      "src": "/assets/extra/stickers/sea-09.png",
+      "thumb": "/assets/extra/stickers/thumb/sea-09.png"
+    },
+    {
       "id": 166,
       "category": "Cœur & ciel",
       "categoryId": 1,

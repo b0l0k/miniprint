@@ -25,6 +25,9 @@ desktop.ini
 .env.*
 !.env.example
 
+# Venv outillage images (tools/cut_stickers.py)
+.venv-img/
+
 # Paquets Android (copie locale / reverse)
 *.apk
 *.aab
