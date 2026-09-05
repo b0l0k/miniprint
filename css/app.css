@@ -744,15 +744,16 @@ body {
   gap: 0.3rem;
   min-height: 0;
   height: 100%;
+  /* Hauteur définie : studio.fitShell() peut s’y fier. */
+  --stage-fluid: 0;
   /* Pas de mini-scrollbar : on réserve la place du hint ci-dessous. */
   overflow: hidden;
 }
 
 .canvas-shell {
-  /* 1.4rem ≈ hint + gap ; 8.75rem ≈ header/footer un peu plus généreux sur Chromebook */
-  --shell-max-h: min(calc(100% - 1.4rem), calc(100dvh - 8.75rem));
   max-width: 100%;
-  max-height: var(--shell-max-h);
+  /* 8.75rem ≈ header/footer un peu plus généreux sur Chromebook */
+  max-height: calc(100dvh - 8.75rem);
   background: white;
   padding: 0.45rem;
   border-radius: 16px;
@@ -764,15 +765,21 @@ body {
   box-sizing: border-box;
 }
 
-/* Dimensionne la coque elle-même (évite canvas à hauteur 0 sur ChromeOS). */
-.canvas-shell[data-orient="portrait"] {
-  width: min(calc(var(--shell-max-h) * 2 / 3), 100%);
+/*
+ * Repli avant que fitShell() ne fixe les pixels. `aspect-ratio` porte sur la
+ * bordure, donc padding + bordure faussent légèrement le ratio ici : c’est
+ * pourquoi la taille exacte est calculée en JS (un rond doit rester rond).
+ */
+.canvas-shell[data-orient="portrait"],
+.canvas-shell[data-orient="round"] {
+  width: min(100%, calc((100dvh - 8.75rem) * 2 / 3));
   aspect-ratio: 2 / 3;
   height: auto;
 }
 
 .canvas-shell[data-orient="landscape"] {
-  width: min(100%, 42rem, calc(var(--shell-max-h) * 3 / 2));
+  max-width: 42rem;
+  width: min(100%, 42rem, calc((100dvh - 8.75rem) * 3 / 2));
   aspect-ratio: 3 / 2;
   height: auto;
   transform: rotate(0.3deg);
@@ -978,14 +985,19 @@ body {
     align-self: stretch;
   }
   .v-tool { width: 4.2rem; }
+  /* Colonne unique : la hauteur du stage suit son contenu, donc on ne s’en sert
+     pas comme borne (sinon boucle coque → stage → coque). */
+  .stage { --stage-fluid: 1; }
   .canvas-shell {
     transform: none;
-    --shell-max-h: min(70dvh, 520px);
+    max-height: min(70dvh, 520px);
   }
-  .canvas-shell[data-orient="portrait"] {
+  .canvas-shell[data-orient="portrait"],
+  .canvas-shell[data-orient="round"] {
     width: min(100%, 340px);
   }
   .canvas-shell[data-orient="landscape"] {
+    max-width: 480px;
     width: min(100%, 480px);
   }
   #studio-canvas {
@@ -1022,8 +1034,30 @@ body {
 }
 
 .orient-grid {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 0.35rem;
+}
+
+.orient-grid .chip {
+  font-size: 0.74rem;
+  padding: 0.55rem 0.25rem;
+}
+
+.round-note {
+  margin: 0 0 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 12px;
+  border: 2px dashed rgba(255, 107, 157, 0.35);
+  background: rgba(255, 240, 246, 0.7);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.chip:disabled,
+.frame-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .fit-grid .chip {

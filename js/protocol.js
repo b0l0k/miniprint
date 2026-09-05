@@ -3,7 +3,7 @@
  * https://github.com/dtgreene/ivy2
  */
 
-import { t } from "./i18n.js?v=1";
+import { t } from "./i18n.js?v=5";
 
 export const START_CODE = 0x430f; // 17167 — requêtes (host → imprimante)
 /** Réponses imprimante : nibble bas inversé (`43 f0` observé sur Zoemini 2). */

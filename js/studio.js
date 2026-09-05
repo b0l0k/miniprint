@@ -7,7 +7,7 @@ import {
   loadImage,
   pathRoundRect,
 } from "./filters.js?v=3";
-import { t } from "./i18n.js?v=1";
+import { t } from "./i18n.js?v=5";
 
 export const COLLAGES = [
   { id: "single", labelKey: "collage.single", slots: [{ x: 0, y: 0, w: 1, h: 1 }] },
@@ -57,6 +57,19 @@ export const COLLAGES = [
   },
 ];
 
+/**
+ * Papier sticker rond pré-découpé (mode « Pre-Cut Sticker » de l’appli Canon).
+ * Deux pastilles empilées, cotes relatives à la hauteur de la feuille 1280×1920.
+ * Ø 0.46326·H ≈ 890 px ≈ 35 mm, marge haute/basse 0.0269·H, entre-deux 0.0197·H.
+ */
+export const PRECUT = {
+  centerX: 0.5,
+  centersY: [0.25853, 0.74147],
+  outerRadius: 0.23163,
+  innerRadius: 0.19029,
+  dashes: 45,
+};
+
 const emojiCache = new Map();
 function emojiCanvas(emoji, size = 256) {
   const key = `${emoji}@${size}`;
@@ -79,7 +92,7 @@ function emojiCanvas(emoji, size = 256) {
 export class Studio {
   W = PRINT_START_WIDTH;
   H = PRINT_START_HEIGHT;
-  /** @type {'portrait'|'landscape'} */
+  /** @type {'portrait'|'landscape'|'round'} */
   orientation = "portrait";
 
   collageId = "single";
@@ -120,6 +133,7 @@ export class Studio {
   #fileInput;
   #pendingSlot = 0;
   #renderToken = 0;
+  #lastFit = "";
 
   constructor(canvas, opts = {}) {
     this.canvas = canvas;
@@ -130,9 +144,87 @@ export class Studio {
     this.#fileInput = opts.fileInput ?? null;
     this.setCollage("single");
     this.#bindPointer();
+    this.#bindResize();
     if (this.#fileInput) {
       this.#fileInput.addEventListener("change", () => this.#onFilePicked());
     }
+  }
+
+  /**
+   * Fixe en pixels la zone canvas de la coque, au ratio exact du rendu.
+   * `aspect-ratio` s’applique à la boîte de bordure : padding + bordure
+   * décalaient le ratio de la zone utile, et un `100%` glissé dans une variable
+   * CSS se résolvait sur la largeur d’un côté et sur la hauteur de l’autre.
+   * Résultat : les ronds s’ovalisaient selon la taille de la fenêtre.
+   */
+  fitShell() {
+    const shell = this.canvas.closest(".canvas-shell");
+    const stage = shell?.parentElement;
+    if (!shell || !stage) return;
+
+    const shellStyle = getComputedStyle(shell);
+    const num = (v) => {
+      const n = parseFloat(v);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const chromeX =
+      num(shellStyle.paddingLeft) +
+      num(shellStyle.paddingRight) +
+      num(shellStyle.borderLeftWidth) +
+      num(shellStyle.borderRightWidth);
+    const chromeY =
+      num(shellStyle.paddingTop) +
+      num(shellStyle.paddingBottom) +
+      num(shellStyle.borderTopWidth) +
+      num(shellStyle.borderBottomWidth);
+
+    const stageStyle = getComputedStyle(stage);
+    const limit = (v) => {
+      const n = parseFloat(v);
+      return Number.isFinite(n) && !String(v).includes("%") ? n : Infinity;
+    };
+
+    let maxW = limit(shellStyle.maxWidth);
+    const innerW =
+      stage.clientWidth - num(stageStyle.paddingLeft) - num(stageStyle.paddingRight);
+    if (innerW > 0) maxW = Math.min(maxW, innerW);
+
+    let maxH = limit(shellStyle.maxHeight);
+    // En colonne unique la hauteur du stage dépend de son contenu : s’en servir
+    // créerait une boucle de redimensionnement.
+    if (stageStyle.getPropertyValue("--stage-fluid").trim() !== "1") {
+      const hint = stage.querySelector(".stage-hint");
+      const gap = num(stageStyle.rowGap);
+      const innerH =
+        stage.clientHeight -
+        num(stageStyle.paddingTop) -
+        num(stageStyle.paddingBottom) -
+        (hint ? hint.offsetHeight + gap : 0);
+      if (innerH > 0) maxH = Math.min(maxH, innerH);
+    }
+
+    const boxW = maxW - chromeX;
+    const boxH = maxH - chromeY;
+    if (!(boxW > 40)) return;
+
+    const ratio = this.W / this.H;
+    const w = Math.max(40, Math.min(boxW, boxH * ratio));
+    const next = `${w + chromeX}px|${w / ratio + chromeY}px`;
+    if (next === this.#lastFit) return;
+    this.#lastFit = next;
+    const [width, height] = next.split("|");
+    shell.style.width = width;
+    shell.style.height = height;
+  }
+
+  #bindResize() {
+    const shell = this.canvas.closest(".canvas-shell");
+    const stage = shell?.parentElement;
+    this.fitShell();
+    if (stage && typeof ResizeObserver !== "undefined") {
+      new ResizeObserver(() => this.fitShell()).observe(stage);
+    }
+    window.addEventListener("resize", () => this.fitShell());
   }
 
   async loadCatalog(url = asset("assets/canon/catalog.json?v=2")) {
@@ -160,24 +252,57 @@ export class Studio {
     return this.catalog?.patterns?.find((p) => p.id === this.patternId) ?? null;
   }
 
+  /** Le papier pré-découpé impose la mise en page (2 pastilles). */
+  get isRound() {
+    return this.orientation === "round";
+  }
+
   setCollage(id) {
+    if (this.isRound) return;
     this.collageId = id;
-    const n = this.collage.slots.length;
-    while (this.slots.length < n) this.slots.push(emptySlot());
-    if (this.slots.length > n) {
-      for (let i = n; i < this.slots.length; i++) this.slots[i].bitmap?.close?.();
-      this.slots.length = n;
-    }
+    this.#syncSlotCount();
     this.selection = null;
     this.queueRender();
   }
 
   /**
-   * Bascule portrait (1280×1920) / paysage (1920×1280).
-   * @param {'portrait'|'landscape'} orient
+   * Emplacements photo du mode courant, en pixels canvas.
+   * @returns {{ x: number, y: number, w: number, h: number, shape: 'rect'|'circle', cx?: number, cy?: number, r?: number }[]}
+   */
+  slotRects() {
+    if (this.isRound) {
+      const r = PRECUT.outerRadius * this.H;
+      const cx = PRECUT.centerX * this.W;
+      return PRECUT.centersY.map((ratio) => {
+        const cy = ratio * this.H;
+        return {
+          x: cx - r,
+          y: cy - r,
+          w: r * 2,
+          h: r * 2,
+          shape: "circle",
+          cx,
+          cy,
+          r,
+        };
+      });
+    }
+    const gap = this.gap;
+    return this.collage.slots.map((s) => ({
+      x: s.x * this.W + gap / 2,
+      y: s.y * this.H + gap / 2,
+      w: s.w * this.W - gap,
+      h: s.h * this.H - gap,
+      shape: "rect",
+    }));
+  }
+
+  /**
+   * Bascule portrait (1280×1920) / paysage (1920×1280) / rond (stickers pré-découpés).
+   * @param {'portrait'|'landscape'|'round'} orient
    */
   setOrientation(orient) {
-    if (orient !== "portrait" && orient !== "landscape") return;
+    if (orient !== "portrait" && orient !== "landscape" && orient !== "round") return;
     if (orient === this.orientation) return;
 
     const oldW = this.W;
@@ -200,12 +325,37 @@ export class Studio {
       t.y = (t.y / oldH) * this.H;
     }
 
+    // Une photo « ajustée » perdrait ses coins dans la pastille : l’appli Canon
+    // recadre au centre, on fait pareil.
+    if (this.isRound) {
+      for (const slot of this.slots) {
+        if (slot.bitmap && (slot.fit ?? "contain") === "contain") {
+          slot.fit = "cover";
+          slot.panX = 0;
+          slot.panY = 0;
+        }
+      }
+    }
+
+    this.#syncSlotCount();
+    this.selection = null;
     this.canvas.width = this.W;
     this.canvas.height = this.H;
     this.canvas.closest(".canvas-shell")?.setAttribute("data-orient", orient);
     document.documentElement.dataset.orient = orient;
+    this.#lastFit = "";
+    this.fitShell();
     this.queueRender();
     this.onChange();
+  }
+
+  #syncSlotCount() {
+    const n = this.slotRects().length;
+    while (this.slots.length < n) this.slots.push(emptySlot());
+    if (this.slots.length > n) {
+      for (let i = n; i < this.slots.length; i++) this.slots[i].bitmap?.close?.();
+      this.slots.length = n;
+    }
   }
 
   setFrame(id) {
@@ -239,13 +389,39 @@ export class Studio {
     this.queueRender();
   }
 
+  /** Pastille visée par les ajouts : celle sélectionnée, sinon la première. */
+  #activeSlotRect() {
+    const rects = this.slotRects();
+    const i = this.selection?.kind === "slot" ? this.selection.index : 0;
+    return rects[i] ?? rects[0];
+  }
+
+  /**
+   * Point d’apparition d’un sticker / texte. En rond, on vise la pastille
+   * active : hors pastille l’élément serait masqué à l’impression.
+   */
+  #spawnPoint() {
+    if (this.isRound) {
+      const rect = this.#activeSlotRect();
+      const angle = Math.random() * Math.PI * 2;
+      const dist = rect.r * 0.4 * Math.random();
+      return {
+        x: rect.cx + Math.cos(angle) * dist,
+        y: rect.cy + Math.sin(angle) * dist,
+      };
+    }
+    return {
+      x: this.W * (0.35 + Math.random() * 0.3),
+      y: this.H * (0.35 + Math.random() * 0.3),
+    };
+  }
+
   addEmojiSticker(emoji) {
     this.stickers.push({
       id: uid(),
       type: "emoji",
+      ...this.#spawnPoint(),
       emoji,
-      x: this.W * (0.35 + Math.random() * 0.3),
-      y: this.H * (0.35 + Math.random() * 0.3),
       scale: 1,
       rotation: (Math.random() - 0.5) * 0.35,
     });
@@ -259,8 +435,7 @@ export class Studio {
       type: "canon",
       src: sticker.src,
       stickerId: sticker.id,
-      x: this.W * (0.35 + Math.random() * 0.3),
-      y: this.H * (0.35 + Math.random() * 0.3),
+      ...this.#spawnPoint(),
       scale: 0.85,
       rotation: (Math.random() - 0.5) * 0.3,
     });
@@ -270,11 +445,14 @@ export class Studio {
   }
 
   addText(text = "Hello !") {
+    const anchor = this.isRound
+      ? this.#activeSlotRect()
+      : { cx: this.W / 2, cy: this.H * 0.82, r: 0 };
     this.texts.push({
       id: uid(),
       text,
-      x: this.W / 2,
-      y: this.H * 0.82,
+      x: anchor.cx,
+      y: anchor.cy + anchor.r * 0.55,
       size: 72,
       color: "#ff6b9d",
       font: "Mini Gochi",
@@ -389,7 +567,13 @@ export class Studio {
       imageOrientation: "from-image",
     });
     this.slots[index]?.bitmap?.close?.();
-    this.slots[index] = { bitmap, fit: "contain", panX: 0, panY: 0, zoom: 1 };
+    this.slots[index] = {
+      bitmap,
+      fit: this.isRound ? "cover" : "contain",
+      panX: 0,
+      panY: 0,
+      zoom: 1,
+    };
     this.selection = { kind: "slot", index };
     this.queueRender();
   }
@@ -444,18 +628,13 @@ export class Studio {
     photoLayer.width = W;
     photoLayer.height = H;
     const pctx = photoLayer.getContext("2d");
-    pctx.fillStyle = this.bgColor;
-    pctx.fillRect(0, 0, W, H);
+    if (!pattern) {
+      pctx.fillStyle = this.bgColor;
+      pctx.fillRect(0, 0, W, H);
+    }
 
-    const gap = this.gap;
-    const layout = this.collage.slots;
-    layout.forEach((slot, i) => {
-      const x = slot.x * W + gap / 2;
-      const y = slot.y * H + gap / 2;
-      const w = slot.w * W - gap;
-      const h = slot.h * H - gap;
-      this.#drawSlot(pctx, this.slots[i], x, y, w, h, false, false);
-    });
+    const rects = this.slotRects();
+    rects.forEach((rect, i) => this.#drawSlot(pctx, this.slots[i], rect));
 
     // Ajustements lumière sur la couche photo
     const adjLayer = document.createElement("canvas");
@@ -469,8 +648,9 @@ export class Studio {
 
     ctx.drawImage(adjLayer, 0, 0);
 
-    // Cadre Canon par-dessus (assets portrait → rotés en paysage)
-    const frame = this.selectedFrame;
+    // Cadre Canon par-dessus (assets portrait → rotés en paysage).
+    // Sans objet en rond : le cadre borde la feuille, donc hors pastilles.
+    const frame = this.isRound ? null : this.selectedFrame;
     if (frame) {
       try {
         const img = await loadImage(frame.src);
@@ -539,16 +719,59 @@ export class Studio {
       ctx.restore();
     });
 
+    // Papier pré-découpé : hors pastilles, rien n’est imprimé.
+    if (this.isRound) this.#maskPrecut(ctx, rects);
+
     // UI slots (contours) par-dessus pour l’édition
     if (showUi) {
-      layout.forEach((slot, i) => {
-        const x = slot.x * W + gap / 2;
-        const y = slot.y * H + gap / 2;
-        const w = slot.w * W - gap;
-        const h = slot.h * H - gap;
+      rects.forEach((rect, i) => {
+        const { x, y, w, h } = rect;
         const selected =
           this.selection?.kind === "slot" && this.selection.index === i;
-        if (!this.slots[i]?.bitmap) {
+        const empty = !this.slots[i]?.bitmap;
+
+        if (rect.shape === "circle") {
+          if (empty) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(rect.cx, rect.cy, rect.r - 20, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255,255,255,0.55)";
+            ctx.fill();
+            ctx.fillStyle = "#ff6b9d";
+            ctx.font = `700 ${Math.min(48, w * 0.1)}px Manrope, sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("＋ Photo", rect.cx, rect.cy);
+            ctx.restore();
+          }
+          // Doublé de blanc : les repères doivent rester lisibles sur une photo sombre.
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(rect.cx, rect.cy, rect.r, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(255,255,255,0.9)";
+          ctx.lineWidth = selected ? 14 : 10;
+          ctx.stroke();
+          ctx.strokeStyle = selected ? "#ff6b9d" : "rgba(255,107,157,0.7)";
+          ctx.lineWidth = selected ? 8 : 4;
+          ctx.stroke();
+
+          // Repère intérieur pointillé, 45 tirets comme dans l’appli Canon.
+          const guide = PRECUT.innerRadius * H;
+          const dash = (Math.PI * guide) / PRECUT.dashes;
+          ctx.setLineDash([dash, dash]);
+          ctx.beginPath();
+          ctx.arc(rect.cx, rect.cy, guide, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(255,255,255,0.9)";
+          ctx.lineWidth = 10;
+          ctx.stroke();
+          ctx.strokeStyle = selected ? "#ff6b9d" : "rgba(255,107,157,0.65)";
+          ctx.lineWidth = 4;
+          ctx.stroke();
+          ctx.restore();
+          return;
+        }
+
+        if (empty) {
           ctx.save();
           pathRoundRect(ctx, x + 24, y + 24, w - 48, h - 48, 28);
           ctx.fillStyle = "rgba(255,255,255,0.55)";
@@ -568,6 +791,20 @@ export class Studio {
     }
   }
 
+  /** Blanchit tout ce qui tombe hors des pastilles (cf. PrecutMask de l’appli). */
+  #maskPrecut(ctx, rects) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, this.W, this.H);
+    for (const rect of rects) {
+      ctx.moveTo(rect.cx + rect.r, rect.cy);
+      ctx.arc(rect.cx, rect.cy, rect.r, 0, Math.PI * 2);
+    }
+    ctx.fillStyle = "#ffffff";
+    ctx.fill("evenodd");
+    ctx.restore();
+  }
+
   /**
    * Dessine un asset conçu en portrait (cadre / motif) dans le canvas courant.
    * En paysage : rotation 90° CW pour coller au format 1920×1280.
@@ -584,9 +821,15 @@ export class Studio {
     ctx.restore();
   }
 
-  #drawSlot(ctx, slot, x, y, w, h) {
+  #drawSlot(ctx, slot, rect) {
+    const { x, y, w, h } = rect;
     ctx.save();
-    pathRoundRect(ctx, x, y, w, h, 8);
+    if (rect.shape === "circle") {
+      ctx.beginPath();
+      ctx.arc(rect.cx, rect.cy, rect.r, 0, Math.PI * 2);
+    } else {
+      pathRoundRect(ctx, x, y, w, h, 8);
+    }
     ctx.clip();
     if (slot?.bitmap) {
       drawFitted(ctx, slot.bitmap, x, y, w, h, {
@@ -595,7 +838,7 @@ export class Studio {
         panX: slot.panX ?? 0,
         panY: slot.panY ?? 0,
       });
-    } else {
+    } else if (!this.selectedPattern) {
       ctx.fillStyle = "#f3e6dc";
       ctx.fillRect(x, y, w, h);
     }
@@ -716,12 +959,10 @@ export class Studio {
    */
   #clampSlotPan(index) {
     const slot = this.slots[index];
-    const layout = this.collage.slots[index];
-    if (!slot?.bitmap || !layout || slot.fit === "stretch") return;
+    const rect = this.slotRects()[index];
+    if (!slot?.bitmap || !rect || slot.fit === "stretch") return;
 
-    const gap = this.gap;
-    const w = layout.w * this.W - gap;
-    const h = layout.h * this.H - gap;
+    const { w, h } = rect;
     const iw = slot.bitmap.width;
     const ih = slot.bitmap.height;
     const zoom = slot.zoom ?? 1;
@@ -751,14 +992,21 @@ export class Studio {
         return { kind: "text", index: i };
       }
     }
-    const gap = this.gap;
-    for (let i = 0; i < this.collage.slots.length; i++) {
-      const slot = this.collage.slots[i];
-      const sx = slot.x * this.W + gap / 2;
-      const sy = slot.y * this.H + gap / 2;
-      const sw = slot.w * this.W - gap;
-      const sh = slot.h * this.H - gap;
-      if (x >= sx && x <= sx + sw && y >= sy && y <= sy + sh) {
+    const rects = this.slotRects();
+    for (let i = 0; i < rects.length; i++) {
+      const rect = rects[i];
+      if (rect.shape === "circle") {
+        if (Math.hypot(x - rect.cx, y - rect.cy) <= rect.r) {
+          return { kind: "slot", index: i };
+        }
+        continue;
+      }
+      if (
+        x >= rect.x &&
+        x <= rect.x + rect.w &&
+        y >= rect.y &&
+        y <= rect.y + rect.h
+      ) {
         return { kind: "slot", index: i };
       }
     }

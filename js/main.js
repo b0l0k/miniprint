@@ -1,8 +1,8 @@
-import { COLLAGES, Studio } from "./studio.js?v=5";
+import { COLLAGES, Studio } from "./studio.js?v=7";
 import { prepareStageCanvas } from "./image.js?v=3";
-import { ZoeminiPrinter, serialSupported } from "./printer.js?v=5";
+import { ZoeminiPrinter, serialSupported } from "./printer.js?v=6";
 import { EMOJI_GROUPS, searchEmojis } from "./emoji.js?v=2";
-import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=4";
+import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=5";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -20,6 +20,7 @@ const els = {
   canvas: $("#studio-canvas"),
   collageList: $("#collage-list"),
   orientList: $("#orient-list"),
+  roundNote: $("#round-note"),
   emojiCats: $("#emoji-cats"),
   emojiList: $("#emoji-list"),
   emojiSearch: $("#emoji-search"),
@@ -307,20 +308,36 @@ function buildCollages() {
   });
 }
 
+const ORIENT_LOG_KEYS = {
+  portrait: "collage.orientPortrait",
+  landscape: "collage.orientLandscape",
+  round: "collage.orientRound",
+};
+
+/** Le papier pré-découpé fixe la mise en page et interdit les cadres. */
+function syncFormatUi() {
+  const round = studio.isRound;
+  if (els.roundNote) els.roundNote.hidden = !round;
+  els.orientList?.querySelectorAll("[data-orient]").forEach((btn) => {
+    btn.classList.toggle("is-active", btn.dataset.orient === studio.orientation);
+  });
+  els.collageList?.querySelectorAll(".chip").forEach((btn) => {
+    btn.disabled = round;
+    if (round) btn.title = t("collage.layoutLocked");
+    else btn.removeAttribute("title");
+  });
+  els.frameList?.querySelectorAll(".frame-btn").forEach((btn) => {
+    btn.disabled = round;
+  });
+}
+
 function wireOrientation() {
   els.orientList?.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-orient]");
     if (!btn) return;
     studio.setOrientation(btn.dataset.orient);
-    [...els.orientList.querySelectorAll("[data-orient]")].forEach((el) => {
-      el.classList.toggle("is-active", el === btn);
-    });
-    log(
-      btn.dataset.orient === "landscape"
-        ? t("collage.orientLandscape")
-        : t("collage.orientPortrait"),
-      "ok",
-    );
+    syncFormatUi();
+    log(t(ORIENT_LOG_KEYS[btn.dataset.orient] ?? "collage.orientPortrait"), "ok");
   });
 }
 
@@ -656,6 +673,7 @@ function refreshLocalizedUi() {
   }
   els.emojiCats.innerHTML = "";
   buildEmojis();
+  syncFormatUi();
   setPrinterUi();
   renderStatus();
   updateSelectionLabel();
@@ -770,6 +788,8 @@ async function boot() {
   } catch {
     /* ignore */
   }
+  // La hauteur du hint bouge avec les polices : on recale la coque.
+  studio.fitShell();
 
   try {
     log(t("log.loadingCatalog"));
@@ -781,6 +801,7 @@ async function boot() {
     buildFrames(catalog);
     buildEffects(catalog);
     buildPatterns(catalog);
+    syncFormatUi();
     await studio.render();
     log(
       t("log.readyStudio", {

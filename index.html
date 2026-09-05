@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/fonts.css?v=14" />
-    <link rel="stylesheet" href="css/app.css?v=14" />
+    <link rel="stylesheet" href="css/app.css?v=16" />
   </head>
   <body>
     <div class="sparkles" aria-hidden="true"></div>
@@ -64,7 +64,11 @@
             <div class="chip-grid orient-grid" id="orient-list">
               <button type="button" class="chip is-active" data-orient="portrait" data-i18n="collage.portrait">Portrait</button>
               <button type="button" class="chip" data-orient="landscape" data-i18n="collage.landscape">Paysage</button>
+              <button type="button" class="chip" data-orient="round" data-i18n="collage.round" data-i18n-title="collage.roundTitle" title="Papier sticker rond pré-découpé">Rond</button>
             </div>
+            <p class="round-note" id="round-note" hidden data-i18n="collage.roundNote">
+              Papier sticker rond pré-découpé : 2 pastilles de ⌀ 35 mm. Le reste de la feuille n’est pas imprimé.
+            </p>
             <div class="subhead" data-i18n="collage.layout">Mise en page</div>
             <div class="chip-grid" id="collage-list"></div>
             <div class="subhead" data-i18n="collage.patterns">Motifs de fond</div>
@@ -234,6 +238,6 @@
     </footer>
 
     <input type="file" id="file-input" accept="image/*" hidden />
-    <script type="module" src="js/main.js?v=12"></script>
+    <script type="module" src="js/main.js?v=14"></script>
   </body>
 </html>
