@@ -21,6 +21,7 @@ html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+  background-color: #fff3f7;
 }
 
 body {
@@ -28,11 +29,13 @@ body {
   color: var(--ink);
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(700px 420px at 5% 0%, rgba(255, 179, 138, 0.45), transparent 60%),
-    radial-gradient(680px 400px at 95% 5%, rgba(201, 160, 255, 0.35), transparent 55%),
-    radial-gradient(600px 380px at 50% 100%, rgba(125, 206, 184, 0.28), transparent 50%),
-    linear-gradient(180deg, #ffe8f1 0%, #fff5e8 45%, #eef9f5 100%);
+  background-image:
+    radial-gradient(980px 560px at 0% 0%, rgba(255, 179, 138, 0.32), transparent 72%),
+    radial-gradient(900px 520px at 100% 0%, rgba(201, 160, 255, 0.22), transparent 70%),
+    radial-gradient(700px 420px at 85% 85%, rgba(255, 196, 214, 0.35), transparent 70%),
+    linear-gradient(180deg, #ffe6f1 0%, #fff1f6 40%, #fff6f9 70%, #fff3f7 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   background-attachment: fixed;
 }
 
@@ -58,6 +61,8 @@ body {
   gap: 0.75rem;
   padding: 0.55rem clamp(0.8rem, 2.5vw, 1.5rem);
   flex: 0 0 auto;
+  z-index: 30;
+  overflow: visible;
 }
 
 .brand {
@@ -83,6 +88,7 @@ body {
   align-items: center;
   justify-content: flex-end;
   max-width: min(100%, 52rem);
+  overflow: visible;
 }
 
 .printer-pill {
@@ -208,10 +214,15 @@ body {
 }
 
 .candy {
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,247,251,0.95));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 250, 252, 0.82) 100%
+  );
   border: 2px solid rgba(255, 107, 157, 0.18);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
 }
 
 .rail {
@@ -456,6 +467,13 @@ body {
   flex-shrink: 0;
 }
 
+.lang-switch--corner {
+  position: fixed;
+  left: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 40;
+}
+
 .lang-trigger {
   appearance: none;
   display: inline-flex;
@@ -469,6 +487,7 @@ body {
   color: var(--ink);
   cursor: pointer;
   transition: border-color 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 8px 18px rgba(232, 77, 130, 0.12);
 }
 
 .lang-trigger:hover,
@@ -478,8 +497,13 @@ body {
 }
 
 .lang-flag {
-  font-size: 0.95rem;
-  line-height: 1;
+  width: 1.15rem;
+  height: 0.82rem;
+  display: block;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(74, 48, 64, 0.12);
+  flex-shrink: 0;
 }
 
 .lang-code {
@@ -490,6 +514,7 @@ body {
   color: var(--muted);
   font-size: 0.65rem;
   transform: translateY(-0.5px);
+  transition: transform 0.12s ease;
 }
 
 .lang-switch.is-open .lang-caret {
@@ -498,9 +523,11 @@ body {
 
 .lang-menu {
   position: absolute;
-  top: calc(100% + 0.35rem);
-  right: 0;
-  z-index: 40;
+  bottom: calc(100% + 0.4rem);
+  left: 0;
+  right: auto;
+  top: auto;
+  z-index: 50;
   min-width: 9.5rem;
   padding: 0.3rem;
   border: 2px solid var(--line);
@@ -509,6 +536,10 @@ body {
   box-shadow: 0 12px 28px rgba(28, 36, 56, 0.14);
   display: grid;
   gap: 0.2rem;
+}
+
+.lang-menu[hidden] {
+  display: none !important;
 }
 
 .lang-option {
@@ -745,16 +776,6 @@ body {
   aspect-ratio: 3 / 2;
   height: auto;
   transform: rotate(0.3deg);
-}
-
-.shell-bow {
-  position: absolute;
-  top: -0.45rem;
-  right: 0.85rem;
-  font-size: 1.15rem;
-  color: var(--pink);
-  filter: drop-shadow(0 2px 0 white);
-  z-index: 1;
 }
 
 #studio-canvas {
@@ -1069,6 +1090,8 @@ body {
   z-index: 1;
   text-align: center;
   padding: 0.5rem 1rem 4.5rem;
+  background: transparent;
+  flex: 0 0 auto;
 }
 
 .site-footer p {

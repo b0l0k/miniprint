@@ -1,8 +1,8 @@
 import { COLLAGES, Studio } from "./studio.js?v=5";
 import { prepareStageCanvas } from "./image.js?v=3";
-import { ZoeminiPrinter, serialSupported } from "./printer.js?v=4";
+import { ZoeminiPrinter, serialSupported } from "./printer.js?v=5";
 import { EMOJI_GROUPS, searchEmojis } from "./emoji.js?v=2";
-import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=2";
+import { initI18n, onLangChange, setLang, t, tCategory, tEmojiGroup } from "./i18n.js?v=4";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -10,7 +10,6 @@ const els = {
   support: $("#support-banner"),
   connectBtn: $("#btn-connect"),
   disconnectBtn: $("#btn-disconnect"),
-  handshakeBtn: $("#btn-handshake"),
   refreshBtn: $("#btn-refresh"),
   printBtn: $("#btn-print"),
   addTextBtn: $("#btn-add-text"),
@@ -130,7 +129,6 @@ function setPrinterUi() {
   const ok = printer.connected;
   els.connectBtn.hidden = link;
   els.disconnectBtn.hidden = !link;
-  els.handshakeBtn.hidden = !link;
   els.refreshBtn.disabled = !ok;
   els.printBtn.disabled = false;
   const state = ok ? "online" : link ? "link" : "offline";
@@ -591,22 +589,6 @@ async function connect() {
   }
 }
 
-async function retryHandshake() {
-  try {
-    log(t("log.handshakeRetry"));
-    const info = await printer.handshake();
-    renderStatus();
-    setPrinterUi();
-    log(
-      t("log.handshakeOk", { battery: info.status.batteryLevel, fw: info.setting.firmwareVersion }),
-      "ok",
-    );
-  } catch (err) {
-    log(err.message || String(err), "err");
-    setPrinterUi();
-  }
-}
-
 async function disconnect() {
   await printer.disconnect();
   setPrinterUi();
@@ -685,7 +667,8 @@ function setLangMenuOpen(open) {
   const menu = $("#lang-menu");
   if (!root || !trigger || !menu) return;
   root.classList.toggle("is-open", open);
-  menu.hidden = !open;
+  if (open) menu.removeAttribute("hidden");
+  else menu.setAttribute("hidden", "");
   trigger.setAttribute("aria-expanded", open ? "true" : "false");
 }
 
@@ -696,18 +679,21 @@ function wireLangSwitch() {
   if (!root || !trigger || !menu) return;
 
   trigger.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    setLangMenuOpen(menu.hidden);
+    setLangMenuOpen(menu.hasAttribute("hidden"));
   });
 
   menu.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-lang]");
     if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
     setLang(btn.getAttribute("data-lang"));
     setLangMenuOpen(false);
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("pointerdown", (e) => {
     if (!root.contains(e.target)) setLangMenuOpen(false);
   });
 
@@ -741,7 +727,6 @@ async function boot() {
 
   els.connectBtn.addEventListener("click", connect);
   els.disconnectBtn.addEventListener("click", disconnect);
-  els.handshakeBtn.addEventListener("click", retryHandshake);
   els.refreshBtn.addEventListener("click", refresh);
   els.printBtn.addEventListener("click", printNow);
   els.addPhotoQuickBtn?.addEventListener("click", () => studio.pickPhotoForSlot());

@@ -13,7 +13,6 @@ const STRINGS = {
     "header.tagline": "atelier tout mignon · Zoemini 2",
     "header.connect": "📡 Bluetooth",
     "header.disconnect": "Déconnecter",
-    "header.handshake": "Handshake",
     "header.printerOffline": "Hors ligne",
     "header.printerReady": "Prête 💕",
     "header.printerLink": "Connectée…",
@@ -163,7 +162,7 @@ const STRINGS = {
     "log.portBlocked": "Port bloqué — oubli + nouvelle sélection…",
     "log.noDevice": "Aucun appareil choisi.",
     "log.needGesture": "Chrome a besoin d’un nouveau clic. Reclique Connecter (imprimante appairée, appli Canon fermée).",
-    "log.linkOpenRetry": "Lien BT ouvert — tu peux relancer le handshake.",
+    "log.linkOpenRetry": "Lien BT ouvert — reclique Bluetooth pour réessayer.",
     "log.handshakeRetry": "Relance du handshake…",
     "log.handshakeOk": "Handshake OK · batterie {battery}% · FW {fw}",
     "log.disconnected": "Déconnectée.",
@@ -211,7 +210,6 @@ const STRINGS = {
     "header.tagline": "cute little studio · Zoemini 2",
     "header.connect": "📡 Bluetooth",
     "header.disconnect": "Disconnect",
-    "header.handshake": "Handshake",
     "header.printerOffline": "Offline",
     "header.printerReady": "Ready 💕",
     "header.printerLink": "Connected…",
@@ -361,7 +359,7 @@ const STRINGS = {
     "log.portBlocked": "Port locked — forgetting + picking again…",
     "log.noDevice": "No device selected.",
     "log.needGesture": "Chrome needs a fresh click. Click Connect again (printer paired, Canon app closed).",
-    "log.linkOpenRetry": "BT link is open — you can retry the handshake.",
+    "log.linkOpenRetry": "BT link is open — click Bluetooth again to retry.",
     "log.handshakeRetry": "Retrying handshake…",
     "log.handshakeOk": "Handshake OK · battery {battery}% · FW {fw}",
     "log.disconnected": "Disconnected.",
@@ -452,9 +450,11 @@ export function tEmojiGroup(name) {
   return translated === key ? name : translated;
 }
 
+import { asset } from "./base.js?v=3";
+
 const LANG_META = {
-  fr: { flag: "🇫🇷", code: "FR" },
-  en: { flag: "🇬🇧", code: "EN" },
+  fr: { flag: asset("assets/flags/fr.svg"), code: "FR" },
+  en: { flag: asset("assets/flags/en.svg"), code: "EN" },
 };
 
 /**
@@ -485,7 +485,7 @@ export function applyDom(root = document) {
   const meta = LANG_META[currentLang] ?? LANG_META.fr;
   const flagEl = document.getElementById("lang-flag");
   const codeEl = document.getElementById("lang-code");
-  if (flagEl) flagEl.textContent = meta.flag;
+  if (flagEl) flagEl.src = meta.flag;
   if (codeEl) codeEl.textContent = meta.code;
 
   document.querySelectorAll("[data-lang]").forEach((btn) => {

@@ -85,18 +85,18 @@ export function parseIncomingMessage(data) {
   return { data, payload, ack, error };
 }
 
-function parseBitRange(input, size) {
-  let bits = "";
-  for (let i = 0; i < size; i++) {
-    bits += (input >> i) & 1 ? "1" : "0";
-  }
-  const reversed = bits.split("").reverse().join("");
-  return parseInt(reversed, 2) || 0;
+/**
+ * Batterie : l’octet bas du mot statut est un pourcentage 0–100.
+ * ivy2 masquait 6 bits (max 63) — ex. 96% (0x60) devenait 32% (0x20).
+ */
+function parseBatteryPercent(word) {
+  const pct = word & 0xff;
+  return Math.max(0, Math.min(100, pct));
 }
 
 export function parseStartSession(response) {
   const d = response.data;
-  const batteryLevel = parseBitRange((d[9] << 8) | d[10], 6);
+  const batteryLevel = parseBatteryPercent((d[9] << 8) | d[10]);
   const mtu = ((d[11] & 255) << 8) | (d[12] & 255);
   return { batteryLevel, mtu };
 }
@@ -105,7 +105,7 @@ export function parseStatus(response) {
   const p = response.payload;
   const i = (p[0] << 8) | p[1];
   const errorCode = p[2];
-  const batteryLevel = parseBitRange(i, 6);
+  const batteryLevel = parseBatteryPercent(i);
   const usbStatus = (i >> 7) & 1;
   const queueFlags = ((p[4] & 255) << 8) | (p[5] & 255);
 

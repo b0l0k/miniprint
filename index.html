@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800&family=Pacifico&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/fonts.css?v=8" />
-    <link rel="stylesheet" href="css/app.css?v=8" />
+    <link rel="stylesheet" href="css/fonts.css?v=14" />
+    <link rel="stylesheet" href="css/app.css?v=14" />
   </head>
   <body>
     <div class="sparkles" aria-hidden="true"></div>
@@ -22,34 +22,8 @@
         <p class="tagline" data-i18n="header.tagline">atelier tout mignon · Zoemini 2</p>
       </div>
       <div class="header-actions">
-        <div class="lang-switch" id="lang-switch">
-          <button
-            type="button"
-            class="lang-trigger"
-            id="lang-trigger"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-            data-i18n-aria="lang.switchAria"
-            aria-label="Langue"
-          >
-            <span class="lang-flag" id="lang-flag" aria-hidden="true">🇫🇷</span>
-            <span class="lang-code" id="lang-code">FR</span>
-            <span class="lang-caret" aria-hidden="true">▾</span>
-          </button>
-          <div class="lang-menu" id="lang-menu" role="listbox" hidden>
-            <button type="button" class="lang-option is-active" role="option" data-lang="fr" aria-selected="true">
-              <span class="lang-flag" aria-hidden="true">🇫🇷</span>
-              <span data-i18n="lang.frName">Français</span>
-            </button>
-            <button type="button" class="lang-option" role="option" data-lang="en" aria-selected="false">
-              <span class="lang-flag" aria-hidden="true">🇬🇧</span>
-              <span data-i18n="lang.enName">English</span>
-            </button>
-          </div>
-        </div>
         <button type="button" class="btn soft" id="btn-connect" data-i18n="header.connect">📡 Bluetooth</button>
         <button type="button" class="btn soft" id="btn-disconnect" hidden data-i18n="header.disconnect">Déconnecter</button>
-        <button type="button" class="btn soft" id="btn-handshake" hidden data-i18n="header.handshake">Handshake</button>
         <div class="printer-pill" id="printer-pill" data-state="offline">
           <span class="dot"></span>
           <span id="printer-label" data-i18n="header.printerOffline">Hors ligne</span>
@@ -174,7 +148,6 @@
 
       <section class="stage">
         <div class="canvas-shell" data-orient="portrait">
-          <div class="shell-bow" aria-hidden="true">♡</div>
           <canvas id="studio-canvas" data-i18n-aria="stage.canvasAria" aria-label="Zone de création"></canvas>
         </div>
         <p class="stage-hint" data-i18n="stage.hint">Glisse les stickers · double-clic pour changer une photo</p>
@@ -230,11 +203,37 @@
       </div>
     </div>
 
+    <div class="lang-switch lang-switch--corner" id="lang-switch">
+      <button
+        type="button"
+        class="lang-trigger"
+        id="lang-trigger"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        data-i18n-aria="lang.switchAria"
+        aria-label="Langue"
+      >
+        <img class="lang-flag" id="lang-flag" src="assets/flags/fr.svg" alt="" width="20" height="14" />
+        <span class="lang-code" id="lang-code">FR</span>
+        <span class="lang-caret" aria-hidden="true">▾</span>
+      </button>
+      <div class="lang-menu" id="lang-menu" role="listbox" hidden>
+        <button type="button" class="lang-option is-active" role="option" data-lang="fr" aria-selected="true">
+          <img class="lang-flag" src="assets/flags/fr.svg" alt="" width="20" height="14" />
+          <span data-i18n="lang.frName">Français</span>
+        </button>
+        <button type="button" class="lang-option" role="option" data-lang="en" aria-selected="false">
+          <img class="lang-flag" src="assets/flags/en.svg" alt="" width="20" height="14" />
+          <span data-i18n="lang.enName">English</span>
+        </button>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <p>Made by <strong>b0l0k</strong> for his <span class="heart" aria-hidden="true">♥</span> daughter</p>
     </footer>
 
     <input type="file" id="file-input" accept="image/*" hidden />
-    <script type="module" src="js/main.js?v=7"></script>
+    <script type="module" src="js/main.js?v=12"></script>
   </body>
 </html>
